@@ -51,4 +51,9 @@ func gain(amount := 1):
 	tick += amount
 
 func unlock():
+	print("unlcoed ", self)
 	unlocked = true
+
+func lock():
+	print("locked ", self)
+	unlocked = false

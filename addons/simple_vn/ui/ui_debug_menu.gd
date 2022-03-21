@@ -13,9 +13,11 @@ func _input(event: InputEvent) -> void:
 		if visible:
 			visible = false
 			debug_menu.process_mode = Node.PROCESS_MODE_DISABLED
+			get_tree().paused = false
+			
 		else:
 			_screenshot = get_viewport().get_texture().get_image()
-			print(_screenshot)
 			
 			visible = true
 			debug_menu.process_mode = Node.PROCESS_MODE_ALWAYS
+			get_tree().paused = true

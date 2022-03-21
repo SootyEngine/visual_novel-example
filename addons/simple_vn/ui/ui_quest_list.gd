@@ -34,4 +34,4 @@ func _ready_deferred():
 			else:
 				text.append("\t%s [dim]%s[]" % [quest.name, quest.state])
 	
-	$ColorRect/RichTextLabel.set_bbcode("\n".join(text))
+	$RichTextLabel.set_bbcode("\n".join(text))

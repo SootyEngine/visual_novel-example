@@ -29,9 +29,9 @@ _option_menu = NodePath("")
 
 [node name="from" type="RichTextLabel" parent="."]
 offset_left = 512.0
-offset_top = 4.0
+offset_top = 37.0
 offset_right = 512.0
-offset_bottom = 31.0
+offset_bottom = 64.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
@@ -58,7 +58,7 @@ outline_colored = 4
 outline_adjust = 0.25
 
 [node name="text" type="RichTextLabel" parent="."]
-offset_top = 35.0
+offset_top = 68.0
 offset_right = 1024.0
 offset_bottom = 68.0
 size_flags_horizontal = 3
@@ -67,7 +67,7 @@ theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.25)
 theme_override_constants/shadow_offset_x = 3
 theme_override_constants/shadow_offset_y = 3
-theme_override_constants/outline_size = 6
+theme_override_constants/outline_size = 4
 theme_override_fonts/bold_italics_font = ExtResource( "3_ccacc" )
 theme_override_fonts/italics_font = ExtResource( "3_lrkqk" )
 theme_override_fonts/bold_font = ExtResource( "4_e85rd" )
@@ -80,15 +80,11 @@ theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
 fit_content_height = true
 script = ExtResource( "3_es7ai" )
-bbcode = "[dim;dim]\"[]Text[dim;dim]\"[]"
 size = 24
-outline_colored = 6
-progress = 1.0
-effect_time = 1452.85
-visible_character = 6
+outline_colored = 4
 _triggers = {}
-_alpha_real = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
-_alpha_goal = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+_alpha_real = []
+_alpha_goal = []
 
 [node name="indicator" type="TextureRect" parent="."]
 modulate = Color(1, 1, 1, 0)

@@ -1,25 +1,18 @@
 [gd_scene load_steps=3 format=3 uid="uid://beeajbnhjflok"]
 
-[ext_resource type="Script" path="res://addons/sys_quests/ui/ui_quest_list.gd" id="1_hfb0x"]
+[ext_resource type="Script" path="res://addons/simple_vn/ui/ui_quest_list.gd" id="1_42ktn"]
 [ext_resource type="Script" path="res://addons/rich_text/RichTextLabel2.gd" id="2_xr5r5"]
 
 [node name="quests" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( "1_hfb0x" )
+script = ExtResource( "1_42ktn" )
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0, 0, 0, 0.34902)
-__meta__ = {
-"_edit_layout_mode": 0,
-"_edit_use_custom_anchors": false
-}
-
-[node name="RichTextLabel" type="RichTextLabel" parent="ColorRect"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_constants/outline_size = 0
 theme_override_font_sizes/mono_font_size = 16
 theme_override_font_sizes/bold_italics_font_size = 16
 theme_override_font_sizes/italics_font_size = 16
