@@ -158,6 +158,7 @@ meta_underlined = false
 script = ExtResource( "16_roqut" )
 
 [node name="dialogue" type="Control" parent="debug/debug_menu"]
+visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource( "17_4ysal" )
