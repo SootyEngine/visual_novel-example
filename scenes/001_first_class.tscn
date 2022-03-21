@@ -1,26 +1,48 @@
-[gd_scene load_steps=4 format=3 uid="uid://hy462mpwbb8v"]
+[gd_scene load_steps=5 format=3 uid="uid://hy462mpwbb8v"]
 
 [ext_resource type="PackedScene" path="res://bgs/class_room.tscn" id="1_di2mh"]
-[ext_resource type="PackedScene" path="res://chars/school_boy.tscn" id="2_sg1bl"]
+[ext_resource type="Texture2D" uid="uid://cfo0wwg3qvcie" path="res://chars/school_boy.webp" id="2_nxdin"]
 [ext_resource type="Script" path="res://addons/simple_vn/camera.gd" id="3_8avwo"]
+[ext_resource type="Script" path="res://addons/simple_vn/nodes/Sprite2DAnimations.gd" id="3_kejdu"]
 
 [node name="first_class" type="ParallaxBackground"]
 
 [node name="class_room" parent="." instance=ExtResource( "1_di2mh" )]
-position = Vector2(-593, -356)
+position = Vector2(-536, -348)
 motion_scale = Vector2(-0.5, -0.5)
 
-[node name="school_boy" parent="." groups=["john", "school_boy"] instance=ExtResource( "2_sg1bl" )]
+[node name="school_boy" type="ParallaxLayer" parent="."]
 position = Vector2(317, 315)
 motion_scale = Vector2(1.5, 1.5)
 
-[node name="school_boy2" parent="." groups=["paul", "school_boy"] instance=ExtResource( "2_sg1bl" )]
+[node name="sprite" type="Sprite2D" parent="school_boy" groups=["john", "school_boy"]]
+texture = ExtResource( "2_nxdin" )
+offset = Vector2(0, -300)
+script = ExtResource( "3_kejdu" )
+start_hidden = false
+current_shake = Vector2(7.83774e-15, 7.83774e-15)
+
+[node name="school_boy2" type="ParallaxLayer" parent="."]
 position = Vector2(-343, 317)
 motion_scale = Vector2(1.5, 1.5)
 
-[node name="school_boy3" parent="." groups=["chris", "school_boy"] instance=ExtResource( "2_sg1bl" )]
+[node name="sprite" type="Sprite2D" parent="school_boy2" groups=["paul", "school_boy"]]
+texture = ExtResource( "2_nxdin" )
+offset = Vector2(0, -300)
+script = ExtResource( "3_kejdu" )
+start_hidden = false
+current_shake = Vector2(7.83774e-15, 7.83774e-15)
+
+[node name="school_boy3" type="ParallaxLayer" parent="."]
 position = Vector2(-10, 312)
 motion_scale = Vector2(2, 2)
+
+[node name="sprite" type="Sprite2D" parent="school_boy3" groups=["chris", "school_boy"]]
+texture = ExtResource( "2_nxdin" )
+offset = Vector2(0, -300)
+script = ExtResource( "3_kejdu" )
+start_hidden = false
+current_shake = Vector2(7.83774e-15, 7.83774e-15)
 
 [node name="camera" type="Camera2D" parent="." groups=["camera"]]
 modulate = Color(0, 0, 0, 0.0862745)

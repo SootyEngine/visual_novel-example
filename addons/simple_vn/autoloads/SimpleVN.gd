@@ -24,6 +24,15 @@ func _init() -> void:
 	DialogueStack.flow_ended.connect(_flow_ended)
 	DialogueStack.on_line.connect(_on_text)
 
+func _ready() -> void:
+	_ready_deferred.call_deferred()
+
+func _ready_deferred():
+	var id := UFile.get_file_name(get_tree().current_scene.scene_file_path)
+	print("SCENE ", id)
+	if not DialogueStack.is_active() and Dialogues.has(id):
+		DialogueStack.do("=> %s.START" % id)
+
 func simple_vn_version() -> String:
 	return "[%s]%s[]" % [Color.TOMATO, VERSION]
 

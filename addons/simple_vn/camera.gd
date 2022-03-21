@@ -103,7 +103,7 @@ func wait():
 
 func pan(x := 0.0, y := 0.0):
 	var t := _get_tween()
-	t.tween_property(self, "position_offset", Vector2(x, y), 0.5)\
+	t.tween_property(self, "position", Vector2(x, y), 0.5)\
 		.set_trans(Tween.TRANS_CUBIC)\
 		.set_ease(Tween.EASE_IN_OUT)
 
