@@ -144,7 +144,9 @@
 		"type": "text",
 		"text": "I'm John.",
 		"from": "john",
-		"action": "@john.anim talk"
+		"action": [
+			"@john.anim talk"
+		]
 	},
 	"0!32": {
 		"id": "",
@@ -153,7 +155,9 @@
 		"type": "text",
 		"text": "I'm Paul.",
 		"from": "paul",
-		"action": "@paul.anim talk"
+		"action": [
+			"@paul.anim talk"
+		]
 	},
 	"0!33": {
 		"id": "",
@@ -162,7 +166,9 @@
 		"type": "text",
 		"text": "I'm Chris.",
 		"from": "chris",
-		"action": "@chris.anim talk"
+		"action": [
+			"@chris.anim talk"
+		]
 	},
 	"0!36": {
 		"id": "",

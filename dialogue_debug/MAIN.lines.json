@@ -61,7 +61,7 @@
 		"file": 0,
 		"line": 6,
 		"type": "text",
-		"text": "Hey, have you heard about the [$godot_game_engine] game engine?",
+		"text": "Hey, have you heard about the [$godot_game_engine]?",
 		"from": "godette",
 		"options": [
 			"0!7",
@@ -131,7 +131,9 @@
 		"type": "text",
 		"text": "I should go home.",
 		"from": "godette",
-		"action": "@godette.talk"
+		"action": [
+			"@godette.talk"
+		]
 	},
 	"0!24": {
 		"id": "",
@@ -205,7 +207,9 @@
 		"type": "text",
 		"text": "Hey, what are you two doing here?",
 		"from": "godette",
-		"action": "@godette.talk"
+		"action": [
+			"@godette.talk"
+		]
 	},
 	"0!26": {
 		"id": "",
@@ -231,7 +235,9 @@
 		"type": "text",
 		"text": "...",
 		"from": "godot",
-		"action": "@godot.talk"
+		"action": [
+			"@godot.talk"
+		]
 	},
 	"0!37": {
 		"id": "",
@@ -254,7 +260,9 @@
 		"type": "text",
 		"text": "He's not much of a talker.",
 		"from": "godette",
-		"action": "@godette.talk"
+		"action": [
+			"@godette.talk"
+		]
 	},
 	"0!40": {
 		"id": "",
@@ -263,7 +271,9 @@
 		"type": "text",
 		"text": "This is version [@sooty_version] of Sooty and version [@simple_vn_version] of the SimpleVN System.",
 		"from": "godette",
-		"action": "@godette.talk"
+		"action": [
+			"@godette.talk"
+		]
 	},
 	"0!41": {
 		"id": "",

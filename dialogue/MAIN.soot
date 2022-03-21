@@ -4,7 +4,7 @@
 === godette
 	@camera.target godette
 	@blur
-	godette: Hey, have you heard about the [$godot_game_engine] game engine?
+	godette: Hey, have you heard about the [$godot_game_engine]?
 		- No.
 			godette: Oh, well, go learn it.
 		- Yes.
