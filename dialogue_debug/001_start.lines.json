@@ -1,0 +1,188 @@
+{
+	"0!2": {
+		"id": "",
+		"file": 0,
+		"line": 2,
+		"type": "action",
+		"action": "$scene 001_first_class"
+	},
+	"0!3": {
+		"id": "",
+		"file": 0,
+		"line": 3,
+		"type": "action",
+		"action": "@school_boy.anim fade_in"
+	},
+	"0!5": {
+		"id": "",
+		"file": 0,
+		"line": 5,
+		"type": "goto",
+		"goto": "001_start.ok"
+	},
+	"0!8": {
+		"id": "",
+		"file": 0,
+		"line": 8,
+		"type": "text",
+		"text": "Hey kid, *who the hell* are you?",
+		"from": "school_boy"
+	},
+	"0!11": {
+		"id": "",
+		"file": 0,
+		"line": 11,
+		"type": "action",
+		"action": "@school_boy.anim talk"
+	},
+	"0!12": {
+		"id": "",
+		"file": 0,
+		"line": 12,
+		"type": "text",
+		"text": "We are the killers.",
+		"from": "paul john chris"
+	},
+	"0!14": {
+		"id": "",
+		"file": 0,
+		"line": 14,
+		"type": "action",
+		"action": "@camera.pan 200"
+	},
+	"0!15": {
+		"id": "",
+		"file": 0,
+		"line": 15,
+		"type": "action",
+		"action": "@camera.wait"
+	},
+	"0!16": {
+		"id": "",
+		"file": 0,
+		"line": 16,
+		"type": "action",
+		"action": "@john.anim talk"
+	},
+	"0!17": {
+		"id": "",
+		"file": 0,
+		"line": 17,
+		"type": "text",
+		"text": "I'm John. (He looks to his side.) I don't take kindly to strangers.",
+		"from": "john"
+	},
+	"0!19": {
+		"id": "",
+		"file": 0,
+		"line": 19,
+		"type": "action",
+		"action": "@camera.pan -200"
+	},
+	"0!20": {
+		"id": "",
+		"file": 0,
+		"line": 20,
+		"type": "action",
+		"action": "@camera.wait"
+	},
+	"0!21": {
+		"id": "",
+		"file": 0,
+		"line": 21,
+		"type": "action",
+		"action": "@paul.anim talk"
+	},
+	"0!22": {
+		"id": "",
+		"file": 0,
+		"line": 22,
+		"type": "text",
+		"text": "I'm Paul",
+		"from": "paul"
+	},
+	"0!24": {
+		"id": "",
+		"file": 0,
+		"line": 24,
+		"type": "action",
+		"action": "@camera.pan"
+	},
+	"0!25": {
+		"id": "",
+		"file": 0,
+		"line": 25,
+		"type": "action",
+		"action": "@camera.wait"
+	},
+	"0!26": {
+		"id": "",
+		"file": 0,
+		"line": 26,
+		"type": "action",
+		"action": "@chris.anim talk"
+	},
+	"0!27": {
+		"id": "",
+		"file": 0,
+		"line": 27,
+		"type": "text",
+		"text": "I'm Chris.",
+		"from": "chris"
+	},
+	"0!29": {
+		"id": "",
+		"file": 0,
+		"line": 29,
+		"type": "goto",
+		"goto": "001_start.ok"
+	},
+	"0!31": {
+		"id": "",
+		"file": 0,
+		"line": 31,
+		"type": "text",
+		"text": "I'm John.",
+		"from": "john",
+		"action": "@john.anim talk"
+	},
+	"0!32": {
+		"id": "",
+		"file": 0,
+		"line": 32,
+		"type": "text",
+		"text": "I'm Paul.",
+		"from": "paul",
+		"action": "@paul.anim talk"
+	},
+	"0!33": {
+		"id": "",
+		"file": 0,
+		"line": 33,
+		"type": "text",
+		"text": "I'm Chris.",
+		"from": "chris",
+		"action": "@chris.anim talk"
+	},
+	"0!36": {
+		"id": "",
+		"file": 0,
+		"line": 36,
+		"type": "goto",
+		"goto": "001_start.next_day"
+	},
+	"0!39": {
+		"id": "",
+		"file": 0,
+		"line": 39,
+		"type": "text",
+		"text": "Okay, who cares?"
+	},
+	"0!40": {
+		"id": "",
+		"file": 0,
+		"line": 40,
+		"type": "goto",
+		"goto": "quest.patrol"
+	}
+}

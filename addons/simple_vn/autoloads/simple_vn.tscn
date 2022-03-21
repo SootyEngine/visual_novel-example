@@ -1,0 +1,141 @@
+[gd_scene load_steps=18 format=3 uid="uid://cmtk877fqtogm"]
+
+[ext_resource type="PackedScene" uid="uid://b65a4stm08sem" path="res://addons/simple_vn/ui/ui_caption.tscn" id="1_5fvuj"]
+[ext_resource type="Script" path="res://addons/simple_vn/autoloads/SimpleVN.gd" id="1_41ilk"]
+[ext_resource type="Script" path="res://addons/simple_vn/ui/EdgeClampContainer.gd" id="2_mqxw1"]
+[ext_resource type="Shader" path="res://addons/simple_vn/ui/ui_gradient_blur.gdshader" id="3_kr04k"]
+[ext_resource type="PackedScene" uid="uid://m84326jpcicc" path="res://addons/simple_vn/ui/ui_option_menu.tscn" id="3_so0hf"]
+[ext_resource type="PackedScene" uid="uid://dl2mg14o34fng" path="res://addons/simple_vn/ui/ui_notifications.tscn" id="4_sf4ru"]
+[ext_resource type="PackedScene" uid="uid://bfngd7b38mvow" path="res://addons/sooty_engine/ui/ui_debug.tscn" id="5_ojci6"]
+[ext_resource type="Shader" path="res://addons/screen_blur.gdshader" id="6_6ry1d"]
+[ext_resource type="PackedScene" uid="uid://beeajbnhjflok" path="res://addons/simple_vn/ui/ui_quest_list.tscn" id="6_e6odl"]
+[ext_resource type="PackedScene" uid="uid://bhqmgfywa0o4y" path="res://addons/simple_vn/ui/ui_notification.tscn" id="6_ep3a5"]
+[ext_resource type="PackedScene" uid="uid://3kiavxcgtsmg" path="res://addons/sooty_engine/ui/ui_save_load.tscn" id="6_p1slb"]
+[ext_resource type="Script" path="res://addons/simple_vn/ui/ui_debug_menu.gd" id="6_rc2au"]
+[ext_resource type="PackedScene" uid="uid://pd6qker8pist" path="res://addons/simple_vn/ui/ui_achievements.tscn" id="7_s3pqk"]
+[ext_resource type="PackedScene" uid="uid://d1csgqju2u32x" path="res://addons/sooty_engine/ui/ui_console.tscn" id="12_t3jm4"]
+[ext_resource type="Script" path="res://addons/simple_vn/ui/ui_overdraw.gd" id="14_57xfr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2oed7"]
+shader = ExtResource( "3_kr04k" )
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_adcva"]
+render_priority = 0
+shader = ExtResource( "6_6ry1d" )
+
+[node name="simple_vn" type="Node"]
+script = ExtResource( "1_41ilk" )
+
+[node name="captions" type="CanvasLayer" parent="."]
+
+[node name="backing" type="ColorRect" parent="captions"]
+material = SubResource( "ShaderMaterial_2oed7" )
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -130.0
+script = ExtResource( "2_mqxw1" )
+
+[node name="top" parent="captions" instance=ExtResource( "1_5fvuj" )]
+visible = false
+offset_left = -494.0
+offset_top = -290.0
+offset_right = -14.0
+offset_bottom = -172.0
+mouse_filter = 2
+_option_menu = NodePath("../bottom/option_menu")
+
+[node name="bottom" type="VBoxContainer" parent="captions"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 642.0
+offset_bottom = 42.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+alignment = 2
+script = ExtResource( "2_mqxw1" )
+margin = 4.0
+
+[node name="bottom" parent="captions/bottom" instance=ExtResource( "1_5fvuj" )]
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 583.0
+offset_right = 1024.0
+offset_bottom = 643.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+_option_menu = NodePath("../option_menu")
+
+[node name="option_menu" parent="captions/bottom" instance=ExtResource( "3_so0hf" )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_top = 48.0
+offset_right = 1024.0
+offset_bottom = 79.0
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/margin_right = 240
+theme_override_constants/margin_left = 240
+
+[node name="notification" parent="." groups=["notification_manager"] instance=ExtResource( "4_sf4ru" )]
+prefab = ExtResource( "6_ep3a5" )
+
+[node name="debug" type="CanvasLayer" parent="."]
+process_mode = 3
+visible = false
+script = ExtResource( "6_rc2au" )
+
+[node name="backing" type="ColorRect" parent="debug"]
+material = SubResource( "ShaderMaterial_adcva" )
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="debug_menu" type="TabContainer" parent="debug"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+tab_alignment = 0
+drag_to_rearrange_enabled = true
+
+[node name="debug" parent="debug/debug_menu" instance=ExtResource( "5_ojci6" )]
+offset_top = 31.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="console" parent="debug/debug_menu" instance=ExtResource( "12_t3jm4" )]
+visible = false
+
+[node name="save_load" parent="debug/debug_menu" instance=ExtResource( "6_p1slb" )]
+visible = false
+
+[node name="quests" parent="debug/debug_menu" instance=ExtResource( "6_e6odl" )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 342.0
+offset_right = 681.0
+offset_bottom = 361.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="achievements" parent="debug/debug_menu" instance=ExtResource( "7_s3pqk" )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 685.0
+offset_right = 1024.0
+offset_bottom = 361.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="overdraw" type="CanvasLayer" parent="."]
+layer = 128
+
+[node name="ui_overdraw" type="Node2D" parent="overdraw"]
+script = ExtResource( "14_57xfr" )

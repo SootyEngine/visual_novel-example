@@ -1,0 +1,38 @@
+=== START
+	=> 001_start.start
+
+=== godette
+	@camera.target godette
+	@blur
+	godette: Hey, have you heard about the [$godot_game_engine] game engine?
+		- No.
+			godette: Oh, well, go learn it.
+		- Yes.
+			godette: Cool, me too!
+	@camera.target main
+	@unblur
+	
+=== godot
+	@camera.target godot
+	@blur
+	godot: ...
+		- Fastforward.
+			{{beach_is_night}}
+				~beach_is_night = false
+				Here comes the sun!
+			{{else}}
+				~beach_is_night = true
+				Atmospheric.
+		- What version are you?
+			godot (talk): ...
+			@camera.target godette
+			@camera.wait
+			godette (talk): He's not much of a talker.
+			godette (talk): This is version [@sooty_version] of Sooty and version [@simple_vn_version] of the SimpleVN System.
+			@camera.target godot true
+			godot: ...
+			@camera.target godette true
+			godette: He says hi.
+			//@camera.target godot true
+	@camera.target main
+	@unblur
