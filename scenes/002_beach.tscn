@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://bevqy0p65mt0e"]
+[gd_scene load_steps=11 format=3 uid="uid://bevqy0p65mt0e"]
 
+[ext_resource type="Script" path="res://scenes/002_beach.gd" id="1_lnvpj"]
 [ext_resource type="Texture2D" uid="uid://c4i2bldgp27xh" path="res://bgs/beach_night.webp" id="1_wo2ev"]
 [ext_resource type="Script" path="res://addons/simple_vn/nodes/background.gd" id="2_vvle1"]
 [ext_resource type="Texture2D" uid="uid://cwxshyarxpvpl" path="res://bgs/beach_noon.webp" id="3_i2w6y"]
@@ -14,6 +15,7 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+script = ExtResource( "1_lnvpj" )
 
 [node name="BeachNoon" type="Sprite2D" parent="." groups=["bg"]]
 position = Vector2(512, 300)

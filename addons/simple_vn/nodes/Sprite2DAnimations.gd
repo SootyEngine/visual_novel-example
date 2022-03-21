@@ -75,11 +75,13 @@ func fade_out():
 	_add_color(t, Color.TRANSPARENT)
 
 func from_left():
+	print("Called from_left on ", self)
 	var t := _create().set_parallel()
 	modulate = Color.TRANSPARENT
 	current_shift = Vector2(unit * 6, 0)
 	_add_color(t, Color.WHITE, {ease=Tween.EASE_OUT})
 	_add_shift(t, 0, 0, {ease=Tween.EASE_OUT, trans=Tween.TRANS_QUINT})
+	t.tween_callback(func(): print("All DONE"))
 
 func from_right():
 	var t := _create().set_parallel()
@@ -114,6 +116,7 @@ func _create(kwargs := {}) -> Tween:
 	if active:
 		active.kill()
 	active = get_tree().create_tween()
+	active.bind_node(self)
 #	active.bind_node(self)
 	if "loop" in kwargs:
 		active.set_loops(kwargs.loop)

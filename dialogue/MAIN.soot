@@ -16,13 +16,23 @@
 	@camera.target godot
 	@blur
 	godot: ...
-		- Fastforward.
-			{{beach_is_night}}
-				~beach_is_night = false
-				Here comes the sun!
-			{{else}}
-				~beach_is_night = true
-				Atmospheric.
+		- Go to evening. {{not beach_is_night}}
+			~beach_is_night = true
+			Atmospheric.
+			@camera.target godette
+			@camera.wait
+			godette (talk): I should go home.
+			@godette.fade_out
+		
+		- Go to daytime. {{beach_is_night}}
+			~beach_is_night = false
+			Here comes the sun!
+			@camera.target godette
+			@camera.wait
+			@godette.from_left
+			Looks like [$godette] is back.
+			godette (talk): Hey, what are you two doing here?
+		
 		- What version are you?
 			godot (talk): ...
 			@camera.target godette

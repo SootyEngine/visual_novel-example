@@ -96,151 +96,221 @@
 		"type": "action",
 		"action": "@blur"
 	},
+	"0!19": {
+		"id": "",
+		"file": 0,
+		"line": 19,
+		"type": "action",
+		"action": "~beach_is_night = true"
+	},
 	"0!20": {
 		"id": "",
 		"file": 0,
 		"line": 20,
-		"type": "action",
-		"action": "~beach_is_night = false"
+		"type": "text",
+		"text": "Atmospheric."
 	},
 	"0!21": {
 		"id": "",
 		"file": 0,
 		"line": 21,
-		"type": "text",
-		"text": "Here comes the sun!"
+		"type": "action",
+		"action": "@camera.target godette"
+	},
+	"0!22": {
+		"id": "",
+		"file": 0,
+		"line": 22,
+		"type": "action",
+		"action": "@camera.wait"
 	},
 	"0!23": {
 		"id": "",
 		"file": 0,
 		"line": 23,
-		"type": "action",
-		"action": "~beach_is_night = true"
+		"type": "text",
+		"text": "I should go home.",
+		"from": "godette",
+		"action": "@godette.talk"
 	},
 	"0!24": {
 		"id": "",
 		"file": 0,
 		"line": 24,
-		"type": "text",
-		"text": "Atmospheric."
-	},
-	"0!19": {
-		"id": "",
-		"file": 0,
-		"line": 19,
-		"type": "if",
-		"conds": [
-			"beach_is_night",
-			"true"
-		],
-		"cond_lines": [
-			[
-				"0!20",
-				"0!21"
-			],
-			[
-				"0!23",
-				"0!24"
-			]
-		]
+		"type": "action",
+		"action": "@godette.fade_out"
 	},
 	"0!18": {
 		"id": "",
 		"file": 0,
 		"line": 18,
 		"type": "option",
-		"text": "Fastforward.",
+		"text": "Go to evening.",
+		"cond": "not beach_is_night",
 		"then": [
-			"0!19"
+			"0!19",
+			"0!20",
+			"0!21",
+			"0!22",
+			"0!23",
+			"0!24"
 		]
-	},
-	"0!26": {
-		"id": "",
-		"file": 0,
-		"line": 26,
-		"type": "text",
-		"text": "...",
-		"from": "godot",
-		"action": "@godot.talk"
 	},
 	"0!27": {
 		"id": "",
 		"file": 0,
 		"line": 27,
 		"type": "action",
-		"action": "@camera.target godette"
+		"action": "~beach_is_night = false"
 	},
 	"0!28": {
 		"id": "",
 		"file": 0,
 		"line": 28,
-		"type": "action",
-		"action": "@camera.wait"
+		"type": "text",
+		"text": "Here comes the sun!"
 	},
 	"0!29": {
 		"id": "",
 		"file": 0,
 		"line": 29,
-		"type": "text",
-		"text": "He's not much of a talker.",
-		"from": "godette",
-		"action": "@godette.talk"
+		"type": "action",
+		"action": "@camera.target godette"
 	},
 	"0!30": {
 		"id": "",
 		"file": 0,
 		"line": 30,
-		"type": "text",
-		"text": "This is version [@sooty_version] of Sooty and version [@simple_vn_version] of the SimpleVN System.",
-		"from": "godette",
-		"action": "@godette.talk"
+		"type": "action",
+		"action": "@camera.wait"
 	},
 	"0!31": {
 		"id": "",
 		"file": 0,
 		"line": 31,
 		"type": "action",
-		"action": "@camera.target godot true"
+		"action": "@godette.from_left"
 	},
 	"0!32": {
 		"id": "",
 		"file": 0,
 		"line": 32,
 		"type": "text",
-		"text": "...",
-		"from": "godot"
+		"text": "Looks like [$godette] is back."
 	},
 	"0!33": {
 		"id": "",
 		"file": 0,
 		"line": 33,
-		"type": "action",
-		"action": "@camera.target godette true"
-	},
-	"0!34": {
-		"id": "",
-		"file": 0,
-		"line": 34,
 		"type": "text",
-		"text": "He says hi.",
-		"from": "godette"
+		"text": "Hey, what are you two doing here?",
+		"from": "godette",
+		"action": "@godette.talk"
 	},
-	"0!25": {
+	"0!26": {
 		"id": "",
 		"file": 0,
-		"line": 25,
+		"line": 26,
 		"type": "option",
-		"text": "What version are you?",
+		"text": "Go to daytime.",
+		"cond": "beach_is_night",
 		"then": [
-			"0!26",
 			"0!27",
 			"0!28",
 			"0!29",
 			"0!30",
 			"0!31",
 			"0!32",
-			"0!33",
-			"0!34"
+			"0!33"
+		]
+	},
+	"0!36": {
+		"id": "",
+		"file": 0,
+		"line": 36,
+		"type": "text",
+		"text": "...",
+		"from": "godot",
+		"action": "@godot.talk"
+	},
+	"0!37": {
+		"id": "",
+		"file": 0,
+		"line": 37,
+		"type": "action",
+		"action": "@camera.target godette"
+	},
+	"0!38": {
+		"id": "",
+		"file": 0,
+		"line": 38,
+		"type": "action",
+		"action": "@camera.wait"
+	},
+	"0!39": {
+		"id": "",
+		"file": 0,
+		"line": 39,
+		"type": "text",
+		"text": "He's not much of a talker.",
+		"from": "godette",
+		"action": "@godette.talk"
+	},
+	"0!40": {
+		"id": "",
+		"file": 0,
+		"line": 40,
+		"type": "text",
+		"text": "This is version [@sooty_version] of Sooty and version [@simple_vn_version] of the SimpleVN System.",
+		"from": "godette",
+		"action": "@godette.talk"
+	},
+	"0!41": {
+		"id": "",
+		"file": 0,
+		"line": 41,
+		"type": "action",
+		"action": "@camera.target godot true"
+	},
+	"0!42": {
+		"id": "",
+		"file": 0,
+		"line": 42,
+		"type": "text",
+		"text": "...",
+		"from": "godot"
+	},
+	"0!43": {
+		"id": "",
+		"file": 0,
+		"line": 43,
+		"type": "action",
+		"action": "@camera.target godette true"
+	},
+	"0!44": {
+		"id": "",
+		"file": 0,
+		"line": 44,
+		"type": "text",
+		"text": "He says hi.",
+		"from": "godette"
+	},
+	"0!35": {
+		"id": "",
+		"file": 0,
+		"line": 35,
+		"type": "option",
+		"text": "What version are you?",
+		"then": [
+			"0!36",
+			"0!37",
+			"0!38",
+			"0!39",
+			"0!40",
+			"0!41",
+			"0!42",
+			"0!43",
+			"0!44"
 		]
 	},
 	"0!17": {
@@ -252,20 +322,21 @@
 		"from": "godot",
 		"options": [
 			"0!18",
-			"0!25"
+			"0!26",
+			"0!35"
 		]
 	},
-	"0!36": {
+	"0!46": {
 		"id": "",
 		"file": 0,
-		"line": 36,
+		"line": 46,
 		"type": "action",
 		"action": "@camera.target main"
 	},
-	"0!37": {
+	"0!47": {
 		"id": "",
 		"file": 0,
-		"line": 37,
+		"line": 47,
 		"type": "action",
 		"action": "@unblur"
 	}

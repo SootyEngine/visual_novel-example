@@ -92,10 +92,12 @@ func _on_text(line: DialogueLine):
 			
 		elif State._has(from):
 			from = UString.as_string(State._get(from))
+		
+		from = FORMAT_FROM % from
 	
 	DialogueStack.halt(self)
 	_caption_msg("show_line", {
-		from=FORMAT_FROM % from,
+		from=from,
 		text=_format_text(line.text, from != null),
 		line=line
 	})

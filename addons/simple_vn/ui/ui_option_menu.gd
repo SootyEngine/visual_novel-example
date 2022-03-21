@@ -11,7 +11,6 @@ var _can_select := false
 var _shown := false
 var _tween: Tween
 var _options: Array
-var _options_passing: Array
 
 var hovered := 0:
 	set(h):
@@ -39,15 +38,15 @@ func _input(event: InputEvent) -> void:
 			_select(_options[hovered])
 
 func has_options() -> bool:
-	return len(_options_passing) > 0
+	return len(_options) > 0
 
 func _set_line(line: DialogueLine):
 	if line.has_options():
 		_options = line.get_options()
-		_options_passing = _options.filter(func(x): return x.passed)
+		if not Sooty.debug_show_hidden_options:
+			_options = _options.filter(func(x): return x.passed)
 	else:
 		_options = []
-		_options_passing = []
 	
 	_shown = true
 	visible = true
