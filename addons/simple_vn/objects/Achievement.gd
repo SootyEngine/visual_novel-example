@@ -1,6 +1,9 @@
 extends BaseDataClass
 class_name Achievement
 
+func get_class() -> String:
+	return "Achievement"
+	
 const MSG_ACHIEVEMENT_PROGRESS := "achievement_progress"
 const MSG_ACHIEVEMENT_UNLOCKED := "achievement_unlocked"
 

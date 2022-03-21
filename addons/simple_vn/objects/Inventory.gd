@@ -1,6 +1,9 @@
 extends BaseDataClass
 class_name Inventory
 
+func get_class() -> String:
+	return "Inventory"
+
 signal gained(type: Item, quantity: int)
 signal lost(type: Item, quantity: int)
 signal equipped(type: Item, slot: String)

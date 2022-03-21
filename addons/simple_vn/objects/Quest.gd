@@ -1,6 +1,9 @@
 extends BaseDataClass
 class_name Quest
 
+func get_class() -> String:
+	return "Quest"
+
 const MSG_STATE_CHANGED := "MSG_STATE_CHANGED"
 
 const QUEST_NOT_STARTED := "NOT_STARTED"

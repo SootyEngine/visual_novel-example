@@ -1,25 +1,26 @@
 === START
+	//@scene 001_first_class
 	
-	$scene 001_first_class
-	@school_boy.fade_in
-	
-	=> intros
-
-=== intros
 	school_boy: Hey kid, *who the hell* are you?
-	
-	@school_boy.talk
-	paul john chris: We are *The Gang of 3*.[wait=2] [!@school_boy.laugh]heu, heu, heu.
 	
 	@camera.pan 200
 	@camera.wait
+	@john.fade_in
+	@john.wait
 	john (talk): I'm John. (He get's angry.)[!@john.shake_no][w] [!@john.talk]I don't take kindly to strangers.
 	
 	@camera.pan -200
 	@camera.wait
+	@paul.fade_in
+	@paul.wait
 	paul (talk): I'm Paul. (He smiles.)[!@paul.shake_yes][w] [!@paul.talk]I *do* take kindly to strangers.
 	
 	@camera.pan
 	@camera.wait
+	@chris.fade_in
+	@chris.wait
 	chris (talk): I'm Chris. I'm the main character of this group.
+	
+	@school_boy.talk
+	paul john chris: We are *The Gang of 3*.[wait=2] [!@school_boy.laugh]hah, hah, hah.
 	

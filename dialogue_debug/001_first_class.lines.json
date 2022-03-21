@@ -1,71 +1,88 @@
 {
-	"0!2": {
-		"id": "",
-		"file": 0,
-		"line": 2,
-		"type": "action",
-		"action": "$scene 001_first_class"
-	},
 	"0!3": {
 		"id": "",
 		"file": 0,
 		"line": 3,
-		"type": "action",
-		"action": "@school_boy.anim fade_in"
+		"type": "text",
+		"text": "Hey kid, *who the hell* are you?",
+		"from": "school_boy"
 	},
 	"0!5": {
 		"id": "",
 		"file": 0,
 		"line": 5,
-		"type": "goto",
-		"goto": "001_first_class.ok"
+		"type": "action",
+		"action": "@camera.pan 200"
+	},
+	"0!6": {
+		"id": "",
+		"file": 0,
+		"line": 6,
+		"type": "action",
+		"action": "@camera.wait"
+	},
+	"0!7": {
+		"id": "",
+		"file": 0,
+		"line": 7,
+		"type": "action",
+		"action": "@john.fade_in"
 	},
 	"0!8": {
 		"id": "",
 		"file": 0,
 		"line": 8,
-		"type": "text",
-		"text": "Hey kid, *who the hell* are you?",
-		"from": "school_boy"
+		"type": "action",
+		"action": "@john.wait"
 	},
-	"0!10": {
+	"0!9": {
 		"id": "",
 		"file": 0,
-		"line": 10,
-		"type": "action",
-		"action": "@school_boy.talk"
+		"line": 9,
+		"type": "text",
+		"text": "I'm John. (He get's angry.)[!@john.shake_no][w] [!@john.talk]I don't take kindly to strangers.",
+		"from": "john",
+		"action": [
+			"@john.talk"
+		]
 	},
 	"0!11": {
 		"id": "",
 		"file": 0,
 		"line": 11,
-		"type": "text",
-		"text": "We are *The Gang of 3*.[wait=2] [!@school_boy.laugh]heu, heu, heu.",
-		"from": "paul john chris"
+		"type": "action",
+		"action": "@camera.pan -200"
+	},
+	"0!12": {
+		"id": "",
+		"file": 0,
+		"line": 12,
+		"type": "action",
+		"action": "@camera.wait"
 	},
 	"0!13": {
 		"id": "",
 		"file": 0,
 		"line": 13,
 		"type": "action",
-		"action": "@camera.pan 200"
+		"action": "@paul.fade_in"
 	},
 	"0!14": {
 		"id": "",
 		"file": 0,
 		"line": 14,
 		"type": "action",
-		"action": "@camera.wait"
+		"action": "@paul.wait"
 	},
 	"0!15": {
 		"id": "",
 		"file": 0,
 		"line": 15,
 		"type": "text",
-		"text": "I'm John.[w] [!@john.shake_no][w] (He get's angry.)[w] [!@john.talk]I don't take kindly to strangers.",
-		"from": "john",
+		"text": "I'm Paul. (He smiles.)[!@paul.shake_yes][w] [!@paul.talk]I *do* take kindly to strangers.",
+		"from": "paul",
 		"action": [
-			"@john.talk"
+			"@paul.talk"
 		]
 	},
 	"0!17": {
@@ -73,7 +90,7 @@
 		"file": 0,
 		"line": 17,
 		"type": "action",
-		"action": "@camera.pan -200"
+		"action": "@camera.pan"
 	},
 	"0!18": {
 		"id": "",
@@ -86,97 +103,40 @@
 		"id": "",
 		"file": 0,
 		"line": 19,
-		"type": "text",
-		"text": "I'm Paul",
-		"from": "paul",
-		"action": [
-			"@paul.talk"
-		]
+		"type": "action",
+		"action": "@chris.fade_in"
+	},
+	"0!20": {
+		"id": "",
+		"file": 0,
+		"line": 20,
+		"type": "action",
+		"action": "@chris.wait"
 	},
 	"0!21": {
 		"id": "",
 		"file": 0,
 		"line": 21,
-		"type": "action",
-		"action": "@camera.pan"
-	},
-	"0!22": {
-		"id": "",
-		"file": 0,
-		"line": 22,
-		"type": "action",
-		"action": "@camera.wait"
-	},
-	"0!23": {
-		"id": "",
-		"file": 0,
-		"line": 23,
 		"type": "text",
-		"text": "I'm Chris.",
+		"text": "I'm Chris. I'm the main character of this group.",
 		"from": "chris",
 		"action": [
 			"@chris.talk"
 		]
 	},
-	"0!25": {
+	"0!23": {
 		"id": "",
 		"file": 0,
-		"line": 25,
-		"type": "goto",
-		"goto": "001_first_class.ok"
+		"line": 23,
+		"type": "action",
+		"action": "@school_boy.talk"
 	},
-	"0!27": {
+	"0!24": {
 		"id": "",
 		"file": 0,
-		"line": 27,
+		"line": 24,
 		"type": "text",
-		"text": "I'm John.",
-		"from": "john",
-		"action": [
-			"@john.anim talk"
-		]
-	},
-	"0!28": {
-		"id": "",
-		"file": 0,
-		"line": 28,
-		"type": "text",
-		"text": "I'm Paul.",
-		"from": "paul",
-		"action": [
-			"@paul.anim talk"
-		]
-	},
-	"0!29": {
-		"id": "",
-		"file": 0,
-		"line": 29,
-		"type": "text",
-		"text": "I'm Chris.",
-		"from": "chris",
-		"action": [
-			"@chris.anim talk"
-		]
-	},
-	"0!32": {
-		"id": "",
-		"file": 0,
-		"line": 32,
-		"type": "goto",
-		"goto": "001_first_class.next_day"
-	},
-	"0!35": {
-		"id": "",
-		"file": 0,
-		"line": 35,
-		"type": "text",
-		"text": "Okay, who cares?"
-	},
-	"0!36": {
-		"id": "",
-		"file": 0,
-		"line": 36,
-		"type": "goto",
-		"goto": "quest.patrol"
+		"text": "We are *The Gang of 3*.[wait=2] [!@school_boy.laugh]hah, hah, hah.",
+		"from": "paul john chris"
 	}
 }

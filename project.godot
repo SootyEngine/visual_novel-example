@@ -109,7 +109,7 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://addons/simple_vn/objects/Quest.gd"
 }, {
-"base": "BaseDataClass",
+"base": "BaseDataClassExtra",
 "class": &"Reward",
 "language": &"GDScript",
 "path": "res://addons/simple_vn/objects/Reward.gd"
@@ -272,6 +272,7 @@ Global="*res://addons/sooty_engine/autoloads/Global.gd"
 Mods="*res://addons/sooty_engine/autoloads/Mods.gd"
 State="*res://addons/sooty_engine/autoloads/State.gd"
 Persistent="*res://addons/sooty_engine/autoloads/Persistent.gd"
+Saver="*res://addons/sooty_engine/autoloads/Saver.gd"
 Dialogues="*res://addons/sooty_engine/autoloads/Dialogues.gd"
 DialogueStack="*res://addons/sooty_engine/autoloads/DialogueStack.gd"
 SimpleVN="*res://addons/simple_vn/autoloads/simple_vn.tscn"

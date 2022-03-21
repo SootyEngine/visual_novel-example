@@ -1,6 +1,9 @@
 extends BaseDataClassExtra
 class_name Character
 
+func get_class() -> String:
+	return "Character"
+
 var name := ""
 var format := ""
 var gender := ""

@@ -1,6 +1,9 @@
 extends BaseDataClassExtra
 class_name Item
 
+func get_class() -> String:
+	return "Item"
+
 var name := ""
 var desc := ""
 var slot_max := 1:
@@ -16,5 +19,5 @@ static func get_item(type: String) -> Item:
 static func exists(id: String) -> bool:
 	return State._has_of_type(id, Item)
 
-static func get_all_items() -> Dictionary:
+static func get_all() -> Dictionary:
 	return State._get_all_of_type(Item)

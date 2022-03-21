@@ -2,6 +2,8 @@
 extends BaseDataClass
 class_name DateTime
 
+func get_class() -> String:
+	return "DateTime"
 #
 # Godot's built in Time class starts Months and Weekdays at 1, while this starts at 0.
 # So be careful combining the two.

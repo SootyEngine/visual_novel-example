@@ -57,7 +57,7 @@ func _get_tool_buttons():
 	breath, pant, stop
 ]
 
-var active: Tween
+var _tween: Tween
 
 func _ready() -> void:
 	if start_hidden:
@@ -65,6 +65,10 @@ func _ready() -> void:
 	else:
 		modulate = Color.WHITE
 
+func wait():
+	DialogueStack.halt(self)
+	_tween.tween_callback(DialogueStack.unhalt.bind(self))
+	
 func fade_in():
 	var t := _create()
 	modulate = Color.TRANSPARENT
@@ -113,14 +117,14 @@ func talk(dir := 1.1):
 	_add_squash(t.chain(), 0.0)
 
 func _create(kwargs := {}) -> Tween:
-	if active:
-		active.kill()
-	active = get_tree().create_tween()
-	active.bind_node(self)
+	if _tween:
+		_tween.kill()
+	_tween = get_tree().create_tween()
+	_tween.bind_node(self)
 #	active.bind_node(self)
 	if "loop" in kwargs:
-		active.set_loops(kwargs.loop)
-	return active
+		_tween.set_loops(kwargs.loop)
+	return _tween
 
 func sigh():
 	var t := _create()
@@ -150,8 +154,8 @@ func pant(p := 1.0, dur := 0.5):
 	t.set_loops(5)
 
 func stop():
-	if active:
-		active.kill()
+	if _tween:
+		_tween.kill()
 
 func _add_color(t: Tween, c: Variant = Color.WHITE, kwargs := {}):
 	t.tween_property(self, "modulate", c, kwargs.get("time", 1.0))\
