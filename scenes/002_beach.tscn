@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bevqy0p65mt0e"]
+[gd_scene load_steps=11 format=3 uid="uid://bevqy0p65mt0e"]
 
 [ext_resource type="Script" path="res://scenes/002_beach.gd" id="1_lnvpj"]
 [ext_resource type="Texture2D" uid="uid://c4i2bldgp27xh" path="res://bgs/beach_night.webp" id="1_wo2ev"]
@@ -10,7 +10,6 @@
 [ext_resource type="Script" path="res://addons/simple_vn/action_button.gd" id="5_oki08"]
 [ext_resource type="Script" path="res://addons/simple_vn/camera.gd" id="7_0b8xy"]
 [ext_resource type="Script" path="res://addons/simple_vn/nodes/Sprite2DAnimations.gd" id="7_kldqt"]
-[ext_resource type="PackedScene" uid="uid://cmm027aowcodt" path="res://addons/simple_vn/screen_effects/bloom/bloom.tscn" id="11_quont"]
 
 [node name="the_beach" type="Control"]
 anchor_right = 1.0
@@ -101,6 +100,3 @@ zoom = Vector2(0.4, 0.4)
 position = Vector2(725, 318)
 rotating = true
 zoom = Vector2(0.3, 0.3)
-
-[node name="bloom" parent="." instance=ExtResource( "11_quont" )]
-amount = 0.25

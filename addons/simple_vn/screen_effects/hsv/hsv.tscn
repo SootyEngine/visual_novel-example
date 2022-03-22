@@ -5,6 +5,7 @@
 
 [node name="hsv" type="CanvasLayer"]
 script = ExtResource( "1_ecd66" )
+default_time = 0.5
 
 [node name="ColorRect" type="ColorRect" parent="."]
 material = ExtResource( "2_ievrg" )

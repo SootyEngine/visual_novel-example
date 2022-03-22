@@ -5,6 +5,8 @@
 
 [node name="bloom" type="CanvasLayer"]
 script = ExtResource( "1_dpmfb" )
+default_time = 0.5
+size = 1.0
 
 [node name="ColorRect" type="ColorRect" parent="."]
 material = ExtResource( "2_7r0ey" )

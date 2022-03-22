@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=3 uid="uid://d4agpu7dekc8w"]
+
+[ext_resource type="Texture2D" uid="uid://cmxots2gluuba" path="res://bgs/holding_cell.webp" id="1_rpp05"]
+[ext_resource type="Texture2D" uid="uid://dgefqjotu080g" path="res://chars/20191124_man4.png" id="2_iqek1"]
+[ext_resource type="Script" path="res://addons/simple_vn/nodes/Sprite2DAnimations.gd" id="3_owpy5"]
+[ext_resource type="Script" path="res://addons/simple_vn/nodes/Light2DFlicker.gd" id="4_ub7hv"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_hu24f"]
+
+[sub_resource type="Gradient" id="Gradient_qagwl"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.635135, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.44186, 0.44186, 0.44186, 0.44186, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3fquc"]
+gradient = SubResource( "Gradient_qagwl" )
+
+[node name="Node2D" type="Node2D"]
+
+[node name="HoldingCell" type="Sprite2D" parent="."]
+position = Vector2(525, 309)
+scale = Vector2(1.13194, 1.13194)
+texture = ExtResource( "1_rpp05" )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(291, 614)
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="20191124Man4" type="Sprite2D" parent="Node2D"]
+scale = Vector2(0.4675, 0.414118)
+texture = ExtResource( "2_iqek1" )
+offset = Vector2(0, -600)
+script = ExtResource( "3_owpy5" )
+start_hidden = false
+default_scale = Vector2(0.4, 0.4)
+current_zoom = 1.1
+current_shake = Vector2(7.83774e-15, 7.83774e-15)
+current_squish = 0.0625
+
+[node name="ColorRect" type="PointLight2D" parent="."]
+material = SubResource( "CanvasItemMaterial_hu24f" )
+position = Vector2(581, 244)
+rotation = 1.93919
+scale = Vector2(1.39279, 2.17972)
+energy = 0.904922
+blend_mode = 1
+texture = SubResource( "GradientTexture2D_3fquc" )
+texture_scale = 9.85
+script = ExtResource( "4_ub7hv" )
+flicker_min = 0.9
+flicker_max = 1.0
+time_scale = 0.5
