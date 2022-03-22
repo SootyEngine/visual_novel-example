@@ -9,6 +9,8 @@ var godot_game_engine := Character.new({name="Godot Game Engine", color=Color.DE
 
 var sooty := Character.new({name="Sooty", color=Color.DARK_GRAY})
 
+var mr_bool := Character.new({name="Mr. Bool", color=Color.BURLYWOOD})
+
 func _init() -> void:
 	Saver._get_state_info.connect(_get_state_info)
 

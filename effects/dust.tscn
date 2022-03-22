@@ -9,7 +9,7 @@ curve = SubResource( "Curve_l6s0m" )
 [sub_resource type="ParticlesMaterial" id="ParticlesMaterial_qjagb"]
 lifetime_randomness = 1.0
 emission_shape = 2
-emission_box_extents = Vector3(400, 200, 100)
+emission_box_extents = Vector3(600, 400, 100)
 particle_flag_disable_z = true
 direction = Vector3(0, 0, 0)
 spread = 180.0
@@ -36,7 +36,7 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
 
 [node name="GPUParticles2D" type="GPUParticles2D"]
-amount = 64
+amount = 128
 lifetime = 8.0
 process_material = SubResource( "ParticlesMaterial_qjagb" )
 texture = SubResource( "GradientTexture2D_4bsqk" )

@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://d4agpu7dekc8w"]
+[gd_scene load_steps=10 format=3 uid="uid://d4agpu7dekc8w"]
 
+[ext_resource type="Script" path="res://addons/simple_vn/nodes/SootScene.gd" id="1_r64q8"]
 [ext_resource type="Texture2D" uid="uid://cmxots2gluuba" path="res://bgs/holding_cell.webp" id="1_rpp05"]
 [ext_resource type="Texture2D" uid="uid://dgefqjotu080g" path="res://chars/20191124_man4.png" id="2_iqek1"]
 [ext_resource type="Script" path="res://addons/simple_vn/nodes/Sprite2DAnimations.gd" id="3_owpy5"]
 [ext_resource type="Script" path="res://addons/simple_vn/nodes/Light2DFlicker.gd" id="4_ub7hv"]
+[ext_resource type="PackedScene" uid="uid://umhoomvv2ogv" path="res://effects/dust.tscn" id="6_j81c1"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_hu24f"]
 
@@ -15,7 +17,8 @@ colors = PackedColorArray(1, 1, 1, 1, 0.44186, 0.44186, 0.44186, 0.44186, 0, 0, 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_3fquc"]
 gradient = SubResource( "Gradient_qagwl" )
 
-[node name="Node2D" type="Node2D"]
+[node name="jail_cell" type="Node2D"]
+script = ExtResource( "1_r64q8" )
 
 [node name="HoldingCell" type="Sprite2D" parent="."]
 position = Vector2(525, 309)
@@ -31,7 +34,7 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="20191124Man4" type="Sprite2D" parent="Node2D"]
+[node name="mr_bool" type="Sprite2D" parent="Node2D" groups=["mr_bool"]]
 scale = Vector2(0.4675, 0.414118)
 texture = ExtResource( "2_iqek1" )
 offset = Vector2(0, -600)
@@ -42,12 +45,16 @@ current_zoom = 1.1
 current_shake = Vector2(7.83774e-15, 7.83774e-15)
 current_squish = 0.0625
 
+[node name="GPUParticles2D" parent="." instance=ExtResource( "6_j81c1" )]
+modulate = Color(1, 1, 1, 0.537255)
+position = Vector2(493, 297)
+
 [node name="ColorRect" type="PointLight2D" parent="."]
 material = SubResource( "CanvasItemMaterial_hu24f" )
 position = Vector2(581, 244)
 rotation = 1.93919
 scale = Vector2(1.39279, 2.17972)
-energy = 0.904922
+energy = 0.964253
 blend_mode = 1
 texture = SubResource( "GradientTexture2D_3fquc" )
 texture_scale = 9.85
