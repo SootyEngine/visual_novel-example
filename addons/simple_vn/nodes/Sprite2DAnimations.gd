@@ -54,7 +54,10 @@ func _get_tool_buttons():
 	laugh, sigh, talk,
 	
 	shake_yes, shake_no,
-	breath, pant, stop
+	breath, pant, stop,
+	
+	white_in,
+	radiate
 ]
 
 var _tween: Tween
@@ -68,7 +71,19 @@ func _ready() -> void:
 func wait():
 	DialogueStack.halt(self)
 	_tween.tween_callback(DialogueStack.unhalt.bind(self))
-	
+
+func white_in():
+	var t := _create()
+	t.tween_property(self, "modulate", Color.WHITE, 0.5).from(Color(200,200,200,1.0))\
+		.set_trans(Tween.TRANS_EXPO)\
+		.set_ease(Tween.EASE_OUT)
+
+func radiate():
+	var t := _create()
+	t.tween_property(self, "modulate:g", 1.0, 0.5).from(100.0)\
+		.set_trans(Tween.TRANS_EXPO)\
+		.set_ease(Tween.EASE_OUT)
+
 func fade_in():
 	var t := _create()
 	modulate = Color.TRANSPARENT

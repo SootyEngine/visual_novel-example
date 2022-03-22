@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bevqy0p65mt0e"]
+[gd_scene load_steps=12 format=3 uid="uid://bevqy0p65mt0e"]
 
 [ext_resource type="Script" path="res://scenes/002_beach.gd" id="1_lnvpj"]
 [ext_resource type="Texture2D" uid="uid://c4i2bldgp27xh" path="res://bgs/beach_night.webp" id="1_wo2ev"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://addons/simple_vn/action_button.gd" id="5_oki08"]
 [ext_resource type="Script" path="res://addons/simple_vn/camera.gd" id="7_0b8xy"]
 [ext_resource type="Script" path="res://addons/simple_vn/nodes/Sprite2DAnimations.gd" id="7_kldqt"]
+[ext_resource type="PackedScene" uid="uid://bmh8jma453axi" path="res://addons/simple_vn/screen_effects/invert/invert.tscn" id="11_0dsiv"]
 
 [node name="the_beach" type="Control"]
 anchor_right = 1.0
@@ -66,13 +67,14 @@ current_shake = Vector2(7.83774e-15, 7.83774e-15)
 
 [node name="GodetteMain" type="Sprite2D" parent="." groups=["godette", "godette_scene"]]
 position = Vector2(732, 470)
-scale = Vector2(0.3, 0.3)
+scale = Vector2(0.30375, 0.296296)
 texture = ExtResource( "5_8g0n1" )
 offset = Vector2(0, -360)
 script = ExtResource( "7_kldqt" )
 start_hidden = false
 default_scale = Vector2(0.3, 0.3)
 current_shake = Vector2(0, 1.17566e-14)
+current_squish = 0.0125
 
 [node name="camera" type="Camera2D" parent="." groups=["camera"]]
 position = Vector2(538, 302)
@@ -99,3 +101,6 @@ zoom = Vector2(0.4, 0.4)
 position = Vector2(725, 318)
 rotating = true
 zoom = Vector2(0.3, 0.3)
+
+[node name="invert" parent="." instance=ExtResource( "11_0dsiv" )]
+blend = 1.0

@@ -1,23 +1,23 @@
 extends BaseDataClass
-class_name Quest
+class_name Task
 
 func get_class() -> String:
-	return "Quest"
+	return "Task"
 
-const MSG_STATE_CHANGED := "MSG_STATE_CHANGED"
+const MSG_STATE_CHANGED := "MSG_TASK_STATE_CHANGED"
 
-const QUEST_NOT_STARTED := "NOT_STARTED"
-const QUEST_STARTED := "STARTED"
-const QUEST_COMPLETED := "COMPLETED"
-const QUEST_FAILED := "FAILED"
-const QUEST_UNLOCKED := "UNLOCKED"
+const TASK_NOT_STARTED := "NOT_STARTED"
+const TASK_STARTED := "STARTED"
+const TASK_COMPLETED := "COMPLETED"
+const TASK_FAILED := "FAILED"
+const TASK_UNLOCKED := "UNLOCKED"
 
-signal state_changed(quest: Quest)
+signal state_changed(task: Task)
 
 var name := ""
 var desc := ""
 var goal := false
-var state := QUEST_NOT_STARTED:
+var state := TASK_NOT_STARTED:
 	set(x):
 		if state != x:
 			state = x
@@ -26,11 +26,11 @@ var state := QUEST_NOT_STARTED:
 			if not goal:
 				var msg := { text="[tomato]%s[]" % name }
 				match state:
-					QUEST_COMPLETED:
-						msg.type = "Quest Complete"
+					TASK_COMPLETED:
+						msg.type = "task_complete"
 						Global.notify(msg)
-					QUEST_STARTED:
-						msg.type = "Quest Started"
+					TASK_STARTED:
+						msg.type = "task_started"
 						Global.notify(msg)
 				Global.message.emit(MSG_STATE_CHANGED, self)
 			
@@ -43,15 +43,15 @@ var rewards: Array[String] = [] # rewards that will be unlocked.
 
 func _post_init():
 	super._post_init()
-	for quest in get_required():
-		quest.state_changed.connect(_subquest_state_changed)
+	for task in get_required():
+		task.state_changed.connect(_subtask_state_changed)
 
-func _subquest_state_changed(subquest: Quest):
-	prints(self, goal, "SUBQUEST CHANGED", subquest)
+func _subtask_state_changed(subtask: Task):
+	prints(self, goal, "SUBQUEST CHANGED", subtask)
 	
 	if not goal:
 		var msg := {
-			text="[tomato]%s[]\n%s" % [name, subquest.name],
+			text="[tomato]%s[]\n%s" % [name, subtask.name],
 			type="Goal Complete\n[hide].[]",
 			prog=get_progress()
 		}
@@ -60,8 +60,8 @@ func _subquest_state_changed(subquest: Quest):
 		if get_total_complete_required() >= get_total_required():
 			complete()
 
-func get_required() -> Array[Quest]:
-	var all := State._get_all_of_type(Quest)
+func get_required() -> Array[Task]:
+	var all := State._get_all_of_type(Task)
 	var out := []
 	for k in requires:
 		if k in all:
@@ -71,13 +71,13 @@ func get_required() -> Array[Quest]:
 	return out
 
 var is_completed: bool:
-	get: return state == QUEST_COMPLETED
+	get: return state == TASK_COMPLETED
 
 var is_started: bool:
-	get: return state == QUEST_STARTED
+	get: return state == TASK_STARTED
 
 var is_unlocked: bool:
-	get: return state == QUEST_UNLOCKED
+	get: return state == TASK_UNLOCKED
 
 func get_total_required() -> int:
 	return len(requires)
@@ -97,23 +97,23 @@ func get_progress() -> float:
 	return float(tick) / float(toll)
 
 func has_requirements() -> bool:
-	for quest in get_required():
-		if not quest.is_completed:
+	for task in get_required():
+		if not task.is_completed:
 			return false
 	return true
 
 func start(force := false):
 	if force or has_requirements():
-		state = QUEST_STARTED
+		state = TASK_STARTED
 	else:
 		push_error("%s doesn't meet it's requirements." % self)
 
 func complete():
-	if state != QUEST_COMPLETED:
-		state = QUEST_COMPLETED
+	if state != TASK_COMPLETED:
+		state = TASK_COMPLETED
 
 static func exists(id: String) -> bool:
-	return State._has_of_type(id, Quest)
+	return State._has_of_type(id, Task)
 
-static func get_all_quests() -> Dictionary:
-	return State._get_all_of_type(Quest)
+static func get_all() -> Dictionary:
+	return State._get_all_of_type(Task)
