@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://blpibl73wob63"]
+
+[ext_resource type="Script" path="res://addons/simple_vn/screen_effects/hsv/hsv.gd" id="1_ecd66"]
+[ext_resource type="Material" uid="uid://rpm34e1hdljn" path="res://addons/simple_vn/screen_effects/hsv/hsv.tres" id="2_ievrg"]
+
+[node name="hsv" type="CanvasLayer"]
+script = ExtResource( "1_ecd66" )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = ExtResource( "2_ievrg" )
+anchor_right = 1.0
+anchor_bottom = 1.0
