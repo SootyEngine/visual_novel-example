@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dh8rn327yr1rs"]
+
+[ext_resource type="Shader" path="res://addons/simple_vn/screen_effects/bloom/bloom.gdshader" id="1_4q4fv"]
+
+[resource]
+shader = ExtResource( "1_4q4fv" )
+shader_param/range = 3.0
+shader_param/amount = 1.0
