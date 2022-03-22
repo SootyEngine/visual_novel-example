@@ -5,4 +5,4 @@
 [resource]
 shader = ExtResource( "1_itwes" )
 shader_param/size = 512.0
-shader_param/lum_scale = 0.75
+shader_param/lum_scale = 0.845
