@@ -10,7 +10,7 @@
 [ext_resource type="Script" path="res://addons/simple_vn/action_button.gd" id="5_oki08"]
 [ext_resource type="Script" path="res://addons/simple_vn/camera.gd" id="7_0b8xy"]
 [ext_resource type="Script" path="res://addons/simple_vn/nodes/Sprite2DAnimations.gd" id="7_kldqt"]
-[ext_resource type="PackedScene" uid="uid://bmh8jma453axi" path="res://addons/simple_vn/screen_effects/invert/invert.tscn" id="11_0dsiv"]
+[ext_resource type="PackedScene" uid="uid://b224yjrjimeps" path="res://addons/simple_vn/screen_effects/noise_grain/noise_grain.tscn" id="11_si18u"]
 
 [node name="the_beach" type="Control"]
 anchor_right = 1.0
@@ -102,5 +102,5 @@ position = Vector2(725, 318)
 rotating = true
 zoom = Vector2(0.3, 0.3)
 
-[node name="invert" parent="." instance=ExtResource( "11_0dsiv" )]
-blend = 1.0
+[node name="noise" parent="." instance=ExtResource( "11_si18u" )]
+lum_scale = 0.845

@@ -1,7 +1,8 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://d1wgkmpse4mmi"]
 
 [ext_resource type="Shader" path="res://addons/simple_vn/screen_effects/noise_grain/noise.gdshader" id="1_itwes"]
 
 [resource]
 shader = ExtResource( "1_itwes" )
-shader_param/noise = 512.0
+shader_param/size = 512.0
+shader_param/lum_scale = 0.75
