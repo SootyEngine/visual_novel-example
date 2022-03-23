@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://dl2mg14o34fng"]
+[gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://addons/simple_vn/ui/ui_notifications.gd" id="1_pirhg"]
+[ext_resource type="Script" path="res://addons/simple_vn/ui/notifications/ui_notifications.gd" id="1_pirhg"]
 
 [node name="notification" type="CanvasLayer"]
 script = ExtResource( "1_pirhg" )

@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://ckxkkqm6bqvi6"]
+[gd_scene load_steps=7 format=3]
 
-[ext_resource type="Script" path="res://addons/simple_vn/ui/ui_option_button.gd" id="1_ptcho"]
+[ext_resource type="Script" path="res://addons/simple_vn/ui/options/ui_option_button.gd" id="1_ptcho"]
 [ext_resource type="Font" path="res://fonts/robotomono/robotomono_bi.tres" id="2_82qb6"]
 [ext_resource type="Script" path="res://addons/rich_text/RichTextLabel2.gd" id="2_waskk"]
 [ext_resource type="Font" path="res://fonts/robotomono/robotomono_i.tres" id="3_eldg6"]

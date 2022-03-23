@@ -1,14 +1,14 @@
-[gd_scene load_steps=22 format=3 uid="uid://re4r20g7o4mn"]
+[gd_scene load_steps=22 format=3]
 
 [ext_resource type="PackedScene" uid="uid://b65a4stm08sem" path="res://addons/simple_vn/ui/ui_caption.tscn" id="1_5fvuj"]
 [ext_resource type="Script" path="res://addons/simple_vn/autoloads/SimpleVN.gd" id="1_41ilk"]
 [ext_resource type="Script" path="res://addons/simple_vn/ui/EdgeClampContainer.gd" id="2_mqxw1"]
 [ext_resource type="Shader" path="res://addons/simple_vn/ui/ui_gradient_blur.gdshader" id="3_kr04k"]
-[ext_resource type="PackedScene" uid="uid://m84326jpcicc" path="res://addons/simple_vn/ui/ui_option_menu.tscn" id="3_so0hf"]
-[ext_resource type="PackedScene" uid="uid://dl2mg14o34fng" path="res://addons/simple_vn/ui/ui_notifications.tscn" id="4_sf4ru"]
+[ext_resource type="PackedScene" path="res://addons/simple_vn/ui/options/ui_option_menu.tscn" id="3_so0hf"]
+[ext_resource type="PackedScene" path="res://addons/simple_vn/ui/notifications/ui_notifications.tscn" id="4_sf4ru"]
 [ext_resource type="PackedScene" uid="uid://bfngd7b38mvow" path="res://addons/sooty_engine/ui/ui_debug.tscn" id="5_ojci6"]
 [ext_resource type="PackedScene" uid="uid://beeajbnhjflok" path="res://addons/simple_vn/ui/ui_quest_list.tscn" id="6_e6odl"]
-[ext_resource type="PackedScene" uid="uid://bhqmgfywa0o4y" path="res://addons/simple_vn/ui/ui_notification.tscn" id="6_ep3a5"]
+[ext_resource type="PackedScene" path="res://addons/simple_vn/ui/notifications/ui_notification.tscn" id="6_ep3a5"]
 [ext_resource type="PackedScene" uid="uid://3kiavxcgtsmg" path="res://addons/sooty_engine/ui/ui_save_load.tscn" id="6_p1slb"]
 [ext_resource type="Script" path="res://addons/simple_vn/ui/ui_debug_menu.gd" id="6_rc2au"]
 [ext_resource type="PackedScene" uid="uid://8h05he3jqbss" path="res://addons/simple_vn/ui/achievements/ui_achievements.tscn" id="7_s3pqk"]
@@ -107,6 +107,7 @@ tab_alignment = 0
 drag_to_rearrange_enabled = true
 
 [node name="debug" parent="debug/debug_menu" instance=ExtResource( "5_ojci6" )]
+visible = false
 offset_top = 31.0
 size_flags_horizontal = 3
 size_flags_vertical = 3

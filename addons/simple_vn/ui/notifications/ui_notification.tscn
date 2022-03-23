@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://bhqmgfywa0o4y"]
+[gd_scene load_steps=6 format=3]
 
-[ext_resource type="Script" path="res://addons/simple_vn/ui/ui_notification.gd" id="1_m2nm3"]
+[ext_resource type="Script" path="res://addons/simple_vn/ui/notifications/ui_notification.gd" id="1_m2nm3"]
 [ext_resource type="Texture2D" uid="uid://b3vywvjoc08be" path="res://icon.png" id="1_wxrxi"]
 [ext_resource type="Script" path="res://addons/rich_text/RichTextLabel2.gd" id="3_g8y6o"]
 
