@@ -16,7 +16,7 @@ func _setup(a: Achievement):
 	
 	if a._unlocked:
 		icon.modulate.v = 1.0
-		label.set_bbcode("[b;yellow_green]%s[]\n[i]%s[]" % [a.name, a.desc])
+		label.set_bbcode("[b;dodger_blue]%s[]\n[i]%s[]" % [a.name, a.desc])
 	else:
 		icon.modulate.v = 0.125
-		label.set_bbcode("[b;yellow_green;dim]%s[]\n[i;dim]%s[]" % [a.name, "???"])
+		label.set_bbcode("[b;deep_sky_blue;dim]%s[]\n[i;dim]%s[]" % [a.name, "???"])

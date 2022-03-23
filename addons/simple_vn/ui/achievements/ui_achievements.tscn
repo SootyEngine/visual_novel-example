@@ -21,12 +21,22 @@ offset_bottom = 80.0
 [node name="ui_achievement" parent="parent/prefab" instance=ExtResource( "2_xjvt6" )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_right = 510.0
+offset_right = 952.0
 offset_bottom = 80.0
 size_flags_horizontal = 3
 
-[node name="toggle_lock" type="Button" parent="parent/prefab"]
-offset_left = 514.0
+[node name="min" type="Button" parent="parent/prefab"]
+rect_min_size = Vector2(32, 0)
+offset_left = 956.0
+offset_right = 988.0
+offset_bottom = 80.0
+size_flags_horizontal = 4
+text = "-"
+
+[node name="max" type="Button" parent="parent/prefab"]
+rect_min_size = Vector2(32, 0)
+offset_left = 992.0
 offset_right = 1024.0
 offset_bottom = 80.0
-size_flags_horizontal = 3
+size_flags_horizontal = 4
+text = "+"

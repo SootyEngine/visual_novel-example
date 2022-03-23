@@ -27,13 +27,5 @@ func _ready_deferred():
 		var btn = prefab.duplicate()
 		parent.add_child(btn)
 		btn.get_child(0)._setup(a)
-		btn.get_child(1).text = "Lock" if a._unlocked else "Unlock"
-		btn.get_child(1).pressed.connect(Persistent._set.bind(id+"._unlocked", not a._unlocked))
-#		var clr = Color.YELLOW_GREEN if a._unlocked else Color.TOMATO
-#		var id_unlock = "%s_unlock" % id
-#		var id_lock = "%s_lock" % id
-#		text.append("[%s]%s[] [dim][0.5]\\[%s\\][] [meta %s]UNLOCK[] [meta %s]LOCK[]" % [clr, a.name, a._unlocked, id_unlock, id_lock])
-#		meta[id_unlock] = Persistent._set.bind(id+"._unlocked", true)
-#		meta[id_lock] = Persistent._set.bind(id+"._unlocked", false)
-#	$RichTextLabel.set_bbcode("\n".join(text))
-#	$RichTextLabel._meta = meta
+		btn.get_child(1).pressed.connect(Persistent._set.bind(id+".tick", a.tick-1))
+		btn.get_child(2).pressed.connect(Persistent._set.bind(id+".tick", a.tick+1))
