@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://8h05he3jqbss"]
+
+[ext_resource type="Script" path="res://addons/simple_vn/ui/achievements/ui_achievements.gd" id="1_rmxkm"]
+[ext_resource type="PackedScene" uid="uid://v174hslhkqq5" path="res://addons/simple_vn/ui/achievements/ui_achievement.tscn" id="2_xjvt6"]
+
+[node name="achievements" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( "1_rmxkm" )
+_prefab = NodePath("parent/prefab")
+_parent = NodePath("parent")
+
+[node name="parent" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="prefab" type="HBoxContainer" parent="parent"]
+offset_right = 1024.0
+offset_bottom = 80.0
+
+[node name="ui_achievement" parent="parent/prefab" instance=ExtResource( "2_xjvt6" )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 510.0
+offset_bottom = 80.0
+size_flags_horizontal = 3
+
+[node name="toggle_lock" type="Button" parent="parent/prefab"]
+offset_left = 514.0
+offset_right = 1024.0
+offset_bottom = 80.0
+size_flags_horizontal = 3

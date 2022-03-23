@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cmtk877fqtogm"]
+[gd_scene load_steps=22 format=3 uid="uid://re4r20g7o4mn"]
 
 [ext_resource type="PackedScene" uid="uid://b65a4stm08sem" path="res://addons/simple_vn/ui/ui_caption.tscn" id="1_5fvuj"]
 [ext_resource type="Script" path="res://addons/simple_vn/autoloads/SimpleVN.gd" id="1_41ilk"]
@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bhqmgfywa0o4y" path="res://addons/simple_vn/ui/ui_notification.tscn" id="6_ep3a5"]
 [ext_resource type="PackedScene" uid="uid://3kiavxcgtsmg" path="res://addons/sooty_engine/ui/ui_save_load.tscn" id="6_p1slb"]
 [ext_resource type="Script" path="res://addons/simple_vn/ui/ui_debug_menu.gd" id="6_rc2au"]
-[ext_resource type="PackedScene" uid="uid://pd6qker8pist" path="res://addons/simple_vn/ui/ui_achievements.tscn" id="7_s3pqk"]
+[ext_resource type="PackedScene" uid="uid://8h05he3jqbss" path="res://addons/simple_vn/ui/achievements/ui_achievements.tscn" id="7_s3pqk"]
 [ext_resource type="Shader" path="res://addons/sooty_engine/ui/screen_blur.gdshader" id="9_dbl8f"]
 [ext_resource type="PackedScene" uid="uid://d1csgqju2u32x" path="res://addons/sooty_engine/ui/ui_console.tscn" id="12_t3jm4"]
 [ext_resource type="PackedScene" uid="uid://b816vwooqre87" path="res://addons/simple_vn/ui/ui_mods.tscn" id="13_ljjo8"]
