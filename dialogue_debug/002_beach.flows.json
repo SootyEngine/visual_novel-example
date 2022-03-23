@@ -1,0 +1,47 @@
+{
+	"INIT": {
+		"id": "",
+		"file": 0,
+		"line": 0,
+		"type": "flow",
+		"then": [
+			"0!1",
+			"0!3"
+		]
+	},
+	"CHANGED:beach_is_night": {
+		"id": "",
+		"file": 0,
+		"line": 9,
+		"type": "flow",
+		"then": [
+			"0!10"
+		]
+	},
+	"godette": {
+		"id": "",
+		"file": 0,
+		"line": 15,
+		"type": "flow",
+		"then": [
+			"0!16",
+			"0!17",
+			"0!18",
+			"0!23",
+			"0!24"
+		]
+	},
+	"godot": {
+		"id": "",
+		"file": 0,
+		"line": 26,
+		"type": "flow",
+		"then": [
+			"0!27",
+			"0!28",
+			"0!29",
+			"0!58",
+			"0!59"
+		]
+	}
+}

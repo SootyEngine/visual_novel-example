@@ -1,5 +1,27 @@
 === START
-	@mr_bool.breath
+	~save_caption = "The Jail Cell"
+	
+	~save_caption = "One"
+	mr_bool: One
+	~save_caption = "Two"
+	mr_bool: Two
+	~save_caption = "Three"
+	mr_bool: Three
+	~save_caption = "Four"
+	mr_bool: Four
+	~save_caption = "Five"
+	mr_bool: Five
+	~save_caption = "Six"
+	mr_bool: Six
+	~save_caption = "7"
+	mr_bool: 7
+	~save_caption = "8"
+	mr_bool: 8
+	~save_caption = "Nine"
+	mr_bool: 9
+	~save_caption = "10"
+	mr_bool: 10
+	
 	"Stranger": And who might you be?
 		- Just a random game developer.
 			"Stranger": Okay.

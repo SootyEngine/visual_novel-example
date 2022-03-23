@@ -16,22 +16,33 @@ var last_speaker := ""
 func _init() -> void:
 	add_to_group("sa:scene")
 	add_to_group("sa:simple_vn_version")
-	Mods.install.connect(_install_mods)
-	Mods.install_mod("res://addons/simple_vn")
+	Mods.pre_loaded.connect(_clear_mods)
+	Mods.load_all.connect(_load_mods)
+	Mods._add_mod("res://addons/simple_vn", true)
 	
 	DialogueStack.started.connect(_dialogue_started)
 	DialogueStack.flow_started.connect(_flow_started)
 	DialogueStack.flow_ended.connect(_flow_ended)
 	DialogueStack.on_line.connect(_on_text)
 
-func _ready() -> void:
-	_ready_deferred.call_deferred()
+func _clear_mods():
+	scenes.clear()
 
-func _ready_deferred():
-	var id := UFile.get_file_name(get_tree().current_scene.scene_file_path)
-	print("SCENE ", id)
-	if not DialogueStack.is_active() and Dialogues.has(id):
-		DialogueStack.do("=> %s.START" % id)
+func _load_mods(mods: Array):
+	print("[Scenes]")
+	for mod in mods:
+		for scene_path in UFile.get_files(mod.dir.plus_file("scenes"), [".scn", ".tscn"]):
+			Mods._print_file(scene_path)
+			scenes[UFile.get_file_name(scene_path)] = scene_path
+
+#func _ready() -> void:
+#	_ready_deferred.call_deferred()
+#
+#func _ready_deferred():
+#	var id := UFile.get_file_name(get_tree().current_scene.scene_file_path)
+#	print("SCENE ", id)
+#	if not DialogueStack.is_active() and Dialogues.has(id):
+#		DialogueStack.do("=> %s.START" % id)
 
 func simple_vn_version() -> String:
 	return "[%s]%s[]" % [Color.TOMATO, VERSION]
@@ -41,7 +52,7 @@ func scene(id: String):
 		State.current_scene = id
 		DialogueStack.halt(self)
 		Fader.create(
-			Global.get_tree().change_scene.bind(scenes[id]),
+			Global.change_scene.bind(scenes[id]),
 			DialogueStack.unhalt.bind(self),
 			{wait=1.0})
 	else:
@@ -110,13 +121,6 @@ func _on_text(line: DialogueLine):
 		text=_format_text(line.text, from != null),
 		line=line
 	})
-
-func _install_mods(dirs: Array):
-	print("[Scenes]")
-	for dir in dirs:
-		for scene_path in UFile.get_files(dir.plus_file("scenes"), [".scn", ".tscn"]):
-			Mods._print_file(scene_path)
-			scenes[UFile.get_file_name(scene_path)] = scene_path
 
 func _format_text(text: String, has_from: bool) -> String:
 	var out := ""

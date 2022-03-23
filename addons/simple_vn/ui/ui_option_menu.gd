@@ -25,8 +25,11 @@ var hovered := 0:
 		_fix_indicator_position.call_deferred()
 
 func _ready() -> void:
-	visible = false
 	button_parent.remove_child(button_prefab)
+	Saver.pre_load.connect(_pre_load)
+
+func _pre_load():
+	_hide()
 
 func _input(event: InputEvent) -> void:
 	if _shown:
@@ -78,15 +81,18 @@ func _select(option: DialogueLine):
 	if not _can_select:
 		return
 	
-	for button in button_parent.get_children():
-		button_parent.remove_child(button)
-		button.queue_free()
-	
-	visible = false
-	_shown = false
+	_hide()
 	_can_select = false
 	
 	DialogueStack.select_option(option)
+
+func _hide():
+	visible = false
+	_shown = false
+	
+	for button in button_parent.get_children():
+		button_parent.remove_child(button)
+		button.queue_free()
 
 func _create_tween() -> Tween:
 	if _tween:

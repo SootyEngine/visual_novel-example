@@ -4,121 +4,271 @@
 		"file": 0,
 		"line": 1,
 		"type": "action",
-		"action": "@mr_bool.breath"
+		"action": "~save_caption = \"The Jail Cell\""
+	},
+	"0!3": {
+		"id": "",
+		"file": 0,
+		"line": 3,
+		"type": "action",
+		"action": "~save_caption = \"One\""
 	},
 	"0!4": {
 		"id": "",
 		"file": 0,
 		"line": 4,
 		"type": "text",
-		"text": "Okay.",
-		"from": "\"Stranger\""
+		"text": "One",
+		"from": "mr_bool"
 	},
 	"0!5": {
 		"id": "",
 		"file": 0,
 		"line": 5,
-		"type": "text",
-		"text": "I need a favor.",
-		"from": ""
+		"type": "action",
+		"action": "~save_caption = \"Two\""
 	},
 	"0!6": {
 		"id": "",
 		"file": 0,
 		"line": 6,
 		"type": "text",
-		"text": "You can call me [$mr_bool].",
-		"from": ""
+		"text": "Two",
+		"from": "mr_bool"
 	},
 	"0!7": {
 		"id": "",
 		"file": 0,
 		"line": 7,
-		"type": "goto",
-		"goto": "003_jail.favor"
+		"type": "action",
+		"action": "~save_caption = \"Three\""
 	},
-	"0!3": {
+	"0!8": {
 		"id": "",
 		"file": 0,
-		"line": 3,
-		"type": "option",
-		"text": "Just a random game developer.",
-		"then": [
-			"0!4",
-			"0!5",
-			"0!6",
-			"0!7"
-		]
+		"line": 8,
+		"type": "text",
+		"text": "Three",
+		"from": "mr_bool"
+	},
+	"0!9": {
+		"id": "",
+		"file": 0,
+		"line": 9,
+		"type": "action",
+		"action": "~save_caption = \"Four\""
 	},
 	"0!10": {
 		"id": "",
 		"file": 0,
 		"line": 10,
 		"type": "text",
-		"text": "(Chuckles)",
-		"from": "\"Stranger\""
+		"text": "Four",
+		"from": "mr_bool"
 	},
 	"0!11": {
 		"id": "",
 		"file": 0,
 		"line": 11,
-		"type": "text",
-		"text": "I never had a government name.",
-		"from": ""
+		"type": "action",
+		"action": "~save_caption = \"Five\""
 	},
 	"0!12": {
 		"id": "",
 		"file": 0,
 		"line": 12,
 		"type": "text",
-		"text": "But you can call me [$mr_bool] for convenience.",
-		"from": ""
+		"text": "Five",
+		"from": "mr_bool"
 	},
 	"0!13": {
 		"id": "",
 		"file": 0,
 		"line": 13,
-		"type": "text",
-		"text": "I want to ask a favor of you.",
-		"from": "mr_bool"
+		"type": "action",
+		"action": "~save_caption = \"Six\""
 	},
 	"0!14": {
 		"id": "",
 		"file": 0,
 		"line": 14,
-		"type": "goto",
-		"goto": "003_jail.favor"
-	},
-	"0!9": {
-		"id": "",
-		"file": 0,
-		"line": 9,
-		"type": "option",
-		"text": "Who wants to know?",
-		"then": [
-			"0!10",
-			"0!11",
-			"0!12",
-			"0!13",
-			"0!14"
-		]
-	},
-	"0!2": {
-		"id": "",
-		"file": 0,
-		"line": 2,
 		"type": "text",
-		"text": "And who might you be?",
-		"from": "\"Stranger\"",
-		"options": [
-			"0!3",
-			"0!9"
-		]
+		"text": "Six",
+		"from": "mr_bool"
+	},
+	"0!15": {
+		"id": "",
+		"file": 0,
+		"line": 15,
+		"type": "action",
+		"action": "~save_caption = \"7\""
+	},
+	"0!16": {
+		"id": "",
+		"file": 0,
+		"line": 16,
+		"type": "text",
+		"text": "7",
+		"from": "mr_bool"
 	},
 	"0!17": {
 		"id": "",
 		"file": 0,
 		"line": 17,
+		"type": "action",
+		"action": "~save_caption = \"8\""
+	},
+	"0!18": {
+		"id": "",
+		"file": 0,
+		"line": 18,
+		"type": "text",
+		"text": "8",
+		"from": "mr_bool"
+	},
+	"0!19": {
+		"id": "",
+		"file": 0,
+		"line": 19,
+		"type": "action",
+		"action": "~save_caption = \"Nine\""
+	},
+	"0!20": {
+		"id": "",
+		"file": 0,
+		"line": 20,
+		"type": "text",
+		"text": "9",
+		"from": "mr_bool"
+	},
+	"0!21": {
+		"id": "",
+		"file": 0,
+		"line": 21,
+		"type": "action",
+		"action": "~save_caption = \"10\""
+	},
+	"0!22": {
+		"id": "",
+		"file": 0,
+		"line": 22,
+		"type": "text",
+		"text": "10",
+		"from": "mr_bool"
+	},
+	"0!26": {
+		"id": "",
+		"file": 0,
+		"line": 26,
+		"type": "text",
+		"text": "Okay.",
+		"from": "\"Stranger\""
+	},
+	"0!27": {
+		"id": "",
+		"file": 0,
+		"line": 27,
+		"type": "text",
+		"text": "I need a favor.",
+		"from": ""
+	},
+	"0!28": {
+		"id": "",
+		"file": 0,
+		"line": 28,
+		"type": "text",
+		"text": "You can call me [$mr_bool].",
+		"from": ""
+	},
+	"0!29": {
+		"id": "",
+		"file": 0,
+		"line": 29,
+		"type": "goto",
+		"goto": "003_jail.favor"
+	},
+	"0!25": {
+		"id": "",
+		"file": 0,
+		"line": 25,
+		"type": "option",
+		"text": "Just a random game developer.",
+		"then": [
+			"0!26",
+			"0!27",
+			"0!28",
+			"0!29"
+		]
+	},
+	"0!32": {
+		"id": "",
+		"file": 0,
+		"line": 32,
+		"type": "text",
+		"text": "(Chuckles)",
+		"from": "\"Stranger\""
+	},
+	"0!33": {
+		"id": "",
+		"file": 0,
+		"line": 33,
+		"type": "text",
+		"text": "I never had a government name.",
+		"from": ""
+	},
+	"0!34": {
+		"id": "",
+		"file": 0,
+		"line": 34,
+		"type": "text",
+		"text": "But you can call me [$mr_bool] for convenience.",
+		"from": ""
+	},
+	"0!35": {
+		"id": "",
+		"file": 0,
+		"line": 35,
+		"type": "text",
+		"text": "I want to ask a favor of you.",
+		"from": "mr_bool"
+	},
+	"0!36": {
+		"id": "",
+		"file": 0,
+		"line": 36,
+		"type": "goto",
+		"goto": "003_jail.favor"
+	},
+	"0!31": {
+		"id": "",
+		"file": 0,
+		"line": 31,
+		"type": "option",
+		"text": "Who wants to know?",
+		"then": [
+			"0!32",
+			"0!33",
+			"0!34",
+			"0!35",
+			"0!36"
+		]
+	},
+	"0!24": {
+		"id": "",
+		"file": 0,
+		"line": 24,
+		"type": "text",
+		"text": "And who might you be?",
+		"from": "\"Stranger\"",
+		"options": [
+			"0!25",
+			"0!31"
+		]
+	},
+	"0!39": {
+		"id": "",
+		"file": 0,
+		"line": 39,
 		"type": "text",
 		"text": "I need you to get me .",
 		"from": "mr_bool"

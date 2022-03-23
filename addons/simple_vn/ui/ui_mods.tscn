@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://b816vwooqre87"]
+
+[ext_resource type="Script" path="res://addons/rich_text/RichTextLabel2.gd" id="1_lsc2f"]
+[ext_resource type="Script" path="res://addons/simple_vn/ui/ui_mods.gd" id="1_vvu0l"]
+
+[node name="mods" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( "1_vvu0l" )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/mono_font_size = 16
+theme_override_font_sizes/bold_italics_font_size = 16
+theme_override_font_sizes/italics_font_size = 16
+theme_override_font_sizes/bold_font_size = 16
+theme_override_font_sizes/normal_font_size = 16
+meta_underlined = false
+script = ExtResource( "1_lsc2f" )
+alignment = 0
+markdown_enabled = false

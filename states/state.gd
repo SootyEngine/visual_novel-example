@@ -11,8 +11,8 @@ var sooty := Character.new({name="Sooty", color=Color.DARK_GRAY})
 
 var mr_bool := Character.new({name="Mr. Bool", color=Color.BURLYWOOD})
 
-func _init() -> void:
-	Saver._get_state_info.connect(_get_state_info)
-
-func _get_state_info(d: Dictionary):
-	d.caption = save_caption
+#func _init() -> void:
+#	Saver._get_state_info.connect(_get_state_info)
+#
+#func _get_state_info(d: Dictionary):
+#	d.caption = save_caption

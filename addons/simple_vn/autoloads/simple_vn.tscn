@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cmtk877fqtogm"]
+[gd_scene load_steps=22 format=3 uid="uid://cmtk877fqtogm"]
 
 [ext_resource type="PackedScene" uid="uid://b65a4stm08sem" path="res://addons/simple_vn/ui/ui_caption.tscn" id="1_5fvuj"]
 [ext_resource type="Script" path="res://addons/simple_vn/autoloads/SimpleVN.gd" id="1_41ilk"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://pd6qker8pist" path="res://addons/simple_vn/ui/ui_achievements.tscn" id="7_s3pqk"]
 [ext_resource type="Shader" path="res://addons/sooty_engine/ui/screen_blur.gdshader" id="9_dbl8f"]
 [ext_resource type="PackedScene" uid="uid://d1csgqju2u32x" path="res://addons/sooty_engine/ui/ui_console.tscn" id="12_t3jm4"]
+[ext_resource type="PackedScene" uid="uid://b816vwooqre87" path="res://addons/simple_vn/ui/ui_mods.tscn" id="13_ljjo8"]
 [ext_resource type="Script" path="res://addons/simple_vn/ui/ui_overdraw.gd" id="14_57xfr"]
 [ext_resource type="Script" path="res://addons/simple_vn/ui/ui_debug_scenes.gd" id="15_tuye1"]
 [ext_resource type="Script" path="res://addons/rich_text/RichTextLabel2.gd" id="16_roqut"]
@@ -114,6 +115,9 @@ size_flags_vertical = 3
 visible = false
 
 [node name="save_load" parent="debug/debug_menu" instance=ExtResource( "6_p1slb" )]
+visible = false
+
+[node name="mods" parent="debug/debug_menu" instance=ExtResource( "13_ljjo8" )]
 visible = false
 
 [node name="quests" parent="debug/debug_menu" instance=ExtResource( "6_e6odl" )]

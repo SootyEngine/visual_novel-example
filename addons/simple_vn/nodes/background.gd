@@ -17,12 +17,16 @@ func get_alternative_ids():
 	return alternatives.map(func(x: Texture): return UFile.get_file_name(x.resource_path))
 
 func set_current(id: String):
-	if current != id:
-		var index = get_alternative_ids().find(id)
-		if index != -1:
-			current = id
-			var next := alternatives[index]
-			fade_to(next)
+	var index = get_alternative_ids().find(id)
+	if index != -1:
+		current = id
+		fade_to(alternatives[index])
+
+func set_current_immediate(id: String):
+	var index = get_alternative_ids().find(id)
+	if index != -1:
+		current = id
+		set_texture(alternatives[index])
 
 func fade_to(next: Texture):
 	SpriteTransitions.blend(self, next, _tween)

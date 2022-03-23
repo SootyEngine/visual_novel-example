@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://bevqy0p65mt0e"]
 
-[ext_resource type="Script" path="res://scenes/002_beach.gd" id="1_lnvpj"]
+[ext_resource type="Script" path="res://addons/simple_vn/nodes/SootScene.gd" id="1_47eh7"]
 [ext_resource type="Texture2D" uid="uid://c4i2bldgp27xh" path="res://bgs/beach_night.webp" id="1_wo2ev"]
 [ext_resource type="Script" path="res://addons/simple_vn/nodes/background.gd" id="2_vvle1"]
 [ext_resource type="Texture2D" uid="uid://cwxshyarxpvpl" path="res://bgs/beach_noon.webp" id="3_i2w6y"]
@@ -15,7 +15,7 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-script = ExtResource( "1_lnvpj" )
+script = ExtResource( "1_47eh7" )
 
 [node name="BeachNoon" type="Sprite2D" parent="." groups=["bg"]]
 position = Vector2(512, 300)
@@ -41,7 +41,7 @@ __meta__ = {
 "_edit_layout_mode": 0,
 "_edit_use_custom_anchors": false
 }
-command = "=> MAIN.godot"
+command = "=> 002_beach.godot"
 
 [node name="b_godette" type="Button" parent="."]
 offset_left = 692.0
@@ -54,7 +54,7 @@ __meta__ = {
 "_edit_layout_mode": 0,
 "_edit_use_custom_anchors": false
 }
-command = "=> MAIN.godette"
+command = "=> 002_beach.godette"
 
 [node name="Godot" type="Sprite2D" parent="." groups=["godot", "godot_scene"]]
 position = Vector2(485, 397)

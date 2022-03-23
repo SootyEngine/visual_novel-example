@@ -62,11 +62,11 @@ func _get_tool_buttons():
 
 var _tween: Tween
 
-func _ready() -> void:
-	if start_hidden:
-		modulate = Color.TRANSPARENT
-	else:
-		modulate = Color.WHITE
+#func _ready() -> void:
+#	if start_hidden:
+#		modulate = Color.TRANSPARENT
+#	else:
+#		modulate = Color.WHITE
 
 func wait():
 	DialogueStack.halt(self)

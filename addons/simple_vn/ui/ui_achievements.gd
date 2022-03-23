@@ -17,11 +17,11 @@ func _ready_deferred():
 	var meta := {}
 	for id in achievements:
 		var a: Achievement = achievements[id]
-		var clr = Color.YELLOW_GREEN if a.unlocked else Color.TOMATO
+		var clr = Color.YELLOW_GREEN if a._unlocked else Color.TOMATO
 		var id_unlock = "%s_unlock" % id
 		var id_lock = "%s_lock" % id
-		text.append("[%s]%s[] [dim][0.5]\\[%s\\][] [meta %s]UNLOCK[] [meta %s]LOCK[]" % [clr, a.name, a.unlocked, id_unlock, id_lock])
-		meta[id_unlock] = a.unlock
-		meta[id_lock] = a.lock
+		text.append("[%s]%s[] [dim][0.5]\\[%s\\][] [meta %s]UNLOCK[] [meta %s]LOCK[]" % [clr, a.name, a._unlocked, id_unlock, id_lock])
+		meta[id_unlock] = Persistent._set.bind(id+"._unlocked", true)
+		meta[id_lock] = Persistent._set.bind(id+"._unlocked", false)
 	$RichTextLabel.set_bbcode("\n".join(text))
 	$RichTextLabel._meta = meta

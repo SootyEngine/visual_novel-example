@@ -22,23 +22,17 @@ var _tween_indicator: Tween
 var show_indicator := false:
 	set = set_show_indicator
 
-#func _process(delta: float) -> void:
-#	update()
-#func _draw() -> void:
-#	for child in get_children():
-#		draw_rect(Rect2(child.rect_position, child.rect_size), Color.TOMATO, false, 2.0)
-
 func _ready() -> void:
 	rtl_from.clear()
 	rtl_text.clear()
 	rtl_text.faded_in.connect(set_show_indicator.bind(true))
 	rtl_text.started.connect(set_show_indicator.bind(false))
-	if shown:
-		visible = true
-		indicator.modulate.a = 1.0
-	else:
-		visible = false
-		indicator.modulate.a = 0.0
+	Saver.pre_load.connect(_pre_load)
+	visible = false
+	indicator.modulate.a = 0.0
+
+func _pre_load():
+	_hide()
 
 func _caption(id: String, msg_type: String, payload: Variant):
 #	prints("L %s %s (%s): %s" % [self, id, msg_type, payload])
@@ -135,17 +129,15 @@ func _hide_eventually():
 		var tw := _create_tween()
 		tw.tween_interval(0.25)
 		tw.tween_callback(_hide)
+		tw.tween_property(self, "modulate:a", 0.0, 0.25)
+		tw.tween_callback(set_visible.bind(false))
+		rtl_text.fade_out = true
 
 func _hide():
 	shown = false
-	rtl_text.fade_out = true
 	show_indicator = false
-	var tw := _create_tween()
-	tw.tween_property(self, "modulate:a", 0.0, 0.25)
-	tw.tween_callback(set_visible.bind(false))
-	tw.tween_callback(rtl_from.clear)
-	tw.tween_callback(rtl_text.clear)
-	return tw
+	rtl_from.clear()
+	rtl_text.clear()
 
 func _stop_tween():
 	if _tween:

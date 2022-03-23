@@ -99,6 +99,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://addons/rich_text/Markdown.gd"
 }, {
+"base": "Resource",
+"class": &"ModInfo",
+"language": &"GDScript",
+"path": "res://addons/sooty_engine/data/ModInfo.gd"
+}, {
 "base": "BaseDataClass",
 "class": &"Note",
 "language": &"GDScript",
@@ -123,6 +128,11 @@ _global_script_classes=[{
 "class": &"RichTextLabel2",
 "language": &"GDScript",
 "path": "res://addons/rich_text/RichTextLabel2.gd"
+}, {
+"base": "Node",
+"class": &"SootyScene",
+"language": &"GDScript",
+"path": "res://addons/simple_vn/nodes/SootScene.gd"
 }, {
 "base": "Sprite2D",
 "class": &"Sprite2DAnimations",
@@ -238,11 +248,13 @@ _global_script_class_icons={
 "Item": "",
 "Location": "",
 "Markdown": "",
+"ModInfo": "",
 "Note": "",
 "PropList": "",
 "Reward": "",
 "RichTextAnimation": "",
 "RichTextLabel2": "",
+"SootyScene": "",
 "Sprite2DAnimations": "",
 "SpriteTransitions": "",
 "Task": "",
