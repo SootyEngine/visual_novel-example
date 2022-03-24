@@ -1,0 +1,16 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://jd3yf7365a5j"
+path="res://.godot/imported/achievement_got.mp3-b1fc947e86971c972c49c189cb9c6d53.mp3str"
+
+[deps]
+
+source_file="res://audio/sfx/achievement_got.mp3"
+dest_files=["res://.godot/imported/achievement_got.mp3-b1fc947e86971c972c49c189cb9c6d53.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0

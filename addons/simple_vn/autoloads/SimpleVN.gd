@@ -29,11 +29,11 @@ func _clear_mods():
 	scenes.clear()
 
 func _load_mods(mods: Array):
-	print("[Scenes]")
 	for mod in mods:
+		mod.meta["scenes"] = []
 		for scene_path in UFile.get_files(mod.dir.plus_file("scenes"), [".scn", ".tscn"]):
-			Mods._print_file(scene_path)
 			scenes[UFile.get_file_name(scene_path)] = scene_path
+			mod.meta.scenes.append(scene_path)
 
 #func _ready() -> void:
 #	_ready_deferred.call_deferred()
