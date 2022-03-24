@@ -1,5 +1,5 @@
 extends Node
-class_name SootyScene
+class_name SootScene
 
 var scene_id: String:
 	get: return UFile.get_file_name(scene_file_path)

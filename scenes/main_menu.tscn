@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dg1jj3ttkog8k"]
+[gd_scene load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://addons/simple_vn/action_button.gd" id="1_bxev1"]
+[ext_resource type="Script" path="res://addons/simple_vn/nodes/ActionButton.gd" id="1_bxev1"]
 [ext_resource type="Script" path="res://addons/rich_text/RichTextLabel2.gd" id="2_tjk0l"]
 
 [node name="main_menu" type="Node2D"]

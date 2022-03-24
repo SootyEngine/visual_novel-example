@@ -129,8 +129,13 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://addons/rich_text/RichTextLabel2.gd"
 }, {
+"base": "Button",
+"class": &"SceneActionButton",
+"language": &"GDScript",
+"path": "res://addons/simple_vn/nodes/SceneActionButton.gd"
+}, {
 "base": "Node",
-"class": &"SootyScene",
+"class": &"SootScene",
 "language": &"GDScript",
 "path": "res://addons/simple_vn/nodes/SootScene.gd"
 }, {
@@ -254,7 +259,8 @@ _global_script_class_icons={
 "Reward": "",
 "RichTextAnimation": "",
 "RichTextLabel2": "",
-"SootyScene": "",
+"SceneActionButton": "",
+"SootScene": "",
 "Sprite2DAnimations": "",
 "SpriteTransitions": "",
 "Task": "",
