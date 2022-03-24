@@ -62,7 +62,7 @@ func _show_options():
 	get_tree().create_timer(0.5).timeout.connect(set.bind("_can_select", true))
 
 func _create_options():
-	rect_size.y = 0.0
+	size.y = 0.0
 	
 	for i in len(_options):
 		var option = _options[i]
@@ -103,5 +103,5 @@ func _create_tween() -> Tween:
 func _fix_indicator_position():
 		var n: Control = button_parent.get_child(hovered)
 		if n:
-			selection_indicator.position.x = n.rect_position.x + 14
-			selection_indicator.position.y = n.rect_position.y + 16
+			selection_indicator.position.x = n.position.x + 14
+			selection_indicator.position.y = n.position.y + 16

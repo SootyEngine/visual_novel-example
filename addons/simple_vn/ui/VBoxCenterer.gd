@@ -11,7 +11,7 @@ func _resized():
 	var y := 0.0
 	var n: Control = get_parent_control()
 	for i in range(1, n.get_child_count()-1):
-		y += n.get_child(i).rect_size.y
+		y += n.get_child(i).size.y
 		y += n.get_theme_constant("separation")
-	rect_size.y = 0.0
-	rect_min_size.y = (n.rect_size.y - y) * .5
+	size.y = 0.0
+	minimum_size.y = (n.size.y - y) * .5

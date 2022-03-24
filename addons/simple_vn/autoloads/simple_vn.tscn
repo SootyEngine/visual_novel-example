@@ -5,10 +5,10 @@
 [ext_resource type="Script" path="res://addons/simple_vn/ui/EdgeClampContainer.gd" id="2_mqxw1"]
 [ext_resource type="Shader" path="res://addons/simple_vn/ui/ui_gradient_blur.gdshader" id="3_kr04k"]
 [ext_resource type="PackedScene" path="res://addons/simple_vn/ui/options/ui_option_menu.tscn" id="3_so0hf"]
-[ext_resource type="PackedScene" path="res://addons/simple_vn/ui/notifications/ui_notifications.tscn" id="4_sf4ru"]
+[ext_resource type="PackedScene" uid="uid://dsek3dih18lmq" path="res://addons/simple_vn/ui/notifications/ui_notifications.tscn" id="4_sf4ru"]
 [ext_resource type="PackedScene" uid="uid://bfngd7b38mvow" path="res://addons/sooty_engine/ui/ui_debug.tscn" id="5_ojci6"]
 [ext_resource type="PackedScene" uid="uid://beeajbnhjflok" path="res://addons/simple_vn/ui/ui_quest_list.tscn" id="6_e6odl"]
-[ext_resource type="PackedScene" path="res://addons/simple_vn/ui/notifications/ui_notification.tscn" id="6_ep3a5"]
+[ext_resource type="PackedScene" uid="uid://mbgul8mxjq2m" path="res://addons/simple_vn/ui/notifications/ui_notification.tscn" id="6_ep3a5"]
 [ext_resource type="PackedScene" uid="uid://3kiavxcgtsmg" path="res://addons/sooty_engine/ui/ui_save_load.tscn" id="6_p1slb"]
 [ext_resource type="Script" path="res://addons/simple_vn/ui/ui_debug_menu.gd" id="6_rc2au"]
 [ext_resource type="PackedScene" uid="uid://8h05he3jqbss" path="res://addons/simple_vn/ui/achievements/ui_achievements.tscn" id="7_s3pqk"]
@@ -104,7 +104,6 @@ anchor_bottom = 1.0
 [node name="debug_menu" type="TabContainer" parent="debug"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-tab_alignment = 0
 drag_to_rearrange_enabled = true
 
 [node name="debug" parent="debug/debug_menu" instance=ExtResource( "5_ojci6" )]
@@ -178,11 +177,13 @@ theme_override_font_sizes/bold_italics_font_size = 16
 theme_override_font_sizes/italics_font_size = 16
 theme_override_font_sizes/bold_font_size = 16
 theme_override_font_sizes/normal_font_size = 16
+meta_underlined = false
 script = ExtResource( "16_roqut" )
 alignment = 0
 markdown_enabled = false
 
 [node name="audio" type="Control" parent="debug/debug_menu"]
+visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource( "19_ptcwf" )

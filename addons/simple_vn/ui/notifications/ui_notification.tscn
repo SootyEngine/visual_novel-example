@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=6 format=3 uid="uid://mbgul8mxjq2m"]
 
 [ext_resource type="Script" path="res://addons/simple_vn/ui/notifications/ui_notification.gd" id="1_m2nm3"]
 [ext_resource type="Texture2D" uid="uid://b3vywvjoc08be" path="res://icon.png" id="1_wxrxi"]
@@ -14,7 +14,7 @@ width = 16
 height = 16
 
 [node name="notificiation" type="MarginContainer"]
-rect_min_size = Vector2(280, 80)
+minimum_size = Vector2(280, 80)
 offset_right = 280.0
 offset_bottom = 80.0
 script = ExtResource( "1_m2nm3" )
@@ -31,10 +31,9 @@ color = Color(0, 0, 0, 0.294118)
 [node name="bar" type="TextureProgressBar" parent="ColorRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_pivot_offset = Vector2(560, 0)
 value = 90.0
-texture_progress = SubResource( "GradientTexture2D_nvod5" )
 nine_patch_stretch = true
+texture_progress = SubResource( "GradientTexture2D_nvod5" )
 
 [node name="MarginContainer" type="MarginContainer" parent="ColorRect"]
 anchor_right = 1.0
@@ -81,9 +80,9 @@ size_flags_horizontal = 3
 alignment = 1
 
 [node name="label" type="RichTextLabel" parent="ColorRect/MarginContainer/HBoxContainer2/MarginContainer2/VBoxContainer"]
-offset_top = 26.0
+offset_top = 20.0
 offset_right = 192.0
-offset_bottom = 26.0
+offset_bottom = 43.0
 theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
 theme_override_constants/outline_size = 0
 theme_override_font_sizes/mono_font_size = 16
@@ -94,10 +93,10 @@ theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
 fit_content_height = true
 script = ExtResource( "3_g8y6o" )
+bbcode = "..."
 
 [node name="progress" type="ProgressBar" parent="ColorRect/MarginContainer/HBoxContainer2/MarginContainer2/VBoxContainer"]
-rect_min_size = Vector2(0, 16)
-offset_top = 30.0
+offset_top = 47.0
 offset_right = 192.0
-offset_bottom = 46.0
+offset_bottom = 51.0
 percent_visible = false

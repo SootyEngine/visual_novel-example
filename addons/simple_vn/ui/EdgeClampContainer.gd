@@ -22,8 +22,8 @@ func _resized():
 	
 	match edge:
 		BOTTOM:
-			rect_size.y = 0.0
+			size.y = 0.0
 			hide()
 			show()
 			var vp := get_viewport_rect()
-			rect_position.y = vp.size.y - rect_size.y - margin
+			position.y = vp.size.y - size.y - margin

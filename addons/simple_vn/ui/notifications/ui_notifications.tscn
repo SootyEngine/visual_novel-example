@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://dsek3dih18lmq"]
 
 [ext_resource type="Script" path="res://addons/simple_vn/ui/notifications/ui_notifications.gd" id="1_pirhg"]
 

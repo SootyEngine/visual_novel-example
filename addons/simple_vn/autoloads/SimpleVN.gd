@@ -25,28 +25,6 @@ func _init() -> void:
 	DialogueStack.flow_ended.connect(_flow_ended)
 	DialogueStack.on_line.connect(_on_text)
 
-func _clear_mods():
-	scenes.clear()
-
-func _load_mods(mods: Array):
-	for mod in mods:
-		mod.meta["scenes"] = []
-		for scene_path in UFile.get_files(mod.dir.plus_file("scenes"), [".scn", ".tscn"]):
-			scenes[UFile.get_file_name(scene_path)] = scene_path
-			mod.meta.scenes.append(scene_path)
-
-#func _ready() -> void:
-#	_ready_deferred.call_deferred()
-#
-#func _ready_deferred():
-#	var id := UFile.get_file_name(get_tree().current_scene.scene_file_path)
-#	print("SCENE ", id)
-#	if not DialogueStack.is_active() and Dialogues.has(id):
-#		DialogueStack.do("=> %s.START" % id)
-
-func simple_vn_version() -> String:
-	return "[%s]%s[]" % [Color.TOMATO, VERSION]
-
 func scene(id: String):
 	if id in scenes:
 		State.current_scene = id
@@ -57,6 +35,19 @@ func scene(id: String):
 			{wait=1.0})
 	else:
 		push_error("Couldn't find scene %s." % id)
+
+func simple_vn_version() -> String:
+	return "[%s]%s[]" % [Color.TOMATO, VERSION]
+
+func _clear_mods():
+	scenes.clear()
+
+func _load_mods(mods: Array):
+	for mod in mods:
+		mod.meta["scenes"] = []
+		for scene_path in UFile.get_files(mod.dir.plus_file("scenes"), [".scn", ".tscn"]):
+			scenes[UFile.get_file_name(scene_path)] = scene_path
+			mod.meta.scenes.append(scene_path)
 
 func _dialogue_started():
 	State.flow_history.clear()

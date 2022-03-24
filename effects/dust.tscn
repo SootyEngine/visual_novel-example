@@ -8,7 +8,7 @@ curve = SubResource( "Curve_l6s0m" )
 
 [sub_resource type="ParticlesMaterial" id="ParticlesMaterial_qjagb"]
 lifetime_randomness = 1.0
-emission_shape = 2
+emission_shape = 3
 emission_box_extents = Vector3(600, 400, 100)
 particle_flag_disable_z = true
 direction = Vector3(0, 0, 0)

@@ -20,9 +20,9 @@ func setup(info: Dictionary):
 	# main animation
 	var tw := get_tree().create_tween().set_parallel()
 	tw.tween_property(self, "modulate:a", 1.0, 0.5).from(0.0)
-	tw.tween_property(self, "rect_position:x", 0.0, 0.5).from(120.0).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT).from_current()
+	tw.tween_property(self, "position:x", 0.0, 0.5).from(120.0).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT).from_current()
 	tw.chain().tween_property(bar, "value", 0.0, time).from(100.0)
-	tw.chain().tween_property(self, "rect_position:x", 120.0, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT).from_current()
+	tw.chain().tween_property(self, "position:x", 120.0, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT).from_current()
 	tw.tween_property(self, "modulate:a", 0.0, 0.5).from_current()
 	tw.chain().tween_callback(queue_free)
 	

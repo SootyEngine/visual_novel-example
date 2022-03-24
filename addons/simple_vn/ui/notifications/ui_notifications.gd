@@ -1,7 +1,7 @@
 extends Node
 
 @export var prefab: PackedScene
-@export var wait := false
+@export var wait := 0.0
 @export var queue := []
 @export var time_delay := 2.0
 
@@ -13,21 +13,18 @@ func _global_message(type, payload):
 	if type == "notification":
 		_ping(payload)
 
-func _ping(msg := {}):
+func _ping(msg := {text=["No Text Given", "Default Message"]}):
 	queue.append(msg)
-	_next()
 
-func _next():
-	if len(queue) and not wait:
-		var n: Node = prefab.instantiate()
-		n.tree_exited.connect(_next)
-		$VBoxContainer.add_child(n)
-		$VBoxContainer.move_child(n, 0)
-		n.setup.call_deferred(queue.pop_front())
-		
-		wait = true
-		get_tree().create_timer(time_delay).timeout.connect(_stop_waiting)
+func _show(info: Dictionary):
+	var n: Node = prefab.instantiate()
+	$VBoxContainer.add_child(n)
+	$VBoxContainer.move_child(n, 0)
+	n.setup.call_deferred(info)
 
-func _stop_waiting():
-	wait = false
-	_next()
+func _process(delta: float) -> void:
+	if wait > 0.0:
+		wait -= delta
+	elif len(queue):
+		_show(queue.pop_front())
+		wait = time_delay

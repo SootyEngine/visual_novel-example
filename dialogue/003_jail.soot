@@ -2,7 +2,7 @@
 	~save_caption = "The Jail Cell"
 	
 	~save_caption = "One"
-	mr_bool: One
+	mr_bool: Once upon a time there lived a man in a house.
 	~save_caption = "Two"
 	mr_bool: Two
 	~save_caption = "Three"
