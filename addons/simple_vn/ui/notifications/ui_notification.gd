@@ -12,6 +12,9 @@ extends Control
 func setup(info: Dictionary):
 	label.set_bbcode("[hide].[]")
 	
+	if "play" in info:
+		SFX.play(info.play)
+	
 	var time := 5.0
 	
 	# main animation

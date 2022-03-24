@@ -18,5 +18,6 @@ func _to_string() -> String:
 		if line.begins_with("class_name"):
 			c = line.split("class_name", true, 1)[1].strip_edges()
 			break
-	var p = State._get_objects_property(self)
-	return "[%s:%s]" % [c, p]
+	var p = var2str(UObject.get_state(self))
+	p = p.replace(": ", ":").replace("\n", " ").replace('"', '').replace("{ ", "(").replace(" }", ")")
+	return "%s%s" % [c, p]

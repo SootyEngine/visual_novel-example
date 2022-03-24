@@ -1,7 +1,6 @@
 === START
 	~save_caption = "The Jail Cell"
 	
-	@music "No Hope"
 	~save_caption = "One"
 	mr_bool: One
 	~save_caption = "Two"
