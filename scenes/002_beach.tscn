@@ -1,15 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://iwbt7gk4puhr"]
+[gd_scene load_steps=11 format=3]
 
-[ext_resource type="Script" path="res://addons/simple_vn/nodes/SootScene.gd" id="1_47eh7"]
+[ext_resource type="Script" path="res://addons/visual_novel/nodes/SootScene.gd" id="1_47eh7"]
 [ext_resource type="Texture2D" uid="uid://c4i2bldgp27xh" path="res://bgs/beach_night.webp" id="1_wo2ev"]
-[ext_resource type="Script" path="res://addons/simple_vn/nodes/Background.gd" id="2_vvle1"]
+[ext_resource type="Script" path="res://addons/visual_novel/nodes/Background.gd" id="2_vvle1"]
 [ext_resource type="Texture2D" uid="uid://cwxshyarxpvpl" path="res://bgs/beach_noon.webp" id="3_i2w6y"]
-[ext_resource type="PackedScene" path="res://addons/simple_vn/screen_effects/blur/blur.tscn" id="4_elwk2"]
+[ext_resource type="PackedScene" path="res://addons/visual_novel/screen_effects/blur/blur.tscn" id="4_elwk2"]
 [ext_resource type="Texture2D" uid="uid://b3vywvjoc08be" path="res://icon.png" id="4_wu014"]
 [ext_resource type="Texture2D" uid="uid://dhkhavn25pwqi" path="res://chars/godette/godette_main.webp" id="5_8g0n1"]
-[ext_resource type="Script" path="res://addons/simple_vn/nodes/SceneActionButton.gd" id="6_ndp6h"]
-[ext_resource type="Script" path="res://addons/simple_vn/nodes/Camera.gd" id="7_0b8xy"]
-[ext_resource type="Script" path="res://addons/simple_vn/nodes/Sprite2DAnimations.gd" id="7_kldqt"]
+[ext_resource type="Script" path="res://addons/visual_novel/nodes/SceneActionButton.gd" id="6_ndp6h"]
+[ext_resource type="Script" path="res://addons/visual_novel/nodes/Camera.gd" id="7_0b8xy"]
+[ext_resource type="Script" path="res://addons/visual_novel/nodes/Sprite2DAnimations.gd" id="7_kldqt"]
 
 [node name="the_beach" type="Control"]
 anchor_right = 1.0

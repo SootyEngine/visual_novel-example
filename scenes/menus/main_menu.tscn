@@ -1,0 +1,68 @@
+[gd_scene load_steps=3 format=3 uid="uid://b12bxccc4memc"]
+
+[ext_resource type="Script" path="res://addons/visual_novel/nodes/ActionButton.gd" id="1_2dtw3"]
+[ext_resource type="Script" path="res://addons/rich_text/RichTextLabel2.gd" id="2_jklle"]
+
+[node name="main_menu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="buttons" type="VBoxContainer" parent="."]
+offset_left = 31.0
+offset_top = 107.0
+offset_right = 236.0
+offset_bottom = 463.0
+alignment = 1
+__meta__ = {
+"_edit_group_": true,
+"_edit_layout_mode": 0,
+"_edit_use_custom_anchors": false
+}
+
+[node name="continue" type="Button" parent="buttons"]
+offset_top = 110.0
+offset_right = 205.0
+offset_bottom = 141.0
+text = "Continue"
+script = ExtResource( "1_2dtw3" )
+
+[node name="start" type="Button" parent="buttons"]
+offset_top = 145.0
+offset_right = 205.0
+offset_bottom = 176.0
+text = "Start"
+script = ExtResource( "1_2dtw3" )
+action = "@scene start_new_game"
+
+[node name="load" type="Button" parent="buttons"]
+offset_top = 180.0
+offset_right = 205.0
+offset_bottom = 211.0
+text = "Load"
+script = ExtResource( "1_2dtw3" )
+action = "@scene load_game_menu"
+
+[node name="exit" type="Button" parent="buttons"]
+offset_top = 215.0
+offset_right = 205.0
+offset_bottom = 246.0
+text = "Exit"
+script = ExtResource( "1_2dtw3" )
+action = "@exit_game"
+
+[node name="title" type="RichTextLabel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/mono_font_size = 64
+theme_override_font_sizes/bold_italics_font_size = 64
+theme_override_font_sizes/italics_font_size = 64
+theme_override_font_sizes/bold_font_size = 64
+theme_override_font_sizes/normal_font_size = 64
+script = ExtResource( "2_jklle" )
+__meta__ = {
+"_edit_lock_": true
+}
+bbcode = "Main Menu"

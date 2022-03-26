@@ -1,7 +1,0 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://rpm34e1hdljn"]
-
-[ext_resource type="Shader" path="res://addons/simple_vn/screen_effects/hsv/hsv.gdshader" id="1_18fqj"]
-
-[resource]
-shader = ExtResource( "1_18fqj" )
-shader_param/saturation = null

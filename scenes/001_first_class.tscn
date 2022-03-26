@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" path="res://bgs/class_room.tscn" id="1_di2mh"]
 [ext_resource type="Texture2D" uid="uid://cfo0wwg3qvcie" path="res://chars/school_boy.webp" id="2_nxdin"]
-[ext_resource type="Script" path="res://addons/simple_vn/nodes/Camera.gd" id="3_8avwo"]
-[ext_resource type="Script" path="res://addons/simple_vn/nodes/Sprite2DAnimations.gd" id="3_kejdu"]
+[ext_resource type="Script" path="res://addons/visual_novel/nodes/Camera.gd" id="3_8avwo"]
+[ext_resource type="Script" path="res://addons/visual_novel/nodes/Sprite2DAnimations.gd" id="3_kejdu"]
 
 [node name="first_class" type="ParallaxBackground"]
 

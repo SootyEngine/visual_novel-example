@@ -12,17 +12,17 @@ _global_script_classes=[{
 "base": "BaseDataClass",
 "class": &"Achievement",
 "language": &"GDScript",
-"path": "res://addons/simple_vn/objects/Achievement.gd"
+"path": "res://addons/visual_novel/objects/Achievement.gd"
 }, {
 "base": "Resource",
 "class": &"BaseDataClass",
 "language": &"GDScript",
-"path": "res://addons/simple_vn/objects/BaseDataClass.gd"
+"path": "res://addons/visual_novel/objects/BaseDataClass.gd"
 }, {
 "base": "BaseDataClass",
 "class": &"BaseDataClassExtra",
 "language": &"GDScript",
-"path": "res://addons/simple_vn/objects/BaseDataClassExtra.gd"
+"path": "res://addons/visual_novel/objects/BaseDataClassExtra.gd"
 }, {
 "base": "Node",
 "class": &"BaseState",
@@ -32,7 +32,7 @@ _global_script_classes=[{
 "base": "BaseDataClassExtra",
 "class": &"Character",
 "language": &"GDScript",
-"path": "res://addons/simple_vn/objects/Character.gd"
+"path": "res://addons/visual_novel/objects/Character.gd"
 }, {
 "base": "ConfigFile",
 "class": &"Config",
@@ -42,7 +42,7 @@ _global_script_classes=[{
 "base": "BaseDataClass",
 "class": &"DateTime",
 "language": &"GDScript",
-"path": "res://addons/simple_vn/objects/DateTime.gd"
+"path": "res://addons/visual_novel/objects/DateTime.gd"
 }, {
 "base": "Resource",
 "class": &"Dialogue",
@@ -67,12 +67,12 @@ _global_script_classes=[{
 "base": "BaseDataClass",
 "class": &"EquipmentSlots",
 "language": &"GDScript",
-"path": "res://addons/simple_vn/objects/EquipmentSlots.gd"
+"path": "res://addons/visual_novel/objects/EquipmentSlots.gd"
 }, {
 "base": "Node",
 "class": &"Fader",
 "language": &"GDScript",
-"path": "res://addons/simple_vn/fader/fader.gd"
+"path": "res://addons/visual_novel/fader/fader.gd"
 }, {
 "base": "Resource",
 "class": &"FontHelper",
@@ -82,17 +82,17 @@ _global_script_classes=[{
 "base": "BaseDataClass",
 "class": &"Inventory",
 "language": &"GDScript",
-"path": "res://addons/simple_vn/objects/Inventory.gd"
+"path": "res://addons/visual_novel/objects/Inventory.gd"
 }, {
 "base": "BaseDataClassExtra",
 "class": &"Item",
 "language": &"GDScript",
-"path": "res://addons/simple_vn/objects/Item.gd"
+"path": "res://addons/visual_novel/objects/Item.gd"
 }, {
 "base": "BaseDataClassExtra",
 "class": &"Location",
 "language": &"GDScript",
-"path": "res://addons/simple_vn/objects/Location.gd"
+"path": "res://addons/visual_novel/objects/Location.gd"
 }, {
 "base": "Resource",
 "class": &"Markdown",
@@ -107,7 +107,7 @@ _global_script_classes=[{
 "base": "BaseDataClass",
 "class": &"Note",
 "language": &"GDScript",
-"path": "res://addons/simple_vn/objects/Note.gd"
+"path": "res://addons/visual_novel/objects/Note.gd"
 }, {
 "base": "Resource",
 "class": &"PropList",
@@ -117,7 +117,7 @@ _global_script_classes=[{
 "base": "BaseDataClassExtra",
 "class": &"Reward",
 "language": &"GDScript",
-"path": "res://addons/simple_vn/objects/Reward.gd"
+"path": "res://addons/visual_novel/objects/Reward.gd"
 }, {
 "base": "RichTextLabel2",
 "class": &"RichTextAnimation",
@@ -132,27 +132,27 @@ _global_script_classes=[{
 "base": "Button",
 "class": &"SceneActionButton",
 "language": &"GDScript",
-"path": "res://addons/simple_vn/nodes/SceneActionButton.gd"
+"path": "res://addons/visual_novel/nodes/SceneActionButton.gd"
 }, {
 "base": "Node",
 "class": &"SootScene",
 "language": &"GDScript",
-"path": "res://addons/simple_vn/nodes/SootScene.gd"
+"path": "res://addons/visual_novel/nodes/SootScene.gd"
 }, {
 "base": "Sprite2D",
 "class": &"Sprite2DAnimations",
 "language": &"GDScript",
-"path": "res://addons/simple_vn/nodes/Sprite2DAnimations.gd"
+"path": "res://addons/visual_novel/nodes/Sprite2DAnimations.gd"
 }, {
 "base": "Resource",
 "class": &"SpriteTransitions",
 "language": &"GDScript",
-"path": "res://addons/simple_vn/shaders/SpriteTransition.gd"
+"path": "res://addons/visual_novel/shaders/SpriteTransition.gd"
 }, {
 "base": "BaseDataClass",
 "class": &"Task",
 "language": &"GDScript",
-"path": "res://addons/simple_vn/objects/Task.gd"
+"path": "res://addons/visual_novel/objects/Task.gd"
 }, {
 "base": "Resource",
 "class": &"UDebug",
@@ -190,6 +190,11 @@ _global_script_classes=[{
 "path": "res://addons/util/UList.gd"
 }, {
 "base": "Resource",
+"class": &"UNode",
+"language": &"GDScript",
+"path": "res://addons/util/UNode.gd"
+}, {
+"base": "Resource",
 "class": &"UObject",
 "language": &"GDScript",
 "path": "res://addons/util/UObject.gd"
@@ -222,17 +227,17 @@ _global_script_classes=[{
 "base": "BaseDataClass",
 "class": &"VBool",
 "language": &"GDScript",
-"path": "res://addons/simple_vn/objects/VBool.gd"
+"path": "res://addons/visual_novel/objects/VBool.gd"
 }, {
 "base": "BaseDataClass",
 "class": &"VEnum",
 "language": &"GDScript",
-"path": "res://addons/simple_vn/objects/VEnum.gd"
+"path": "res://addons/visual_novel/objects/VEnum.gd"
 }, {
 "base": "BaseDataClass",
 "class": &"VStat",
 "language": &"GDScript",
-"path": "res://addons/simple_vn/objects/VStat.gd"
+"path": "res://addons/visual_novel/objects/VStat.gd"
 }]
 _global_script_class_icons={
 "Achievement": "",
@@ -271,6 +276,7 @@ _global_script_class_icons={
 "UFlag": "",
 "UGroup": "",
 "UList": "",
+"UNode": "",
 "UObject": "",
 "URand": "",
 "UString": "",
@@ -285,7 +291,7 @@ _global_script_class_icons={
 [application]
 
 config/name="sooty_example"
-run/main_scene="res://scenes/003_jail.tscn"
+run/main_scene="res://scenes/menus/main_menu.tscn"
 config/icon="res://chars/godette/face_confused.webp"
 config/features=PackedStringArray("4.0", "Vulkan Clustered")
 
@@ -301,11 +307,11 @@ Music="*res://addons/sooty_engine/autoloads/Music.gd"
 SFX="*res://addons/sooty_engine/autoloads/SFX.gd"
 Dialogues="*res://addons/sooty_engine/autoloads/Dialogues.gd"
 DialogueStack="*res://addons/sooty_engine/autoloads/DialogueStack.gd"
-SimpleVN="*res://addons/simple_vn/autoloads/simple_vn.tscn"
+VisualNovel="*res://addons/visual_novel/autoloads/VisualNovel.tscn"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/rich_text/plugin.cfg", "res://addons/simple_vn/plugin.cfg", "res://addons/sooty_engine/plugin.cfg", "res://addons/tool_button/plugin.cfg")
+enabled=PackedStringArray("res://addons/rich_text/plugin.cfg", "res://addons/sooty_engine/plugin.cfg", "res://addons/tool_button/plugin.cfg", "res://addons/visual_novel/plugin.cfg")
 
 [input]
 
