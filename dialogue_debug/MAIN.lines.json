@@ -3,7 +3,7 @@
 		"id": "",
 		"file": 0,
 		"line": 1,
-		"type": "goto",
-		"goto": "001_start.start"
+		"type": "action",
+		"action": "@scene 001_first_class"
 	}
 }

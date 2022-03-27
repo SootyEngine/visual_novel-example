@@ -1,16 +1,18 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=4 format=3 uid="uid://b6xq55e7ch5mi"]
 
 [ext_resource type="Texture2D" uid="uid://dd6sqh4v0gtdt" path="res://bgs/class.webp" id="1_xknx2"]
 [ext_resource type="PackedScene" path="res://addons/visual_novel/screen_effects/blur/blur.tscn" id="2_djj7r"]
 [ext_resource type="Script" path="res://addons/visual_novel/nodes/Background.gd" id="2_efxkp"]
 
-[node name="class_room" type="ParallaxLayer"]
+[node name="class_room" type="Node2D"]
 
 [node name="bg" type="Sprite2D" parent="."]
 position = Vector2(508.5, 327)
 scale = Vector2(1.38574, 1.24421)
 texture = ExtResource( "1_xknx2" )
 script = ExtResource( "2_efxkp" )
+alternatives = []
+current = ""
 
 [node name="blur" parent="." instance=ExtResource( "2_djj7r" )]
 visible = false

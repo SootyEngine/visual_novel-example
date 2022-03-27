@@ -6,46 +6,46 @@
 		"type": "action",
 		"action": "~save_caption = \"Classroom\""
 	},
-	"0!4": {
+	"0!3": {
 		"id": "",
 		"file": 0,
-		"line": 4,
+		"line": 3,
 		"type": "text",
 		"text": "Hey kid, *who the hell* are you?",
 		"from": "school_boy"
+	},
+	"0!5": {
+		"id": "",
+		"file": 0,
+		"line": 5,
+		"type": "action",
+		"action": "@camera.pan 200"
 	},
 	"0!6": {
 		"id": "",
 		"file": 0,
 		"line": 6,
 		"type": "action",
-		"action": "@camera.pan 200"
+		"action": "@camera.wait"
 	},
 	"0!7": {
 		"id": "",
 		"file": 0,
 		"line": 7,
 		"type": "action",
-		"action": "@camera.wait"
+		"action": "@john.fade_in"
 	},
 	"0!8": {
 		"id": "",
 		"file": 0,
 		"line": 8,
 		"type": "action",
-		"action": "@john.fade_in"
+		"action": "@john.wait"
 	},
 	"0!9": {
 		"id": "",
 		"file": 0,
 		"line": 9,
-		"type": "action",
-		"action": "@john.wait"
-	},
-	"0!10": {
-		"id": "",
-		"file": 0,
-		"line": 10,
 		"type": "text",
 		"text": "I'm John. (He get's angry.)[!@john::shake_no][w] [!@john::talk]I don't take kindly to strangers.",
 		"from": "john",
@@ -53,38 +53,38 @@
 			"@john.talk"
 		]
 	},
+	"0!11": {
+		"id": "",
+		"file": 0,
+		"line": 11,
+		"type": "action",
+		"action": "@camera.pan -200"
+	},
 	"0!12": {
 		"id": "",
 		"file": 0,
 		"line": 12,
 		"type": "action",
-		"action": "@camera.pan -200"
+		"action": "@camera.wait"
 	},
 	"0!13": {
 		"id": "",
 		"file": 0,
 		"line": 13,
 		"type": "action",
-		"action": "@camera.wait"
+		"action": "@paul.fade_in"
 	},
 	"0!14": {
 		"id": "",
 		"file": 0,
 		"line": 14,
 		"type": "action",
-		"action": "@paul.fade_in"
+		"action": "@paul.wait"
 	},
 	"0!15": {
 		"id": "",
 		"file": 0,
 		"line": 15,
-		"type": "action",
-		"action": "@paul.wait"
-	},
-	"0!16": {
-		"id": "",
-		"file": 0,
-		"line": 16,
 		"type": "text",
 		"text": "I'm Paul. (He smiles.)[!@paul::shake_yes][w] [!@paul::talk]I *do* take kindly to strangers.",
 		"from": "paul",
@@ -92,38 +92,38 @@
 			"@paul.talk"
 		]
 	},
+	"0!17": {
+		"id": "",
+		"file": 0,
+		"line": 17,
+		"type": "action",
+		"action": "@camera.pan"
+	},
 	"0!18": {
 		"id": "",
 		"file": 0,
 		"line": 18,
 		"type": "action",
-		"action": "@camera.pan"
+		"action": "@camera.wait"
 	},
 	"0!19": {
 		"id": "",
 		"file": 0,
 		"line": 19,
 		"type": "action",
-		"action": "@camera.wait"
+		"action": "@chris.fade_in"
 	},
 	"0!20": {
 		"id": "",
 		"file": 0,
 		"line": 20,
 		"type": "action",
-		"action": "@chris.fade_in"
+		"action": "@chris.wait"
 	},
 	"0!21": {
 		"id": "",
 		"file": 0,
 		"line": 21,
-		"type": "action",
-		"action": "@chris.wait"
-	},
-	"0!22": {
-		"id": "",
-		"file": 0,
-		"line": 22,
 		"type": "text",
 		"text": "I'm Chris. I'm the main character of this group.",
 		"from": "chris",
@@ -131,17 +131,17 @@
 			"@chris.talk"
 		]
 	},
+	"0!23": {
+		"id": "",
+		"file": 0,
+		"line": 23,
+		"type": "action",
+		"action": "@school_boy.talk"
+	},
 	"0!24": {
 		"id": "",
 		"file": 0,
 		"line": 24,
-		"type": "action",
-		"action": "@school_boy.talk"
-	},
-	"0!25": {
-		"id": "",
-		"file": 0,
-		"line": 25,
 		"type": "text",
 		"text": "We are *The Gang of 3*.[wait=2] [!@school_boy.laugh]hah, hah, hah.",
 		"from": "paul john chris"

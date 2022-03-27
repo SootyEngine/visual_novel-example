@@ -1,50 +1,46 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3 uid="uid://bdal7nruyolom"]
 
-[ext_resource type="PackedScene" path="res://bgs/class_room.tscn" id="1_di2mh"]
+[ext_resource type="Script" path="res://addons/visual_novel/nodes/SootScene.gd" id="1_cgyt2"]
+[ext_resource type="PackedScene" uid="uid://b6xq55e7ch5mi" path="res://bgs/class_room.tscn" id="1_di2mh"]
 [ext_resource type="Texture2D" uid="uid://cfo0wwg3qvcie" path="res://chars/school_boy.webp" id="2_nxdin"]
 [ext_resource type="Script" path="res://addons/visual_novel/nodes/Camera.gd" id="3_8avwo"]
 [ext_resource type="Script" path="res://addons/visual_novel/nodes/Sprite2DAnimations.gd" id="3_kejdu"]
 
-[node name="first_class" type="ParallaxBackground"]
+[node name="first_class" type="Node2D"]
+script = ExtResource( "1_cgyt2" )
 
 [node name="class_room" parent="." instance=ExtResource( "1_di2mh" )]
-position = Vector2(-536, -348)
-motion_scale = Vector2(-0.5, -0.5)
+position = Vector2(-24, -74)
 
-[node name="school_boy" type="ParallaxLayer" parent="."]
-position = Vector2(317, 315)
-motion_scale = Vector2(1.5, 1.5)
-
-[node name="sprite" type="Sprite2D" parent="school_boy" groups=["john", "school_boy"]]
+[node name="sprite" type="Sprite2D" parent="." groups=["john", "school_boy"]]
 modulate = Color(1, 1, 1, 0)
+position = Vector2(829, 589)
+skew = 0.1
 texture = ExtResource( "2_nxdin" )
 offset = Vector2(0, -300)
 script = ExtResource( "3_kejdu" )
 current_shake = Vector2(7.83774e-15, 7.83774e-15)
 
-[node name="school_boy2" type="ParallaxLayer" parent="."]
-position = Vector2(-343, 317)
-motion_scale = Vector2(1.5, 1.5)
-
-[node name="sprite" type="Sprite2D" parent="school_boy2" groups=["paul", "school_boy"]]
+[node name="sprite2" type="Sprite2D" parent="." groups=["paul", "school_boy"]]
 modulate = Color(1, 1, 1, 0)
+position = Vector2(169, 591)
 texture = ExtResource( "2_nxdin" )
 offset = Vector2(0, -300)
 script = ExtResource( "3_kejdu" )
 current_shake = Vector2(7.83774e-15, 7.83774e-15)
 
-[node name="school_boy3" type="ParallaxLayer" parent="."]
-position = Vector2(-10, 312)
-motion_scale = Vector2(2, 2)
-
-[node name="sprite" type="Sprite2D" parent="school_boy3" groups=["chris", "school_boy"]]
+[node name="sprite3" type="Sprite2D" parent="." groups=["chris", "school_boy"]]
 modulate = Color(1, 1, 1, 0)
+position = Vector2(502, 586)
 texture = ExtResource( "2_nxdin" )
 offset = Vector2(0, -300)
 script = ExtResource( "3_kejdu" )
 current_shake = Vector2(7.83774e-15, 7.83774e-15)
 
-[node name="camera" type="Camera2D" parent="." groups=["camera"]]
+[node name="camera_origin" type="Node2D" parent="."]
+position = Vector2(509, 295)
+
+[node name="camera" type="Camera2D" parent="camera_origin" groups=["camera"]]
 modulate = Color(0, 0, 0, 0.0862745)
 rotating = true
 current = true
