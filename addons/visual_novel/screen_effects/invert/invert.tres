@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://addons/visual_novel/screen_effects/invert/invert.gdshader" id="1_kaj17"]
+
+[resource]
+shader = ExtResource( "1_kaj17" )
+shader_param/blend = 0.074

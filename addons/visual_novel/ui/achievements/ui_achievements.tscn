@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://addons/visual_novel/ui/achievements/ui_achievements.gd" id="1_rmxkm"]
+[ext_resource type="PackedScene" path="res://addons/visual_novel/ui/achievements/ui_achievement.tscn" id="2_xjvt6"]
+
+[node name="achievements" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( "1_rmxkm" )
+_prefab = NodePath("parent/prefab")
+_parent = NodePath("parent")
+
+[node name="parent" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="prefab" type="HBoxContainer" parent="parent"]
+offset_right = 1024.0
+offset_bottom = 80.0
+
+[node name="ui_achievement" parent="parent/prefab" instance=ExtResource( "2_xjvt6" )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 952.0
+offset_bottom = 80.0
+size_flags_horizontal = 3
+
+[node name="min" type="Button" parent="parent/prefab"]
+rect_min_size = Vector2(32, 0)
+offset_left = 956.0
+offset_right = 988.0
+offset_bottom = 80.0
+size_flags_horizontal = 4
+text = "-"
+
+[node name="max" type="Button" parent="parent/prefab"]
+rect_min_size = Vector2(32, 0)
+offset_left = 992.0
+offset_right = 1024.0
+offset_bottom = 80.0
+size_flags_horizontal = 4
+text = "+"

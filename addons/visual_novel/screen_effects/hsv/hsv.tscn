@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://addons/visual_novel/screen_effects/hsv/hsv.gd" id="1_ecd66"]
+[ext_resource type="Material" path="res://addons/visual_novel/screen_effects/hsv/hsv.tres" id="2_ievrg"]
+
+[node name="hsv" type="CanvasLayer"]
+script = ExtResource( "1_ecd66" )
+default_time = 0.5
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = ExtResource( "2_ievrg" )
+anchor_right = 1.0
+anchor_bottom = 1.0
