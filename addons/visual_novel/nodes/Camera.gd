@@ -61,7 +61,7 @@ func camera(action: String, args: Array = [], kwargs: Dictionary = {}):
 			if flow_manager.add_pauser(self):
 				t.tween_callback(flow_manager.remove_pauser.bind(self))
 	else:
-		print("\tno action '%s'." % action)
+		push_error("\tno action '%s'." % action)
 
 func set_target(id: String):
 	var target := UGroup.get_first_where("camera_target", {name=id})

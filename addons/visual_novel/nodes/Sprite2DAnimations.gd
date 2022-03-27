@@ -107,7 +107,6 @@ func from_left():
 	current_shift = Vector2(unit * 6, 0)
 	_add_color(t, Color.WHITE, {ease=Tween.EASE_OUT})
 	_add_shift(t, 0, 0, {ease=Tween.EASE_OUT, trans=Tween.TRANS_QUINT})
-	t.tween_callback(func(): print("All DONE"))
 
 func from_right():
 	var t := _create().set_parallel()

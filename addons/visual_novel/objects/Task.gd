@@ -47,8 +47,6 @@ func _post_init():
 		task.state_changed.connect(_subtask_state_changed)
 
 func _subtask_state_changed(subtask: Task):
-	prints(self, goal, "SUBQUEST CHANGED", subtask)
-	
 	if not goal:
 		var msg := {
 			text="[tomato]%s[]\n%s" % [name, subtask.name],

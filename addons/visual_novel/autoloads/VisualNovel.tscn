@@ -178,6 +178,7 @@ prefab = ExtResource( "6_ep3a5" )
 
 [node name="debug" type="CanvasLayer" parent="."]
 process_mode = 3
+visible = false
 script = ExtResource( "6_rc2au" )
 
 [node name="backing" type="ColorRect" parent="debug"]
@@ -246,6 +247,7 @@ meta_underlined = false
 script = ExtResource( "16_roqut" )
 
 [node name="dialogue" type="Control" parent="debug/debug_menu"]
+visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource( "17_4ysal" )

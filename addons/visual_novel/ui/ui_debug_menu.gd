@@ -8,7 +8,7 @@ func _ready() -> void:
 	Saver.loaded.connect(_hide)
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("toggle_debug"):
+	if event.is_action_pressed("toggle_debug") and VisualNovel.debug.allow_debug_menu:
 		if visible:
 			_hide()
 		else:

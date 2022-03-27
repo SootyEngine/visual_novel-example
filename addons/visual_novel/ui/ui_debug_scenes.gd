@@ -12,8 +12,8 @@ func _meta_clicked(scene: String):
 func _ready_deferred():
 	var rt: RichTextLabel = $RichTextLabel
 	rt.clear()
-	for scene in VisualNovel.scenes:
-		rt.push_meta(VisualNovel.scenes[scene])
+	for scene in Scenes:
+		rt.push_meta(scene)#Scenes.scenes[scene])
 		rt.append_text(scene)
 		rt.pop()
 		rt.newline()

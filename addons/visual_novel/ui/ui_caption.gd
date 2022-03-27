@@ -27,12 +27,10 @@ func _ready() -> void:
 	rtl_text.clear()
 	rtl_text.faded_in.connect(set_show_indicator.bind(true))
 	rtl_text.started.connect(set_show_indicator.bind(false))
-	Saver.pre_load.connect(_pre_load)
+	Saver.pre_load.connect(_hide)
+	Global.ended.connect(_hide)
 	visible = false
 	indicator.modulate.a = 0.0
-
-func _pre_load():
-	_hide()
 
 func _caption(id: String, msg_type: String, payload: Variant):
 #	prints("L %s %s (%s): %s" % [self, id, msg_type, payload])

@@ -10,17 +10,20 @@ const QUOTE_DELAY := 0.5 # a delay between predicates and quotes.
 const QUOTES := "“%s”" # nice quotes
 const INNER_QUOTES := "‘%s’" # nice inner quotes
 
-var scenes := {}
 var last_speaker := ""
 
-func _init() -> void:
-	add_to_group("sa:scene")
-	add_to_group("sa:visual_novel_version")
-	add_to_group("sa:start_new")
-	add_to_group("sa:quit")
+class Debug:
+	# when displaying dialogue options, do you want hidden ones to be shown?
+	var show_hidden_options := false
 	
-	Mods.pre_loaded.connect(_clear_mods)
-	Mods.load_all.connect(_load_mods)
+	# toggle with q
+	var allow_debug_menu := false
+
+var debug := Debug.new()
+
+func _init() -> void:
+	add_to_group("sa:visual_novel_version")
+	
 	Mods._add_mod("res://addons/visual_novel", true)
 	
 	DialogueStack.started.connect(_dialogue_started)
@@ -32,36 +35,8 @@ func _init() -> void:
 func _ready() -> void:
 	$captions/backing.visible = false
 
-func scene(id: String, kwargs := {}):
-	if id in scenes:
-		State.current_scene = id
-		DialogueStack.halt(self)
-		Fader.create(
-			Global.change_scene.bind(scenes[id]),
-			DialogueStack.unhalt.bind(self))
-	else:
-		push_error("Couldn't find scene %s." % id)
-
-func start_new():
-	print("start new game")
-	DialogueStack.execute("MAIN.START")
-
-func quit():
-	# TODO: Autosave.
-	get_tree().quit()
-
 func visual_novel_version() -> String:
 	return "[%s]%s[]" % [Color.TOMATO, VERSION]
-
-func _clear_mods():
-	scenes.clear()
-
-func _load_mods(mods: Array):
-	for mod in mods:
-		mod.meta["scenes"] = []
-		for scene_path in UFile.get_files(mod.dir.plus_file("scenes"), [".scn", ".tscn"]):
-			scenes[UFile.get_file_name(scene_path)] = scene_path
-			mod.meta.scenes.append(scene_path)
 
 func _dialogue_started():
 	$captions/backing.visible = true
@@ -85,7 +60,6 @@ func _input(event: InputEvent) -> void:
 		return
 	
 	if event.is_action_pressed("advance"):
-		print("Advance")
 		var waiting_for := []
 		_caption_msg("advance", waiting_for)
 		if len(waiting_for):
@@ -114,7 +88,7 @@ func _on_text(line: DialogueLine):
 			var names = Array(from.split(" "))
 			for i in len(names):
 				if State._has(names[i]):
-					names[i] = Sooty.as_string(State._get(names[i]))
+					names[i] = UString.as_string(State._get(names[i]))
 			from = names.pop_back()
 			if len(names):
 				from = ", ".join(names) + ", and " + from

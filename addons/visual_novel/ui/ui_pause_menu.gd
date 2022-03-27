@@ -15,22 +15,23 @@ func _ready() -> void:
 	
 	for item in buttons.get_children():
 		if item is Button:
-			prints("BUTTON", item, item.name)
-			if item.name == "continue":
-				print("is continue")
-				item.pressed.connect(_hide)
-			if item.name == "save":
-				print("is save")
-				item.pressed.connect(_show_save_menu)
-			if item.name =="load":
-				print("is load")
-				item.pressed.connect(_show_load_menu)
-				# TODO: Are you sure?
-			if item.name =="main_menu":
-				item.pressed.connect(StringAction.do.bind("@scene main_menu"))
+			match str(item.name):
+				"continue":
+					item.pressed.connect(_hide)
+				"save":
+					item.pressed.connect(_show_save_menu)
+				"load":
+					item.pressed.connect(_show_load_menu)
+				"main_menu":
+					item.pressed.connect(_goto_main_menu)
+
+func _goto_main_menu():
+	# TODO: Are you sure?
+	_hide()
+	Global.end()
+	Scenes.goto("main_menu")
 
 func _show_save_menu():
-	print("clicked")
 	save_load_screen.visible = true
 	save_load_screen.save_mode = true
 
@@ -40,8 +41,6 @@ func _show_load_menu():
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		print("toggle ", visible)
-		
 		if visible:
 			_hide()
 		elif get_tree().current_scene is SootScene:

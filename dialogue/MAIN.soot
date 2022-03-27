@@ -1,3 +1,3 @@
 === START
-	@scene 001_first_class
-
+	@goto 001_first_class
+	
