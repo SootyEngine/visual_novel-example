@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=7 format=3 uid="uid://d173tepyjvfhr"]
 
 [ext_resource type="Script" path="res://addons/visual_novel/ui/options/ui_option_button.gd" id="1_ptcho"]
 [ext_resource type="Font" path="res://fonts/robotomono/robotomono_bi.tres" id="2_82qb6"]
@@ -18,10 +18,12 @@ _label = NodePath("RichTextLabel")
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = 27.0
 theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.25)
 theme_override_constants/shadow_outline_size = 4
 theme_override_constants/outline_size = 4
+theme_override_fonts/mono_font = ExtResource( "5_gh021" )
 theme_override_fonts/bold_italics_font = ExtResource( "2_82qb6" )
 theme_override_fonts/italics_font = ExtResource( "3_eldg6" )
 theme_override_fonts/bold_font = ExtResource( "4_74d83" )
@@ -31,9 +33,11 @@ theme_override_font_sizes/bold_italics_font_size = 20
 theme_override_font_sizes/italics_font_size = 20
 theme_override_font_sizes/bold_font_size = 20
 theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
 fit_content_height = true
 script = ExtResource( "2_waskk" )
-bbcode = "Option Text "
-size = 20
+bbcode = "Option Text"
+font = "robotomono "
+font_size = 20
 outline_colored = 4
 outline_adjust = 0.25

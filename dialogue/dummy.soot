@@ -1,6 +1,10 @@
 === START
-	"Strange Person": Who the hell are you?
-	: And what are you doing here?
-	He looks around.
-	: This place is off limits.
-	paul: This is v[@sooty_version] of *Sooty* and v[@visual_novel_version] of the *Visual Novel System*.
+	
+	Once *upon* a time.
+	john: Want more [b;tomato]points[]?
+		- Yes, of course.
+			~score += 10
+		- No, I don't.
+			~score -= 3
+	
+	=> START

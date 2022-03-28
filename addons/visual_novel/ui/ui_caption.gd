@@ -1,8 +1,6 @@
 @tool
 extends Control#"res://addons/visual_novel/ui/EdgeClampContainer.gd"
 
-@export var shown := false
-
 @export var _rtl_from: NodePath = ""
 @export var _rtl_text: NodePath = ""
 @export var _indicator: NodePath = ""
@@ -29,18 +27,33 @@ func _ready() -> void:
 	rtl_text.started.connect(set_show_indicator.bind(false))
 	Saver.pre_load.connect(_hide)
 	Global.ended.connect(_hide)
+	DialogueStack._refresh.connect(_hide)
 	visible = false
 	indicator.modulate.a = 0.0
+
+func _input(event: InputEvent) -> void:
+	if DialogueStack.is_active() and visible:
+		if event.is_action_pressed("advance"):
+			var waiting_for := []
+			_do("advance", waiting_for)
+			if len(waiting_for):
+				print("Waiting for ", waiting_for)
+			else:
+				_do("hide", null)
+				DialogueStack.unhalt(self)
 
 func _caption(id: String, msg_type: String, payload: Variant):
 #	prints("L %s %s (%s): %s" % [self, id, msg_type, payload])
 	if id == "*" or id == name:
+		_do(msg_type, payload)
+
+func _do(msg_type: String, payload: Variant):
 		match msg_type:
 			"show_line":
+				DialogueStack.halt(self)
 				_delay_action()
 				
-				if not shown:
-					shown = true
+				if not visible:
 					visible = true
 					var tween := _create_tween()
 					tween.tween_property(self, "modulate:a", 1.0, 0.25).from(0.0)
@@ -50,7 +63,7 @@ func _caption(id: String, msg_type: String, payload: Variant):
 					_show_line(payload)
 			
 			"advance":
-				if shown:
+				if visible:
 					if not _can_skip:
 						payload.append(self)
 					elif rtl_text.can_advance():
@@ -63,7 +76,7 @@ func _caption(id: String, msg_type: String, payload: Variant):
 						_hide_eventually()
 			
 			"hide":
-				if shown:
+				if visible:
 					_hide_eventually()
 
 func _delay_action():
@@ -112,7 +125,6 @@ func _show_line(payload: Dictionary):
 				indicator.visible = false
 				rtl_text.faded_in.connect(option_menu._show_options, CONNECT_ONESHOT)
 				DialogueStack.option_selected.connect(_option_selected, CONNECT_ONESHOT)
-				DialogueStack.halt(self)
 		else:
 			push_error("No options_menu setup %s." % [name])
 
@@ -123,7 +135,7 @@ func _option_selected(option: DialogueLine):
 
 # wait a period of time before hiding, in case there will be another text showing up.
 func _hide_eventually():
-	if shown:
+	if visible:
 		var tw := _create_tween()
 		tw.tween_interval(0.25)
 		tw.tween_callback(_hide)
@@ -132,7 +144,7 @@ func _hide_eventually():
 		rtl_text.fade_out = true
 
 func _hide():
-	shown = false
+	visible = false
 	show_indicator = false
 	rtl_from.clear()
 	rtl_text.clear()

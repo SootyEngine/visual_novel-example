@@ -17,7 +17,7 @@ class Debug:
 	var show_hidden_options := false
 	
 	# toggle with q
-	var allow_debug_menu := false
+	var allow_debug_menu := true
 
 var debug := Debug.new()
 
@@ -32,6 +32,7 @@ func _ready() -> void:
 	DialogueStack.flow_started.connect(_flow_started)
 	DialogueStack.flow_ended.connect(_flow_ended)
 	DialogueStack.on_line.connect(_on_text)
+	DialogueStack._refresh.connect(DialogueStack.unhalt.bind(self))
 	
 	$captions/backing.visible = false
 
@@ -55,18 +56,18 @@ func _flow_ended(flow: String):
 	if len(State.flow_history) and State.flow_history[-1] != "MAIN.FLOW_END":
 		DialogueStack.goto("MAIN.FLOW_END", DialogueStack.STEP_GOTO)
 
-func _input(event: InputEvent) -> void:
-	if not DialogueStack.is_active():
-		return
-	
-	if event.is_action_pressed("advance"):
-		var waiting_for := []
-		_caption_msg("advance", waiting_for)
-		if len(waiting_for):
-			print("Waiting for ", waiting_for)
-		else:
-			_caption_msg("hide")
-			DialogueStack.unhalt(self)
+#func _input(event: InputEvent) -> void:
+#	if not DialogueStack.is_active():
+#		return
+#
+#	if event.is_action_pressed("advance"):
+#		var waiting_for := []
+#		_caption_msg("advance", waiting_for)
+#		if len(waiting_for):
+#			print("Waiting for ", waiting_for)
+#		else:
+#			_caption_msg("hide")
+#			DialogueStack.unhalt(self)
 
 func _caption_msg(msg_type: String, msg: Variant = null):
 	Global.call_group_flags(SceneTree.GROUP_CALL_REALTIME, "caption", "_caption", [State.caption_at, msg_type, msg])
@@ -98,7 +99,7 @@ func _on_text(line: DialogueLine):
 		
 		from = FORMAT_FROM % from
 	
-	DialogueStack.halt(self)
+#	DialogueStack.halt(self)
 	_caption_msg("show_line", {
 		from=from,
 		text=_format_text(line.text, from != null),

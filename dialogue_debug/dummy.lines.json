@@ -1,41 +1,62 @@
 {
-	"0!1": {
-		"id": "",
-		"file": 0,
-		"line": 1,
-		"type": "text",
-		"text": "Who the hell are you?",
-		"from": "\"Strange Person\""
-	},
 	"0!2": {
 		"id": "",
 		"file": 0,
 		"line": 2,
 		"type": "text",
-		"text": "And what are you doing here?",
-		"from": "\"Strange Person\""
+		"text": "Once *upon* a time."
+	},
+	"0!5": {
+		"id": "",
+		"file": 0,
+		"line": 5,
+		"type": "action",
+		"action": "~score += 10"
+	},
+	"0!4": {
+		"id": "",
+		"file": 0,
+		"line": 4,
+		"type": "option",
+		"text": "Yes, of course.",
+		"then": [
+			"0!5"
+		]
+	},
+	"0!7": {
+		"id": "",
+		"file": 0,
+		"line": 7,
+		"type": "action",
+		"action": "~score -= 3"
+	},
+	"0!6": {
+		"id": "",
+		"file": 0,
+		"line": 6,
+		"type": "option",
+		"text": "No, I don't.",
+		"then": [
+			"0!7"
+		]
 	},
 	"0!3": {
 		"id": "",
 		"file": 0,
 		"line": 3,
 		"type": "text",
-		"text": "He looks around."
+		"text": "Want more [b;tomato]points[]?",
+		"from": "john",
+		"options": [
+			"0!4",
+			"0!6"
+		]
 	},
-	"0!4": {
+	"0!9": {
 		"id": "",
 		"file": 0,
-		"line": 4,
-		"type": "text",
-		"text": "This place is off limits.",
-		"from": "\"Strange Person\""
-	},
-	"0!5": {
-		"id": "",
-		"file": 0,
-		"line": 5,
-		"type": "text",
-		"text": "This is v[@sooty_version] of Sooty and v[@visual_novel_version] of the *Visual Novel System*.",
-		"from": "paul"
+		"line": 9,
+		"type": "goto",
+		"goto": "dummy.START"
 	}
 }

@@ -1,10 +1,10 @@
-[gd_scene load_steps=26 format=3 uid="uid://divhmakl2ewrr"]
+[gd_scene load_steps=28 format=3 uid="uid://divhmakl2ewrr"]
 
 [ext_resource type="PackedScene" path="res://addons/visual_novel/ui/ui_caption.tscn" id="1_5fvuj"]
 [ext_resource type="Script" path="res://addons/visual_novel/autoloads/VisualNovel.gd" id="1_41ilk"]
 [ext_resource type="Script" path="res://addons/visual_novel/ui/EdgeClampContainer.gd" id="2_mqxw1"]
 [ext_resource type="Shader" path="res://addons/visual_novel/ui/ui_gradient_blur.gdshader" id="3_kr04k"]
-[ext_resource type="PackedScene" path="res://addons/visual_novel/ui/options/ui_option_menu.tscn" id="3_so0hf"]
+[ext_resource type="PackedScene" uid="uid://cc3g0jdrjk1ie" path="res://addons/visual_novel/ui/options/ui_option_menu.tscn" id="3_so0hf"]
 [ext_resource type="PackedScene" path="res://addons/visual_novel/ui/notifications/ui_notifications.tscn" id="4_sf4ru"]
 [ext_resource type="PackedScene" uid="uid://bfngd7b38mvow" path="res://addons/sooty_engine/ui/ui_debug.tscn" id="5_ojci6"]
 [ext_resource type="Shader" path="res://addons/visual_novel/screen_effects/blur/blur.gdshader" id="6_2yrjh"]
@@ -22,6 +22,8 @@
 [ext_resource type="Script" path="res://addons/rich_text/RichTextLabel2.gd" id="16_roqut"]
 [ext_resource type="Script" path="res://addons/visual_novel/ui/ui_debug_dialogues.gd" id="17_4ysal"]
 [ext_resource type="Script" path="res://addons/sooty_engine/ui/ui_debug_audio.gd" id="19_ptcwf"]
+[ext_resource type="Script" path="res://addons/visual_novel/ui/ui_history.gd" id="22_4vv54"]
+[ext_resource type="Script" path="res://addons/visual_novel/autoloads/History.gd" id="23_ayw2o"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2oed7"]
 shader = ExtResource( "3_kr04k" )
@@ -316,6 +318,31 @@ meta_underlined = false
 script = ExtResource( "16_roqut" )
 alignment = 0
 markdown_enabled = false
+
+[node name="history" type="Control" parent="debug/debug_menu"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( "22_4vv54" )
+
+[node name="Node" type="Node" parent="debug/debug_menu/history"]
+script = ExtResource( "23_ayw2o" )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="debug/debug_menu/history"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/mono_font_size = 16
+theme_override_font_sizes/bold_italics_font_size = 16
+theme_override_font_sizes/italics_font_size = 16
+theme_override_font_sizes/bold_font_size = 16
+theme_override_font_sizes/normal_font_size = 16
+meta_underlined = false
+script = ExtResource( "16_roqut" )
+alignment = 0
 
 [node name="overdraw" type="CanvasLayer" parent="."]
 layer = 128
