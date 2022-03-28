@@ -11,7 +11,7 @@ const OP_ALL := OP_RELATIONS + OP_ASSIGNMENTS
 
 # colors
 const C_TEXT := Color.GAINSBORO
-const C_SPEAKER := Color(1, 1, 1, 0.4)#Color(0.0, 1.0, 1.0, 0.5)
+const C_SPEAKER := Color(1, 1, 1, 0.4)
 const C_TAG := Color(1, 1, 1, .5)
 const C_SYMBOL := Color(1, 1, 1, 0.25)
 const C_FLAT_LINE := Color(1, 1, 1, 0.5)
@@ -21,7 +21,6 @@ const C_VAR_BOOL := Color.PALE_GOLDENROD
 const C_VAR_FLOAT := Color.ORANGE
 const C_VAR_INT := Color.ORANGE
 const C_VAR_STR := Color.SANDY_BROWN
-#const C_VAR_UNKOWN := Color.PALE_GOLDENROD
 const C_VAR_CONSTANT := Color.DARK_GRAY
 const C_VAR_STATE_PROPERTY := Color.SPRING_GREEN
 
@@ -32,7 +31,7 @@ const C_ACTION_NODE := Color.SALMON
 const C_ACTION_GROUP := Color.MEDIUM_PURPLE
 const C_ACTION_STATE := Color.DEEP_SKY_BLUE
 
-const C_FLOW := Color.TOMATO
+const C_FLOW := Color.TAN
 const C_FLOW_GOTO := Color.GREEN_YELLOW
 const C_FLOW_CALL := Color.DEEP_SKY_BLUE
 

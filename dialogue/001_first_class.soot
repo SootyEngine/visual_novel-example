@@ -7,13 +7,13 @@
 	@camera.wait
 	@john.fade_in
 	@john.wait
-	john (talk): I'm John. (He get's angry.)[!@john::shake_no][w] [!@john::talk]I don't take kindly to strangers.
+	john (talk): I'm John. (He get's angry.)[!@john.shake_no][w] [!@john.talk]I don't take kindly to strangers.
 	
 	@camera.pan -200
 	@camera.wait
 	@paul.fade_in
 	@paul.wait
-	paul (talk): I'm Paul. (He smiles.)[!@paul::shake_yes][w] [!@paul::talk]I *do* take kindly to strangers.
+	paul (talk): I'm Paul. (He smiles.)[!@paul.shake_yes][w] [!@paul.talk]I *do* take kindly to strangers.
 	
 	@camera.pan
 	@camera.wait

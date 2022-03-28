@@ -2,8 +2,6 @@ extends Control
 
 func _ready() -> void:
 	await get_tree().process_frame
-	await get_tree().process_frame
-	print("loaded menu")
 	
 	for btn in $buttons.get_children():
 		if not _is_visible(str(btn.name)):

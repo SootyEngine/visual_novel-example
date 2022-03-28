@@ -297,12 +297,13 @@ _global_script_class_icons={
 [application]
 
 config/name="sooty_example"
-run/main_scene="res://scenes/menus/main_menu.tscn"
+run/main_scene="res://scenes/dummy.tscn"
 config/icon="res://chars/godette/face_confused.webp"
 config/features=PackedStringArray("4.0", "Vulkan Clustered")
 
 [autoload]
 
+VisualNovel="*res://addons/visual_novel/autoloads/VisualNovel.tscn"
 Global="*res://addons/sooty_engine/autoloads/Global.gd"
 Mods="*res://addons/sooty_engine/autoloads/Mods.gd"
 Scenes="*res://addons/sooty_engine/autoloads/Scenes.gd"
@@ -314,7 +315,6 @@ Music="*res://addons/sooty_engine/autoloads/Music.gd"
 SFX="*res://addons/sooty_engine/autoloads/SFX.gd"
 Dialogues="*res://addons/sooty_engine/autoloads/Dialogues.gd"
 DialogueStack="*res://addons/sooty_engine/autoloads/DialogueStack.gd"
-VisualNovel="*res://addons/visual_novel/autoloads/VisualNovel.tscn"
 
 [editor_plugins]
 

@@ -47,7 +47,7 @@
 		"file": 0,
 		"line": 9,
 		"type": "text",
-		"text": "I'm John. (He get's angry.)[!@john::shake_no][w] [!@john::talk]I don't take kindly to strangers.",
+		"text": "I'm John. (He get's angry.)[!@john.shake_no][w] [!@john.talk]I don't take kindly to strangers.",
 		"from": "john",
 		"action": [
 			"@john.talk"
@@ -86,7 +86,7 @@
 		"file": 0,
 		"line": 15,
 		"type": "text",
-		"text": "I'm Paul. (He smiles.)[!@paul::shake_yes][w] [!@paul::talk]I *do* take kindly to strangers.",
+		"text": "I'm Paul. (He smiles.)[!@paul.shake_yes][w] [!@paul.talk]I *do* take kindly to strangers.",
 		"from": "paul",
 		"action": [
 			"@paul.talk"
