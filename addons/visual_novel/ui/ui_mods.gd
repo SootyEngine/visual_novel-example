@@ -1,13 +1,8 @@
 extends Node
 
-func _init():
+func _ready():
 	Mods.loaded.connect(_redraw)
-
-func _ready() -> void:
-	_ready_deferred.call_deferred()
-
-func _ready_deferred():
-	_redraw()
+	_redraw.call_deferred()
 
 func _redraw():
 	var text := []

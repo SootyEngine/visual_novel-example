@@ -21,9 +21,10 @@ class Debug:
 
 var debug := Debug.new()
 
-func _init() -> void:
+func _init():
 	add_to_group("sa:visual_novel_version")
-	
+
+func _ready() -> void:
 	Mods._add_mod("res://addons/visual_novel", true)
 	
 	DialogueStack.started.connect(_dialogue_started)
@@ -31,8 +32,7 @@ func _init() -> void:
 	DialogueStack.flow_started.connect(_flow_started)
 	DialogueStack.flow_ended.connect(_flow_ended)
 	DialogueStack.on_line.connect(_on_text)
-
-func _ready() -> void:
+	
 	$captions/backing.visible = false
 
 func visual_novel_version() -> String:

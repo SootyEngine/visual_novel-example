@@ -20,7 +20,7 @@
 		"line": 7,
 		"type": "text",
 		"text": "Text spoken by last speaker, John.",
-		"from": ""
+		"from": "john"
 	},
 	"0!10": {
 		"id": "",

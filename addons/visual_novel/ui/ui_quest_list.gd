@@ -7,10 +7,8 @@ extends Node
 @onready var task_info: RichTextLabel2 = get_node(_task_info)
 @onready var subtask_list: RichTextLabel2 = get_node(_subtask_list)
 
-func _init():
+func _ready():
 	Global.message.connect(_global_message)
-
-func _ready() -> void:
 	_ready_deferred.call_deferred()
 
 func _global_message(msg: String, payload: Variant):

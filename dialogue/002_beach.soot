@@ -1,5 +1,7 @@
 === INIT
+	// When a game is saved, it will show this caption.
 	~save_caption = "The Beach"
+	$state.score true false 20
 	
 	{{beach_is_night}}
 		@bg.set_current_immediate beach_night
@@ -9,7 +11,7 @@
 
 === CHANGED:beach_is_night
 	{{beach_is_night}}
-		@bg.set_current beach_night
+		@bg.set_current beach_night 3 2 1 false true
 	{{else}}
 		@bg.set_current beach_noon
 
@@ -23,7 +25,7 @@
 			godette: Cool, me too!
 	@camera.target main
 	@unblur
-	
+
 === godot
 	@camera.target godot
 	@blur
@@ -50,7 +52,7 @@
 			@camera.target godette
 			@camera.wait
 			godette (talk): He's not much of a talker.
-			godette (talk): This is version [@sooty_version] of Sooty and version [@simple_vn_version] of the SimpleVN System.
+			godette (talk): This is v[@sooty_version] of Sooty and v[@visual_novel_version] of the *Visual Novel System*.
 			@camera.target godot true
 			godot: ...
 			@camera.target godette true

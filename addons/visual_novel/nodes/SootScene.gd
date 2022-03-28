@@ -8,11 +8,9 @@ var id: String:
 var soot_path: String:
 	get: return "res://dialogue/%s.soot" % id
 
-func _init() -> void:
+func _ready() -> void:
 	if not Engine.is_editor_hint():
 		State.changed.connect(_property_changed)
-		Saver._get_state.connect(_get_save_state)
-		Saver._set_state.connect(_set_save_state)
 
 func has_soot() -> bool:
 	return UFile.file_exists(soot_path)
@@ -29,12 +27,6 @@ func _get_tool_buttons():
 			text="Create %s.soot" % id,
 			call="@CREATE_AND_EDIT;%s;%s" % [soot_path, "=== START\n\tHello world."],
 			hint="Create %s." % soot_path}]
-
-func _get_save_state():
-	pass
-
-func _set_save_state():
-	pass
 
 func _start(loaded: bool):
 	DialogueStack.execute("%s.INIT" % id)

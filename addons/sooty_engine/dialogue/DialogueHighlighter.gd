@@ -11,33 +11,33 @@ const OP_ALL := OP_RELATIONS + OP_ASSIGNMENTS
 
 # colors
 const C_TEXT := Color.GAINSBORO
-const C_SPEAKER := Color(1, 1, 1, 0.4)
+const C_SPEAKER := Color(1, 1, 1, 0.5)
 const C_TAG := Color(1, 1, 1, .5)
-const C_SYMBOL := Color(1, 1, 1, 0.25)
+const C_SYMBOL := Color(1, 1, 1, 0.33)
 const C_FLAT_LINE := Color(1, 1, 1, 0.5)
 
 const C_PROPERTY := Color(1, 1, 1, .25)
-const C_VAR_BOOL := Color.PALE_GOLDENROD
-const C_VAR_FLOAT := Color.ORANGE
-const C_VAR_INT := Color.ORANGE
-const C_VAR_STR := Color.SANDY_BROWN
+const C_VAR_BOOL := Color.AQUAMARINE
+const C_VAR_FLOAT := Color.DARK_TURQUOISE
+const C_VAR_INT := Color.DARK_TURQUOISE
+const C_VAR_STR := Color.CADET_BLUE
 const C_VAR_CONSTANT := Color.DARK_GRAY
 const C_VAR_STATE_PROPERTY := Color.SPRING_GREEN
 
 const C_COMMENT := Color(1.0, 1.0, 1.0, 0.25)
 const C_FE_TAG := Color.PALE_VIOLET_RED
-const C_ACTION_EVAL := Color.SPRING_GREEN
+const C_ACTION_EVAL := Color(0, 1, 0.5, 0.8)
 const C_ACTION_NODE := Color.SALMON
 const C_ACTION_GROUP := Color.MEDIUM_PURPLE
 const C_ACTION_STATE := Color.DEEP_SKY_BLUE
 
 const C_FLOW := Color.TAN
-const C_FLOW_GOTO := Color.GREEN_YELLOW
-const C_FLOW_CALL := Color.DEEP_SKY_BLUE
+const C_FLOW_GOTO := Color.TAN
+const C_FLOW_CALL := Color.TAN
 
 const C_CONDITION := Color.WHEAT
 const C_OPTION_FLAG := Color(0.25, 0.88, 0.82, 0.5)
-const C_OPTION_TEXT := Color.TURQUOISE
+const C_OPTION_TEXT := Color.TAN
 
 # strings
 const S_FLOW := "==="
@@ -73,7 +73,11 @@ func _c(i: int, clr: Color, offset := 0):
 	_co(clr, offset)
 
 func _set_var_color(i: int, v: String, is_function := false, func_color := C_ACTION_EVAL):
-	if " " in v:
+	if UString.is_wrapped(v, "<<", ">>"):
+		_c(i, C_SYMBOL)
+		_c(i+2, C_ACTION_EVAL)
+		_c(i+len(v)-2, C_SYMBOL)
+	elif " " in v:
 		var off := i
 		for part in v.split(" "):
 			_set_var_color(off, part)
@@ -99,7 +103,7 @@ func _set_var_color(i: int, v: String, is_function := false, func_color := C_ACT
 	elif v.begins_with("$"):
 		# only highlight last part
 		var d := v.rfind(".")
-		_c(i, C_VAR_STATE_PROPERTY.darkened(.4))
+		_c(i, C_VAR_STATE_PROPERTY.darkened(.25))
 		if d != -1:
 			_c(i+d+1, C_VAR_STATE_PROPERTY)
 		else:
@@ -107,7 +111,7 @@ func _set_var_color(i: int, v: String, is_function := false, func_color := C_ACT
 	elif v.begins_with("@") or is_function:
 		# only highlight last part
 		var d := v.rfind(".")
-		_c(i, func_color.darkened(.4))
+		_c(i, func_color.darkened(.25))
 		if d != -1:
 			_c(i+d, func_color)
 		else:
@@ -138,7 +142,7 @@ func _h_action_expression(from: int, to: int):
 	_c(from+1, C_ACTION_EVAL)
 	for i in range(from+1, to):
 		if text[i] in ",.[](){}\"'-+=<>":
-			_c(i, C_ACTION_EVAL.darkened(.5))
+			_c(i, C_SYMBOL)
 			_c(i+1, C_ACTION_EVAL)
 
 func _h_conditional(from: int, to: int):
@@ -270,7 +274,9 @@ func _h_line(from: int, to: int):
 	# node options
 	elif t.begins_with(S_OPTION):
 		var s := text.find(S_OPTION)
-		_c(s, C_SYMBOL, 1)
+		var c_option_icon = C_OPTION_TEXT
+		c_option_icon.h = wrapf(c_option_icon.h + .5, 0.0, 1.0)
+		_c(s, c_option_icon, 1)
 		_c(s+1, C_OPTION_TEXT)
 		_h_bbcode(s+1, to, C_OPTION_TEXT)
 		_h_flow()
@@ -284,9 +290,18 @@ func _h_line(from: int, to: int):
 		var i := _find_speaker_split(from)
 #		if ":" in text:
 		if i != -1:
-			_c(max(from, _find_speaker_start(i)), C_SPEAKER)
+			var j = max(from, _find_speaker_start(i))
+			_c(j, C_SPEAKER)
 			_c(i, C_SYMBOL, 1)
 			_co(C_TEXT)
+			var sub = text.substr(j, i-j)
+			# colorize in brackets
+			if "(" in sub:
+				var a := sub.find("(")
+				var b := sub.rfind(")")
+				_c(a, C_SYMBOL)
+				_c(a+1, C_ACTION_GROUP)
+				_c(b, C_SYMBOL)
 		
 		_h_bbcode(from, to, C_TEXT)
 

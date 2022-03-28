@@ -7,9 +7,10 @@ extends CanvasLayer
 
 func _init() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	Saver.loaded.connect(_hide)
 
-func _ready() -> void:
+func _ready():
+	Saver.loaded.connect(_hide)
+	
 	_hide()
 	save_load_screen.visible = false
 	
