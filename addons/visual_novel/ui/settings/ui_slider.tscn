@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpu5ne27ouqp1"]
+
+[ext_resource type="Texture2D" uid="uid://c5lj4jdp4v0dv" path="res://addons/visual_novel/ui/settings/empty_texture.tres" id="1_6stwr"]
+
+[node name="slider" type="HBoxContainer"]
+offset_right = 149.0
+offset_bottom = 39.0
+
+[node name="label" type="Label" parent="."]
+offset_right = 72.0
+offset_bottom = 39.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Label"
+vertical_alignment = 1
+
+[node name="field" type="HSlider" parent="."]
+offset_left = 76.0
+offset_right = 149.0
+offset_bottom = 39.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_icons/grabber_disabled = ExtResource( "1_6stwr" )
+theme_override_icons/grabber_highlight = ExtResource( "1_6stwr" )
+theme_override_icons/grabber = ExtResource( "1_6stwr" )
+value = 25.0

@@ -6,8 +6,9 @@ func _init() -> void:
 
 func _changed(property: String):
 	var head := property.split(".", true, 1)[0]
-	if head in self and self[head] is Achievement:
-		var a: Achievement = self[head]
+	if State._has(property) and State._get(head) is Achievement:
+		var a: Achievement = State._get(head)
+		
 		if a._unlocked:
 			Global.notify({
 				type=Achievement.MSG_ACHIEVEMENT_UNLOCKED,

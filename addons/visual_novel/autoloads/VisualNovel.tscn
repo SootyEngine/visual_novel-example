@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://divhmakl2ewrr"]
+[gd_scene load_steps=29 format=3 uid="uid://divhmakl2ewrr"]
 
 [ext_resource type="PackedScene" path="res://addons/visual_novel/ui/ui_caption.tscn" id="1_5fvuj"]
 [ext_resource type="Script" path="res://addons/visual_novel/autoloads/VisualNovel.gd" id="1_41ilk"]
@@ -24,6 +24,7 @@
 [ext_resource type="Script" path="res://addons/sooty_engine/ui/ui_debug_audio.gd" id="19_ptcwf"]
 [ext_resource type="Script" path="res://addons/visual_novel/ui/ui_history.gd" id="22_4vv54"]
 [ext_resource type="Script" path="res://addons/visual_novel/autoloads/History.gd" id="23_ayw2o"]
+[ext_resource type="PackedScene" uid="uid://bxkconmuncr0c" path="res://addons/visual_novel/ui/settings/ui_settings.tscn" id="24_gqelv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2oed7"]
 shader = ExtResource( "3_kr04k" )
@@ -180,7 +181,6 @@ prefab = ExtResource( "6_ep3a5" )
 
 [node name="debug" type="CanvasLayer" parent="."]
 process_mode = 3
-visible = false
 script = ExtResource( "6_rc2au" )
 
 [node name="backing" type="ColorRect" parent="debug"]
@@ -199,9 +199,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="console" parent="debug/debug_menu" instance=ExtResource( "12_t3jm4" )]
-visible = false
-
-[node name="save_load" parent="debug/debug_menu" instance=ExtResource( "6_p1slb" )]
 visible = false
 
 [node name="mods" parent="debug/debug_menu" instance=ExtResource( "13_ljjo8" )]
@@ -330,9 +327,21 @@ script = ExtResource( "22_4vv54" )
 [node name="Node" type="Node" parent="debug/debug_menu/history"]
 script = ExtResource( "23_ayw2o" )
 
-[node name="RichTextLabel" type="RichTextLabel" parent="debug/debug_menu/history"]
+[node name="VBoxContainer" type="VBoxContainer" parent="debug/debug_menu/history"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+
+[node name="show_state_changes" type="CheckButton" parent="debug/debug_menu/history/VBoxContainer"]
+offset_right = 158.0
+offset_bottom = 31.0
+text = "State Changes"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="debug/debug_menu/history/VBoxContainer"]
+offset_top = 35.0
+offset_right = 158.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
 theme_override_constants/outline_size = 0
 theme_override_font_sizes/mono_font_size = 16
@@ -342,7 +351,11 @@ theme_override_font_sizes/bold_font_size = 16
 theme_override_font_sizes/normal_font_size = 16
 meta_underlined = false
 script = ExtResource( "16_roqut" )
-alignment = 0
+
+[node name="settings" parent="debug/debug_menu" instance=ExtResource( "24_gqelv" )]
+visible = false
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="overdraw" type="CanvasLayer" parent="."]
 layer = 128

@@ -51,12 +51,13 @@ func _process(delta: float) -> void:
 	if _wait_timer > 0.0:
 		_wait_timer -= delta
 	else:
-		_wait_timer = 1.0
 		_save_persistent()
 		set_process(false)
 
 func save_persistent():
 	set_process(true)
+	# in case a setting is being changed or a lot is happening.
+	_wait_timer = 2.0
 
 func _save_persistent():
 	pre_save_persistent.emit()

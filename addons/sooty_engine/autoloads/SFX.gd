@@ -1,7 +1,7 @@
 extends Node
 
 const DIR := "audio/sfx"
-const SFX_BUSS := "Master"
+const BUS := "Master"
 const MAX_SOUNDS := 8
 
 var _files := {} # all playable audio
@@ -58,7 +58,7 @@ func _play(id: String, kwargs := {}):
 	add_child(player)
 	player.stream = load(_files[id])
 	player.finished.connect(_on_audio_finished.bind(player))
-	player.bus = SFX_BUSS
+	player.bus = BUS
 	if "scale_rand" in kwargs:
 		player.pitch_scale = randf_range(1.0 - kwargs.scale_rand, 1.0 + kwargs.scale_rand)
 	player.play()

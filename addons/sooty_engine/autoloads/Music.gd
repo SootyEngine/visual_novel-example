@@ -1,6 +1,6 @@
 extends Node
 
-const MUSIC_BUSS := "Master"
+const BUS := "Master"
 const DEFAULT_FADE_TIME := 2.0
 const MAX_MUSIC_PLAYERS := 3
 
@@ -105,7 +105,7 @@ func play(id: String, kwargs := {}):
 	player.set_meta("state", "playing")
 	player.stream = load(_files[id])
 	player.finished.connect(_on_music_finished.bind(player))
-	player.bus = MUSIC_BUSS
+	player.bus = BUS
 	
 	var play_pos: float = kwargs.get("pos", 0.0)
 	if "rand_offset" in kwargs:

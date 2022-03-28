@@ -1,0 +1,145 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxkconmuncr0c"]
+
+[ext_resource type="Script" path="res://addons/visual_novel/ui/settings/ui_settings.gd" id="1_dimtj"]
+[ext_resource type="Texture2D" uid="uid://c5lj4jdp4v0dv" path="res://addons/visual_novel/ui/settings/empty_texture.tres" id="2_2qrsc"]
+
+[node name="settings" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( "1_dimtj" )
+
+[node name="audio" type="VBoxContainer" parent="."]
+offset_right = 308.0
+offset_bottom = 97.0
+__meta__ = {
+"_edit_layout_mode": 0,
+"_edit_use_custom_anchors": false
+}
+
+[node name="resolution" type="HBoxContainer" parent="audio"]
+offset_right = 308.0
+offset_bottom = 31.0
+__meta__ = {
+"_edit_layout_mode": 0,
+"_edit_use_custom_anchors": false
+}
+
+[node name="label" type="Label" parent="audio/resolution"]
+offset_right = 152.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Resolution"
+vertical_alignment = 1
+
+[node name="field" type="OptionButton" parent="audio/resolution"]
+offset_left = 156.0
+offset_right = 308.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+item_count = 2
+popup/item_0/text = "640x480"
+popup/item_0/id = 1
+popup/item_1/text = "1024x768"
+popup/item_1/id = 0
+
+[node name="full_screen" type="HBoxContainer" parent="audio"]
+offset_top = 35.0
+offset_right = 308.0
+offset_bottom = 66.0
+
+[node name="label" type="Label" parent="audio/full_screen"]
+offset_top = 2.0
+offset_right = 253.0
+offset_bottom = 28.0
+size_flags_horizontal = 3
+text = "Full Screen"
+
+[node name="field" type="CheckBox" parent="audio/full_screen"]
+offset_left = 257.0
+offset_right = 308.0
+offset_bottom = 31.0
+text = "On"
+
+[node name="vsync" type="HBoxContainer" parent="audio"]
+offset_top = 70.0
+offset_right = 308.0
+offset_bottom = 101.0
+
+[node name="label" type="Label" parent="audio/vsync"]
+offset_top = 2.0
+offset_right = 253.0
+offset_bottom = 28.0
+size_flags_horizontal = 3
+text = "VSync"
+
+[node name="field" type="CheckBox" parent="audio/vsync"]
+offset_left = 257.0
+offset_right = 308.0
+offset_bottom = 31.0
+text = "On"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="audio"]
+offset_top = 105.0
+offset_right = 308.0
+offset_bottom = 171.0
+
+[node name="music" type="HBoxContainer" parent="audio/VBoxContainer"]
+offset_right = 308.0
+offset_bottom = 31.0
+
+[node name="mute" type="CheckBox" parent="audio/VBoxContainer/music"]
+offset_right = 24.0
+offset_bottom = 31.0
+button_pressed = true
+
+[node name="label" type="Label" parent="audio/VBoxContainer/music"]
+offset_left = 28.0
+offset_right = 166.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Music"
+vertical_alignment = 1
+
+[node name="field" type="HSlider" parent="audio/VBoxContainer/music"]
+offset_left = 170.0
+offset_right = 308.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_icons/grabber_disabled = ExtResource( "2_2qrsc" )
+theme_override_icons/grabber_highlight = ExtResource( "2_2qrsc" )
+theme_override_icons/grabber = ExtResource( "2_2qrsc" )
+value = 25.0
+
+[node name="sfx" type="HBoxContainer" parent="audio/VBoxContainer"]
+offset_top = 35.0
+offset_right = 308.0
+offset_bottom = 66.0
+
+[node name="mute" type="CheckBox" parent="audio/VBoxContainer/sfx"]
+offset_right = 24.0
+offset_bottom = 31.0
+button_pressed = true
+
+[node name="label" type="Label" parent="audio/VBoxContainer/sfx"]
+offset_left = 28.0
+offset_right = 166.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "SFX"
+vertical_alignment = 1
+
+[node name="field" type="HSlider" parent="audio/VBoxContainer/sfx"]
+offset_left = 170.0
+offset_right = 308.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_icons/grabber_disabled = ExtResource( "2_2qrsc" )
+theme_override_icons/grabber_highlight = ExtResource( "2_2qrsc" )
+theme_override_icons/grabber = ExtResource( "2_2qrsc" )
+value = 25.0
