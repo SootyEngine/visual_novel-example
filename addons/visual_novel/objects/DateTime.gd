@@ -526,6 +526,11 @@ static func create_from_datetime(d: Dictionary) -> DateTime:
 	out.seconds = d.second
 	return out
 
+static func create_from_total_seconds(s: int) -> DateTime:
+	var out := DateTime.new()
+	out.total_seconds = s
+	return out
+
 static func sort(list: Array, obj_property := "datetime", reverse := false, sort_on := "total_seconds"):
 	if reverse:
 		list.sort_custom(func(a, b): return a[obj_property][sort_on] > b[obj_property][sort_on])
