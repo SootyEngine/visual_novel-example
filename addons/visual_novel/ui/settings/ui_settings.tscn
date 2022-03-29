@@ -15,23 +15,25 @@ _sfx_mute = NodePath("audio/VBoxContainer/sfx/mute")
 _sfx_volume = NodePath("audio/VBoxContainer/sfx/field")
 
 [node name="audio" type="VBoxContainer" parent="."]
-offset_right = 308.0
-offset_bottom = 97.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+alignment = 1
 __meta__ = {
 "_edit_layout_mode": 0,
 "_edit_use_custom_anchors": false
 }
 
 [node name="resolution" type="HBoxContainer" parent="audio"]
-offset_right = 308.0
-offset_bottom = 31.0
+offset_top = 214.0
+offset_right = 1024.0
+offset_bottom = 245.0
 __meta__ = {
 "_edit_layout_mode": 0,
 "_edit_use_custom_anchors": false
 }
 
 [node name="label" type="Label" parent="audio/resolution"]
-offset_right = 152.0
+offset_right = 510.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -39,8 +41,8 @@ text = "Resolution"
 vertical_alignment = 1
 
 [node name="field" type="OptionButton" parent="audio/resolution"]
-offset_left = 156.0
-offset_right = 308.0
+offset_left = 514.0
+offset_right = 1024.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -54,48 +56,48 @@ popup/item_2/text = "1920x1080"
 popup/item_2/id = 2
 
 [node name="full_screen" type="HBoxContainer" parent="audio"]
-offset_top = 35.0
-offset_right = 308.0
-offset_bottom = 66.0
+offset_top = 249.0
+offset_right = 1024.0
+offset_bottom = 280.0
 
 [node name="label" type="Label" parent="audio/full_screen"]
 offset_top = 2.0
-offset_right = 253.0
+offset_right = 969.0
 offset_bottom = 28.0
 size_flags_horizontal = 3
 text = "Full Screen"
 
 [node name="field" type="CheckBox" parent="audio/full_screen"]
-offset_left = 257.0
-offset_right = 308.0
+offset_left = 973.0
+offset_right = 1024.0
 offset_bottom = 31.0
 text = "On"
 
 [node name="vsync" type="HBoxContainer" parent="audio"]
-offset_top = 70.0
-offset_right = 308.0
-offset_bottom = 101.0
+offset_top = 284.0
+offset_right = 1024.0
+offset_bottom = 315.0
 
 [node name="label" type="Label" parent="audio/vsync"]
 offset_top = 2.0
-offset_right = 253.0
+offset_right = 969.0
 offset_bottom = 28.0
 size_flags_horizontal = 3
 text = "VSync"
 
 [node name="field" type="CheckBox" parent="audio/vsync"]
-offset_left = 257.0
-offset_right = 308.0
+offset_left = 973.0
+offset_right = 1024.0
 offset_bottom = 31.0
 text = "On"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="audio"]
-offset_top = 105.0
-offset_right = 308.0
-offset_bottom = 171.0
+offset_top = 319.0
+offset_right = 1024.0
+offset_bottom = 385.0
 
 [node name="music" type="HBoxContainer" parent="audio/VBoxContainer"]
-offset_right = 308.0
+offset_right = 1024.0
 offset_bottom = 31.0
 
 [node name="mute" type="CheckBox" parent="audio/VBoxContainer/music"]
@@ -105,7 +107,7 @@ button_pressed = true
 
 [node name="label" type="Label" parent="audio/VBoxContainer/music"]
 offset_left = 28.0
-offset_right = 166.0
+offset_right = 524.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -113,8 +115,8 @@ text = "Music"
 vertical_alignment = 1
 
 [node name="field" type="HSlider" parent="audio/VBoxContainer/music"]
-offset_left = 170.0
-offset_right = 308.0
+offset_left = 528.0
+offset_right = 1024.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -127,7 +129,7 @@ value = 1.0
 
 [node name="sfx" type="HBoxContainer" parent="audio/VBoxContainer"]
 offset_top = 35.0
-offset_right = 308.0
+offset_right = 1024.0
 offset_bottom = 66.0
 
 [node name="mute" type="CheckBox" parent="audio/VBoxContainer/sfx"]
@@ -137,7 +139,7 @@ button_pressed = true
 
 [node name="label" type="Label" parent="audio/VBoxContainer/sfx"]
 offset_left = 28.0
-offset_right = 166.0
+offset_right = 524.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -145,8 +147,8 @@ text = "SFX"
 vertical_alignment = 1
 
 [node name="field" type="HSlider" parent="audio/VBoxContainer/sfx"]
-offset_left = 170.0
-offset_right = 308.0
+offset_left = 528.0
+offset_right = 1024.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 size_flags_vertical = 3

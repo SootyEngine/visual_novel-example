@@ -102,7 +102,9 @@ theme_override_constants/margin_left = 240
 [node name="pause_menu" type="CanvasLayer" parent="."]
 script = ExtResource( "6_p2tig" )
 _buttons = NodePath("MarginContainer/HBoxContainer/items")
+_screen_parent = NodePath("MarginContainer/HBoxContainer/Control")
 _save_load_screen = NodePath("MarginContainer/HBoxContainer/Control/save_load")
+_settings_screen = NodePath("MarginContainer/HBoxContainer/Control/settings")
 
 [node name="ColorRect" type="ColorRect" parent="pause_menu"]
 material = SubResource( "ShaderMaterial_w3ekw" )
@@ -128,36 +130,42 @@ offset_bottom = 600.0
 alignment = 1
 
 [node name="Label" type="Label" parent="pause_menu/MarginContainer/HBoxContainer/items"]
-offset_top = 217.0
+offset_top = 199.0
 offset_right = 96.0
-offset_bottom = 243.0
+offset_bottom = 225.0
 text = "Paused"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="continue" type="Button" parent="pause_menu/MarginContainer/HBoxContainer/items"]
-offset_top = 247.0
+offset_top = 229.0
 offset_right = 96.0
-offset_bottom = 278.0
+offset_bottom = 260.0
 text = "Continue"
 
-[node name="save" type="Button" parent="pause_menu/MarginContainer/HBoxContainer/items"]
-offset_top = 282.0
+[node name="settings" type="Button" parent="pause_menu/MarginContainer/HBoxContainer/items"]
+offset_top = 264.0
 offset_right = 96.0
-offset_bottom = 313.0
+offset_bottom = 295.0
+text = "Settings"
+
+[node name="save" type="Button" parent="pause_menu/MarginContainer/HBoxContainer/items"]
+offset_top = 299.0
+offset_right = 96.0
+offset_bottom = 330.0
 text = "Save"
 
 [node name="load" type="Button" parent="pause_menu/MarginContainer/HBoxContainer/items"]
-offset_top = 317.0
+offset_top = 334.0
 offset_right = 96.0
-offset_bottom = 348.0
+offset_bottom = 365.0
 text = "Load
 "
 
 [node name="main_menu" type="Button" parent="pause_menu/MarginContainer/HBoxContainer/items"]
-offset_top = 352.0
+offset_top = 369.0
 offset_right = 96.0
-offset_bottom = 383.0
+offset_bottom = 400.0
 text = "Main Menu
 "
 
@@ -167,11 +175,22 @@ offset_right = 1008.0
 offset_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_left = 32
 
-[node name="save_load" parent="pause_menu/MarginContainer/HBoxContainer/Control" instance=ExtResource( "6_p1slb" )]
+[node name="settings" parent="pause_menu/MarginContainer/HBoxContainer/Control" instance=ExtResource( "24_gqelv" )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_right = 908.0
+offset_left = 32.0
+offset_right = 876.0
+offset_bottom = 600.0
+
+[node name="save_load" parent="pause_menu/MarginContainer/HBoxContainer/Control" instance=ExtResource( "6_p1slb" )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 32.0
+offset_right = 876.0
 offset_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -181,6 +200,7 @@ prefab = ExtResource( "6_ep3a5" )
 
 [node name="debug" type="CanvasLayer" parent="."]
 process_mode = 3
+visible = false
 script = ExtResource( "6_rc2au" )
 
 [node name="backing" type="ColorRect" parent="debug"]
@@ -351,11 +371,6 @@ theme_override_font_sizes/bold_font_size = 16
 theme_override_font_sizes/normal_font_size = 16
 meta_underlined = false
 script = ExtResource( "16_roqut" )
-
-[node name="settings" parent="debug/debug_menu" instance=ExtResource( "24_gqelv" )]
-visible = false
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="overdraw" type="CanvasLayer" parent="."]
 layer = 128
