@@ -305,6 +305,7 @@ config/features=PackedStringArray("4.0", "Vulkan Clustered")
 
 Global="*res://addons/sooty_engine/autoloads/Global.gd"
 Mods="*res://addons/sooty_engine/autoloads/Mods.gd"
+Settings="*res://addons/sooty_engine/autoloads/Settings.gd"
 Scenes="*res://addons/sooty_engine/autoloads/Scenes.gd"
 Saver="*res://addons/sooty_engine/autoloads/Saver.gd"
 Persistent="*res://addons/sooty_engine/autoloads/Persistent.gd"
