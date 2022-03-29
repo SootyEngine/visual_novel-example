@@ -120,6 +120,12 @@ func load_slot(slot: String):
 	loaded.emit()
 	print("Loaded Slot %s." % slot)
 
+func temp_save(index := 0):
+	save_slot("temp_%s" % index)
+
+func auto_save(index := 0):
+	save_slot("auto_%s" % index)
+
 func save_slot(slot: String):
 	var blocking_save := []
 	_check_can_save.emit(blocking_save)

@@ -7,6 +7,8 @@ signal started()
 signal ended()
 signal message(type: String, payload: Variant)
 
+var active_game := true#false
+
 func _init() -> void:
 	add_to_group("sa:sooty_version")
 
@@ -55,9 +57,11 @@ func quit():
 	get_tree().quit()
 
 func start():
+	active_game = true
 	started.emit()
 
 func end():
+	active_game = false
 	ended.emit()
 
 func sooty_version():
