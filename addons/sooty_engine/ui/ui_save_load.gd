@@ -1,6 +1,10 @@
 extends Node
 
-@export var save_mode := true
+@export var save_mode := true:
+	set(v):
+		save_mode = v
+		label.text = "Save" if v else "Load"
+		
 #var slot_names: PackedStringArray
 var page := 0:
 	set(p):
@@ -9,8 +13,10 @@ var page := 0:
 			_update_page()
 var slots_per_page := 9
 
+@export var _label: NodePath
 @export var _buttons: NodePath
 @export var _pages: NodePath
+@onready var label: Label = get_node(_label)
 @onready var buttons: GridContainer = get_node(_buttons)
 @onready var pages: Container = get_node(_pages)
 
