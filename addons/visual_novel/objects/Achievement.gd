@@ -12,12 +12,15 @@ var desc := ""
 var toll := 1
 var hide := true
 var icon := "res://icon.png"
+var date := -1
 
 var _unlocked: bool = false:
 	get: return tick == toll
 	set(x):
 		if _unlocked != x:
 			self.tick = toll if x else 0
+			if _unlocked:
+				date = DateTime.create_from_current().total_seconds
 
 var _progress: float = 0.0:
 	get: return 0.0 if tick==0 or toll==0 else float(tick) / float(toll)
