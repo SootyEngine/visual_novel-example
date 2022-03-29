@@ -165,6 +165,8 @@ func save_slot(slot: String):
 	UFile.save_json(slot_path.plus_file(FNAME_INFO), state_info)
 	
 	# preview image
+	if not Global._screenshot:
+		Global.snap_screenshot()
 	var img: Image = Global._screenshot.duplicate()
 	var siz := img.get_size() / PREVIEW_SIZE_DIV_AMOUNT
 	img.resize(ceil(siz.x), ceil(siz.y), Image.INTERPOLATE_LANCZOS)
