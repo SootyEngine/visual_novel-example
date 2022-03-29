@@ -1,9 +1,0 @@
-{
-	"0!1": {
-		"id": "",
-		"file": 0,
-		"line": 1,
-		"type": "action",
-		"action": "@goto 001_first_class"
-	}
-}
