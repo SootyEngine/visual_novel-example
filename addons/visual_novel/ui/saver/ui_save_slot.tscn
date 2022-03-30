@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://d118gcdl1wkns"]
 
 [ext_resource type="Texture2D" uid="uid://b3vywvjoc08be" path="res://icon.png" id="1_60yqm"]
-[ext_resource type="Script" path="res://addons/sooty_engine/ui/ui_save_slot.gd" id="1_k0e3m"]
+[ext_resource type="Script" path="res://addons/visual_novel/ui/saver/ui_save_slot.gd" id="1_vn5ea"]
 [ext_resource type="Script" path="res://addons/rich_text/RichTextLabel2.gd" id="3_aic4g"]
 
 [sub_resource type="Gradient" id="Gradient_g0bwb"]
@@ -23,7 +23,7 @@ offset_left = -120.0
 offset_top = -80.0
 offset_right = 120.0
 offset_bottom = 80.0
-script = ExtResource( "1_k0e3m" )
+script = ExtResource( "1_vn5ea" )
 _preview = NodePath("Control/mask/preview")
 _label_caption = NodePath("Control/align/caption")
 _label_info = NodePath("label")

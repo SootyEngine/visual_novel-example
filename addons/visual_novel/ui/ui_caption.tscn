@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=9 format=3 uid="uid://31s0g83d0w0i"]
 
 [ext_resource type="Script" path="res://addons/visual_novel/ui/ui_caption.gd" id="1_me3hd"]
 [ext_resource type="Script" path="res://addons/rich_text/RichTextLabel2.gd" id="2_w06q7"]
@@ -10,7 +10,6 @@
 [ext_resource type="Font" path="res://fonts/robotomono/robotomono_r.tres" id="5_c8524"]
 
 [node name="caption" type="VBoxContainer" groups=["caption"]]
-rect_min_size = Vector2(480, 60)
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -29,9 +28,9 @@ _option_menu = NodePath("")
 
 [node name="from" type="RichTextLabel" parent="."]
 offset_left = 512.0
-offset_top = 37.0
+offset_top = 88.0
 offset_right = 512.0
-offset_bottom = 64.0
+offset_bottom = 88.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
@@ -53,14 +52,13 @@ fit_content_height = true
 script = ExtResource( "2_w06q7" )
 bbcode = "[dim;dim]\\[[]From[dim;dim]\\][]"
 font = "robotomono"
-size = 20
 outline_colored = 4
 outline_adjust = 0.25
 
 [node name="text" type="RichTextLabel" parent="."]
-offset_top = 68.0
+offset_top = 92.0
 offset_right = 1024.0
-offset_bottom = 68.0
+offset_bottom = 92.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
@@ -79,19 +77,20 @@ theme_override_font_sizes/bold_font_size = 24
 theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
 fit_content_height = true
+meta_underlined = false
+hint_underlined = false
 script = ExtResource( "3_es7ai" )
-size = 24
 outline_colored = 4
+effect_time = 28.3377
 _triggers = {}
 _alpha_real = []
 _alpha_goal = []
 
 [node name="indicator" type="TextureRect" parent="."]
 modulate = Color(1, 1, 1, 0)
-rect_min_size = Vector2(24, 24)
-offset_left = 500.0
-offset_top = 72.0
-offset_right = 524.0
+offset_left = 512.0
+offset_top = 96.0
+offset_right = 512.0
 offset_bottom = 96.0
 size_flags_horizontal = 4
 size_flags_vertical = 4

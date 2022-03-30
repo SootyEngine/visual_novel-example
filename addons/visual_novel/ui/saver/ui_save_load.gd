@@ -6,7 +6,7 @@ extends Node
 		_update_label()
 
 var slots_per_page := 9
-var page := "A":
+var page := "a":
 	set(p):
 		if page != p:
 			page = p

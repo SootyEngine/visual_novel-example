@@ -1,14 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://3kiavxcgtsmg"]
 
-[ext_resource type="PackedScene" uid="uid://d118gcdl1wkns" path="res://addons/sooty_engine/ui/ui_save_slot.tscn" id="1_qdd0e"]
-[ext_resource type="Script" path="res://addons/sooty_engine/ui/ui_save_load.gd" id="1_t3sk2"]
+[ext_resource type="Script" path="res://addons/visual_novel/ui/saver/ui_save_load.gd" id="1_28i20"]
+[ext_resource type="PackedScene" uid="uid://d118gcdl1wkns" path="res://addons/visual_novel/ui/saver/ui_save_slot.tscn" id="1_qdd0e"]
 
 [node name="save_load" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource( "1_t3sk2" )
+script = ExtResource( "1_28i20" )
 _label = NodePath("VBoxContainer/Label")
 _buttons = NodePath("VBoxContainer/CenterContainer/GridContainer")
 _pages = NodePath("VBoxContainer/pages")
