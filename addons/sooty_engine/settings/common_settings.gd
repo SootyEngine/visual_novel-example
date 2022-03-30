@@ -35,3 +35,8 @@ var sfx_mute := false:
 	set(v):
 		sfx_mute = v
 		AudioServer.set_bus_mute(AudioServer.get_bus_index(SFX.BUS), sfx_mute)
+
+var instant_text_animation := false:
+	set(v):
+		instant_text_animation = v
+		# 

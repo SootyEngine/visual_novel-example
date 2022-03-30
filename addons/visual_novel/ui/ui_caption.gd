@@ -127,6 +127,11 @@ func _show_line(payload: Dictionary):
 				DialogueStack.option_selected.connect(_option_selected, CONNECT_ONESHOT)
 		else:
 			push_error("No options_menu setup %s." % [name])
+	
+	# skip text animation?
+	if Settings.instant_text_animation:
+		rtl_text.advance()
+	
 
 func _option_selected(option: DialogueLine):
 	_waiting_for_option = false

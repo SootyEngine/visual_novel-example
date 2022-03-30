@@ -16,6 +16,9 @@ extends Node
 @onready var sfx_mute: CheckBox = get_node(_sfx_mute)
 @onready var sfx_volume: HSlider = get_node(_sfx_volume)
 
+@export var _instant_text_animation: NodePath
+@onready var instant_text_animation: CheckBox = get_node(_instant_text_animation)
+
 func _ready() -> void:
 	await get_tree().process_frame
 	
@@ -33,6 +36,9 @@ func _ready() -> void:
 	sfx_mute.toggled.connect(func(x): Settings._set("sfx_mute", not x))
 	sfx_volume.value = Settings._get("sfx_volume")
 	sfx_volume.value_changed.connect(func(x): Settings._set("sfx_volume", x))
+	
+	instant_text_animation.button_pressed = Settings._get("instant_text_animation")
+	instant_text_animation.toggled.connect(func(x): Settings._set("instant_text_animation", x))
 
 func _set_resolution(index: int):
 	var r := resolution.get_item_text(index)

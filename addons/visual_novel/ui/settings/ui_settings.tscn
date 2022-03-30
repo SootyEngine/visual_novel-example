@@ -13,6 +13,7 @@ _music_mute = NodePath("audio/VBoxContainer/music/mute")
 _music_volume = NodePath("audio/VBoxContainer/music/field")
 _sfx_mute = NodePath("audio/VBoxContainer/sfx/mute")
 _sfx_volume = NodePath("audio/VBoxContainer/sfx/field")
+_instant_text_animation = NodePath("audio/VBoxContainer2/instant_text_animation/field")
 
 [node name="audio" type="VBoxContainer" parent="."]
 anchor_right = 1.0
@@ -24,9 +25,9 @@ __meta__ = {
 }
 
 [node name="resolution" type="HBoxContainer" parent="audio"]
-offset_top = 214.0
+offset_top = 197.0
 offset_right = 1024.0
-offset_bottom = 245.0
+offset_bottom = 228.0
 __meta__ = {
 "_edit_layout_mode": 0,
 "_edit_use_custom_anchors": false
@@ -56,9 +57,9 @@ popup/item_2/text = "1920x1080"
 popup/item_2/id = 2
 
 [node name="full_screen" type="HBoxContainer" parent="audio"]
-offset_top = 249.0
+offset_top = 232.0
 offset_right = 1024.0
-offset_bottom = 280.0
+offset_bottom = 263.0
 
 [node name="label" type="Label" parent="audio/full_screen"]
 offset_top = 2.0
@@ -74,9 +75,9 @@ offset_bottom = 31.0
 text = "On"
 
 [node name="vsync" type="HBoxContainer" parent="audio"]
-offset_top = 284.0
+offset_top = 267.0
 offset_right = 1024.0
-offset_bottom = 315.0
+offset_bottom = 298.0
 
 [node name="label" type="Label" parent="audio/vsync"]
 offset_top = 2.0
@@ -92,9 +93,9 @@ offset_bottom = 31.0
 text = "On"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="audio"]
-offset_top = 319.0
+offset_top = 302.0
 offset_right = 1024.0
-offset_bottom = 385.0
+offset_bottom = 368.0
 
 [node name="music" type="HBoxContainer" parent="audio/VBoxContainer"]
 offset_right = 1024.0
@@ -156,3 +157,26 @@ theme_override_icons/grabber_disabled = ExtResource( "2_2qrsc" )
 theme_override_icons/grabber_highlight = ExtResource( "2_2qrsc" )
 theme_override_icons/grabber = ExtResource( "2_2qrsc" )
 value = 25.0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="audio"]
+offset_top = 372.0
+offset_right = 1024.0
+offset_bottom = 403.0
+
+[node name="instant_text_animation" type="HBoxContainer" parent="audio/VBoxContainer2"]
+offset_right = 1024.0
+offset_bottom = 31.0
+
+[node name="label" type="Label" parent="audio/VBoxContainer2/instant_text_animation"]
+offset_top = 2.0
+offset_right = 969.0
+offset_bottom = 28.0
+size_flags_horizontal = 3
+text = "Instant text animation"
+
+[node name="field" type="CheckBox" parent="audio/VBoxContainer2/instant_text_animation"]
+offset_left = 973.0
+offset_right = 1024.0
+offset_bottom = 31.0
+size_flags_horizontal = 4
+text = "On"

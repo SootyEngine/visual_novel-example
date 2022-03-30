@@ -431,7 +431,11 @@ func get_relative(other: Variant) -> String:
 	else:
 		return RELATION.keys()[RELATION.PRESENT]
 
-func get_relation_string(other: Variant) -> String:
+func get_relation_string(other: Variant = null) -> String:
+	# base it on current time.
+	if other == null:
+		other = create_from_current()
+	
 	var r := get_relation(other)
 	match r[0]:
 		"PRESENT": return "Now"
