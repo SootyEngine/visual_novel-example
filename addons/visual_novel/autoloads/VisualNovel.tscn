@@ -99,6 +99,9 @@ mouse_filter = 2
 theme_override_constants/margin_right = 240
 theme_override_constants/margin_left = 240
 
+[node name="notification" parent="." groups=["notification_manager"] instance=ExtResource( "4_sf4ru" )]
+prefab = ExtResource( "6_ep3a5" )
+
 [node name="pause_menu" type="CanvasLayer" parent="."]
 script = ExtResource( "6_p2tig" )
 _buttons = NodePath("MarginContainer/HBoxContainer/items")
@@ -193,9 +196,6 @@ anchor_bottom = 0.0
 offset_left = 32.0
 offset_right = 876.0
 offset_bottom = 600.0
-
-[node name="notification" parent="." groups=["notification_manager"] instance=ExtResource( "4_sf4ru" )]
-prefab = ExtResource( "6_ep3a5" )
 
 [node name="debug" type="CanvasLayer" parent="."]
 process_mode = 3

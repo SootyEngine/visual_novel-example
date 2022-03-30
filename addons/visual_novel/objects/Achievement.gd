@@ -19,8 +19,6 @@ var _unlocked: bool = false:
 	set(x):
 		if _unlocked != x:
 			self.tick = toll if x else 0
-			if _unlocked:
-				date = DateTime.create_from_current().total_seconds
 
 var _progress: float = 0.0:
 	get: return 0.0 if tick==0 or toll==0 else float(tick) / float(toll)
@@ -28,3 +26,5 @@ var _progress: float = 0.0:
 var tick := 0:
 	set(x):
 		tick = clampi(x, 0, toll)
+		if _unlocked:
+			date = DateTime.create_from_current().total_seconds

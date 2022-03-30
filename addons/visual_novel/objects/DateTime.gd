@@ -228,6 +228,9 @@ func _get_month_from_str(s: String) -> int:
 func get_day_of_month() -> int:
 	return days - _days_until_month(years, get_month_index()) + 1
 
+func get_day_of_month_ordinal() -> String:
+	return UString.ordinal(get_day_of_month())
+
 func set_day_of_month(d: int):
 	var y := years
 	days = _days_until_month(y, get_month_index()) + d - 1
@@ -235,6 +238,15 @@ func set_day_of_month(d: int):
 
 func get_month() -> String:
 	return MONTH.keys()[get_month_index()]
+
+func get_month_capitalized() -> String:
+	return get_month().capitalize()
+
+func get_month_short() -> String:
+	return get_month().substr(0, 3)
+
+func get_month_short_capitalized() -> String:
+	return get_month().substr(0, 3).capitalize()
 
 func get_month_index() -> int:
 	for i in range(11, -1, -1):
@@ -401,6 +413,14 @@ func goto_next_year():
 	seconds += get_seconds_until_next_year()
 
 #
+# FORMAT
+#
+
+# TODO:
+func format(f := "{year} {month_short_capitalized} {day_of_month_ordinal}") -> String:
+	return UString.replace_between(f, "{", "}", _get)
+
+#
 # COMPARE
 #
 
@@ -421,7 +441,11 @@ func is_earlier(other: Variant) -> bool:
 func is_later(other: Variant) -> bool:
 	return get_total_seconds() < _to_datetime(other).get_total_seconds()
 
-func get_relative(other: Variant) -> String:
+func get_relative(other: Variant = null) -> String:
+	# base it on current time.
+	if other == null:
+		other = create_from_current()
+	
 	var t1 := get_total_seconds()
 	var t2 := _to_datetime(other).get_total_seconds()
 	if t1 > t2:
@@ -431,12 +455,13 @@ func get_relative(other: Variant) -> String:
 	else:
 		return RELATION.keys()[RELATION.PRESENT]
 
-func get_relation_string(other: Variant = null) -> String:
+# Time until this DateTime.
+func get_until(other: Variant = null) -> String:
 	# base it on current time.
 	if other == null:
 		other = create_from_current()
 	
-	var r := get_relation(other)
+	var r := _get_until(other)
 	match r[0]:
 		"PRESENT": return "Now"
 		"PAST": return "%s %s%s ago" % [r[2], r[1].to_lower(), "" if r[2]==1 else "s"]
@@ -444,8 +469,14 @@ func get_relation_string(other: Variant = null) -> String:
 	push_error("Shouldn't happen.")
 	return "???"
 
+# Time since this DateTime.
+func get_since(other: Variant = null) -> String:
+	if other == null:
+		other = DateTime.create_from_current()
+	return other.get_until(self)
+
 # Array: [past or present or future, epoch type (day, month...), total epochs]
-func get_relation(other: Variant) -> Array:
+func _get_until(other: Variant) -> Array:
 	other = _to_datetime(other)
 	var t1 := get_total_seconds()
 	var t2 = other.get_total_seconds()

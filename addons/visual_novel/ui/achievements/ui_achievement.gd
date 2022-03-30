@@ -16,8 +16,8 @@ func _setup(a: Achievement):
 	
 	if a._unlocked:
 		icon.modulate.v = 1.0
-		var when = DateTime.create_from_total_seconds(a.date).get_relation_string()
-		label.set_bbcode("[b;dodger_blue]%s[]\n[i]%s[]\n%s" % [a.name, a.desc, when])
+		var when = DateTime.create_from_total_seconds(a.date).format("{year} {month_short_capitalized} {day_of_month_ordinal} ({since})")
+		label.set_bbcode("[b;dodger_blue]%s[]\n%s\n[dim;dim;i]%s[]" % [a.name, a.desc, when])
 	else:
 		icon.modulate.v = 0.125
 		label.set_bbcode("[b;deep_sky_blue;dim]%s[]\n[i;dim]%s[]" % [a.name, "???"])
