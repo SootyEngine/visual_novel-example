@@ -7,13 +7,19 @@ func _ready() -> void:
 	rt.meta_clicked.connect(_meta_clicked)
 
 func _meta_clicked(scene: String):
-	Global.change_scene(scene)
+	print("Goto scene ", scene)
+	Scene.change(scene)
 
 func _ready_deferred():
+	var text := []
+	var meta := {}
+	for scene in Scene.scenes:
+		text.append("[meta %s]%s[]" % [scene, scene])
+		meta[scene] = Scene.change.bind(scene)
+#		rt.push_meta(scene)#Scenes.scenes[scene])
+#		rt.append_text(scene)
+#		rt.pop()
+#		rt.newline()
 	var rt: RichTextLabel = $RichTextLabel
-	rt.clear()
-	for scene in Scenes:
-		rt.push_meta(scene)#Scenes.scenes[scene])
-		rt.append_text(scene)
-		rt.pop()
-		rt.newline()
+	rt.set_bbcode("\n".join(text))
+	rt._meta = meta

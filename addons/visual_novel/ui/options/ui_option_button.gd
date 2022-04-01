@@ -22,9 +22,9 @@ func _update_text():
 	var text = option.text
 	
 	if not option.passed:
-		text = "[dim][lb]DEBUG[rb]%s[]" % text
+		text = "[dim][lb]DBG[rb]%s[]" % text
 	
 	if hovered:
-		label.set_bbcode("❰ [sin;tomato]%s[] ❱" % [text])
+		label.set_bbcode("[dim]❰[] [sin;%s]%s[] [dim]❱[]" % [Color.BURLYWOOD, text])
 	else:
-		label.set_bbcode(text)
+		label.set_bbcode("[dim]%s[]" % [text])

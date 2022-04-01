@@ -37,7 +37,7 @@ func _input(event: InputEvent) -> void:
 			var waiting_for := []
 			_do("advance", waiting_for)
 			if len(waiting_for):
-				print("Waiting for ", waiting_for)
+				print("Waiting for ", waiting_for.filter(func(x): return x.get_path()))
 			else:
 				_do("hide", null)
 				DialogueStack.unhalt(self)

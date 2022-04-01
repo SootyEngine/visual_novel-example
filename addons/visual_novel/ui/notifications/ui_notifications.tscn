@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://byq8g7ltwrr5u"]
 
 [ext_resource type="Script" path="res://addons/visual_novel/ui/notifications/ui_notifications.gd" id="1_pirhg"]
 
@@ -20,6 +20,7 @@ __meta__ = {
 }
 
 [node name="Button" type="Button" parent="."]
+visible = false
 offset_left = 917.0
 offset_top = 565.0
 offset_right = 1011.0

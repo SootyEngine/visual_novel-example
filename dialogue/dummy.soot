@@ -4,9 +4,11 @@
 	
 	Once *upon* a time.
 	john: Want more [b;tomato]points[]?
-		- Yes, of course.
+		- Yes, of course
 			~score += 10
-		- No, I don't.
+			There you go.
+		- No, I don't
 			~score -= 3
+			Bye bye points.
 	
 	=> START

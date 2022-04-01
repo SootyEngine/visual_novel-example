@@ -18,7 +18,7 @@ func _pressed(id: String):
 	match id:
 		"continue": Saver.load_last_save()
 		"start": Global.start()
-		"load": Scenes.goto("load_game_menu")
+		"load": Scene.goto("load_game_menu")
 		"quit": Global.quit()
 	
 	grab_focus()

@@ -1,0 +1,59 @@
+=== START
+	// If we save the game, this will be the caption.
+	~save_caption = "The Classroom"
+	
+	@Music.play happytune // Equivalent to Music.play("res://audio/music/happytune.mp3")
+	
+	@camera.pan 200
+	@camera.wait
+	@john.fade_in
+	@john.wait
+	// Node functions can be inside BBCode, if it starts with a !.
+	// Without a !, a node function in BBCode would print whatever values it's function returned.
+	john (talk): I'm *John*. (He get's angry.) [!@john.shake_no][w][!@john.talk]I'm the angriest one.
+	=> START
+	
+	// The following dialogue has no speaker.
+	Entering the classroom.
+	There are so many students.
+	A group walks up to you.
+	
+	// We can manually enter a name between "".
+	"School Kid": Hey, new kid...
+	// If empty, the name field will use the last name, so "School Kid".
+	: Let us introduce ourselves.
+	
+	// These are Node function calls.
+	@camera.pan // get_nodes_in_group("camera").pan(200)
+	@camera.wait
+	@chris.fade_in
+	@chris.wait
+	@chris.talk
+	// 'chris' is defined in a state.gd script, so will be styled by that.
+	// BBCode like *italic*, **bold**, and ***bold_italics*** can be used.
+	chris: I'm *Chris*.
+	// Node functions in the name field will use the name as the group.
+	// So the line below is like calling:
+	// 		@chris.talk
+	// 		chris: I'm the main character of this group.
+	chris (talk): I'm the main character of this group.
+	
+	@camera.pan 200
+	@camera.wait
+	@john.fade_in
+	@john.wait
+	// Node functions can be inside BBCode, if it starts with a !.
+	// Without a !, a node function in BBCode would print whatever values it's function returned.
+	john (talk): I'm *John*. (He get's angry.) [!@john.shake_no][w] [!@john.talk]I'm the angriest one.
+	
+	@camera.pan -200
+	@camera.wait
+	@paul.fade_in
+	@paul.wait
+	paul (talk): I'm *Paul*. (He smiles.) [!@paul.shake_yes][w] [!@paul.talk]I'm the happiest one.
+	
+	@camera.pan
+	@school_boy.talk // Since all kids are part of same group "school_boy" this will be called on all of them.
+	// Multiple speakers can be included, with spaces in between.
+	paul john chris: We are ***The Gang of 3***.[wait] [!@school_boy.laugh]Heu, hue, huah.
+	

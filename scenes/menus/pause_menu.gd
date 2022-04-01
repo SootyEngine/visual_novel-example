@@ -35,7 +35,7 @@ func _goto_main_menu():
 	# TODO: Are you sure?
 	_hide()
 	Global.end()
-	Scenes.goto("main_menu")
+	Scene.goto("main_menu")
 
 func _hide_screens():
 	for child in screen_parent.get_children():

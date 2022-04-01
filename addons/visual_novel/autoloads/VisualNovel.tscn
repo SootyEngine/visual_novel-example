@@ -1,19 +1,17 @@
-[gd_scene load_steps=29 format=3 uid="uid://divhmakl2ewrr"]
+[gd_scene load_steps=25 format=3 uid="uid://divhmakl2ewrr"]
 
-[ext_resource type="PackedScene" path="res://addons/visual_novel/ui/ui_caption.tscn" id="1_5fvuj"]
+[ext_resource type="PackedScene" uid="uid://31s0g83d0w0i" path="res://addons/visual_novel/ui/ui_caption.tscn" id="1_5fvuj"]
 [ext_resource type="Script" path="res://addons/visual_novel/autoloads/VisualNovel.gd" id="1_41ilk"]
 [ext_resource type="Script" path="res://addons/visual_novel/ui/EdgeClampContainer.gd" id="2_mqxw1"]
 [ext_resource type="Shader" path="res://addons/visual_novel/ui/ui_gradient_blur.gdshader" id="3_kr04k"]
 [ext_resource type="PackedScene" uid="uid://cc3g0jdrjk1ie" path="res://addons/visual_novel/ui/options/ui_option_menu.tscn" id="3_so0hf"]
-[ext_resource type="PackedScene" path="res://addons/visual_novel/ui/notifications/ui_notifications.tscn" id="4_sf4ru"]
+[ext_resource type="PackedScene" uid="uid://byq8g7ltwrr5u" path="res://addons/visual_novel/ui/notifications/ui_notifications.tscn" id="4_sf4ru"]
 [ext_resource type="PackedScene" uid="uid://bfngd7b38mvow" path="res://addons/sooty_engine/ui/ui_debug.tscn" id="5_ojci6"]
-[ext_resource type="Shader" path="res://addons/visual_novel/screen_effects/blur/blur.gdshader" id="6_2yrjh"]
 [ext_resource type="PackedScene" path="res://addons/visual_novel/ui/ui_quest_list.tscn" id="6_e6odl"]
 [ext_resource type="PackedScene" path="res://addons/visual_novel/ui/notifications/ui_notification.tscn" id="6_ep3a5"]
-[ext_resource type="PackedScene" uid="uid://3kiavxcgtsmg" path="res://addons/sooty_engine/ui/ui_save_load.tscn" id="6_p1slb"]
-[ext_resource type="Script" path="res://addons/visual_novel/ui/ui_pause_menu.gd" id="6_p2tig"]
 [ext_resource type="Script" path="res://addons/visual_novel/ui/ui_debug_menu.gd" id="6_rc2au"]
 [ext_resource type="PackedScene" uid="uid://dlrxahqihqtqi" path="res://addons/visual_novel/ui/achievements/ui_achievements.tscn" id="7_s3pqk"]
+[ext_resource type="PackedScene" uid="uid://boxwiy10iq2jc" path="res://scenes/menus/pause_menu.tscn" id="8_t3cnj"]
 [ext_resource type="Shader" path="res://addons/sooty_engine/ui/screen_blur.gdshader" id="9_dbl8f"]
 [ext_resource type="PackedScene" uid="uid://d1csgqju2u32x" path="res://addons/sooty_engine/ui/ui_console.tscn" id="12_t3jm4"]
 [ext_resource type="PackedScene" path="res://addons/visual_novel/ui/ui_mods.tscn" id="13_ljjo8"]
@@ -24,15 +22,9 @@
 [ext_resource type="Script" path="res://addons/sooty_engine/ui/ui_debug_audio.gd" id="19_ptcwf"]
 [ext_resource type="Script" path="res://addons/visual_novel/ui/ui_history.gd" id="22_4vv54"]
 [ext_resource type="Script" path="res://addons/visual_novel/autoloads/History.gd" id="23_ayw2o"]
-[ext_resource type="PackedScene" uid="uid://bxkconmuncr0c" path="res://addons/visual_novel/ui/settings/ui_settings.tscn" id="24_gqelv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2oed7"]
 shader = ExtResource( "3_kr04k" )
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_w3ekw"]
-shader = ExtResource( "6_2yrjh" )
-shader_param/amount = 1.0
-shader_param/power = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_adcva"]
 shader = ExtResource( "9_dbl8f" )
@@ -102,100 +94,7 @@ theme_override_constants/margin_left = 240
 [node name="notification" parent="." groups=["notification_manager"] instance=ExtResource( "4_sf4ru" )]
 prefab = ExtResource( "6_ep3a5" )
 
-[node name="pause_menu" type="CanvasLayer" parent="."]
-script = ExtResource( "6_p2tig" )
-_buttons = NodePath("MarginContainer/HBoxContainer/items")
-_screen_parent = NodePath("MarginContainer/HBoxContainer/Control")
-_save_load_screen = NodePath("MarginContainer/HBoxContainer/Control/save_load")
-_settings_screen = NodePath("MarginContainer/HBoxContainer/Control/settings")
-
-[node name="ColorRect" type="ColorRect" parent="pause_menu"]
-material = SubResource( "ShaderMaterial_w3ekw" )
-anchor_right = 1.0
-anchor_bottom = 1.0
-
-[node name="MarginContainer" type="MarginContainer" parent="pause_menu"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-size_flags_horizontal = 3
-theme_override_constants/margin_left = 16
-
-[node name="HBoxContainer" type="HBoxContainer" parent="pause_menu/MarginContainer"]
-offset_left = 16.0
-offset_right = 1024.0
-offset_bottom = 600.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="items" type="VBoxContainer" parent="pause_menu/MarginContainer/HBoxContainer"]
-offset_right = 96.0
-offset_bottom = 600.0
-alignment = 1
-
-[node name="Label" type="Label" parent="pause_menu/MarginContainer/HBoxContainer/items"]
-offset_top = 199.0
-offset_right = 96.0
-offset_bottom = 225.0
-text = "Paused"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="continue" type="Button" parent="pause_menu/MarginContainer/HBoxContainer/items"]
-offset_top = 229.0
-offset_right = 96.0
-offset_bottom = 260.0
-text = "Continue"
-
-[node name="settings" type="Button" parent="pause_menu/MarginContainer/HBoxContainer/items"]
-offset_top = 264.0
-offset_right = 96.0
-offset_bottom = 295.0
-text = "Settings"
-
-[node name="save" type="Button" parent="pause_menu/MarginContainer/HBoxContainer/items"]
-offset_top = 299.0
-offset_right = 96.0
-offset_bottom = 330.0
-text = "Save"
-
-[node name="load" type="Button" parent="pause_menu/MarginContainer/HBoxContainer/items"]
-offset_top = 334.0
-offset_right = 96.0
-offset_bottom = 365.0
-text = "Load
-"
-
-[node name="main_menu" type="Button" parent="pause_menu/MarginContainer/HBoxContainer/items"]
-offset_top = 369.0
-offset_right = 96.0
-offset_bottom = 400.0
-text = "Main Menu
-"
-
-[node name="Control" type="MarginContainer" parent="pause_menu/MarginContainer/HBoxContainer"]
-offset_left = 100.0
-offset_right = 1008.0
-offset_bottom = 600.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/margin_right = 32
-theme_override_constants/margin_left = 32
-
-[node name="settings" parent="pause_menu/MarginContainer/HBoxContainer/Control" instance=ExtResource( "24_gqelv" )]
-visible = false
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 32.0
-offset_right = 876.0
-offset_bottom = 600.0
-
-[node name="save_load" parent="pause_menu/MarginContainer/HBoxContainer/Control" instance=ExtResource( "6_p1slb" )]
-visible = false
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 32.0
-offset_right = 876.0
-offset_bottom = 600.0
+[node name="pause_menu" parent="." instance=ExtResource( "8_t3cnj" )]
 
 [node name="debug" type="CanvasLayer" parent="."]
 process_mode = 3
@@ -263,6 +162,8 @@ theme_override_font_sizes/bold_font_size = 16
 theme_override_font_sizes/normal_font_size = 16
 meta_underlined = false
 script = ExtResource( "16_roqut" )
+alignment = 0
+markdown_enabled = false
 
 [node name="dialogue" type="Control" parent="debug/debug_menu"]
 visible = false
