@@ -16,6 +16,12 @@
 		@bg.set_current beach_noon
 
 === godette
+	Testing.
+		- Okay, it works.
+		- No it doesnt.
+		>< okay
+	><
+	
 	@camera.target godette
 	@blur
 	godette: Hey, have you heard about the [$godot_game_engine]?

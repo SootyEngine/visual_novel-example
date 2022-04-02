@@ -16,13 +16,13 @@ func get_soot_path() -> String:
 	return UFile.get_file_in_dir("res://dialogue", "%s.soot" % id)
 
 func _start(loaded: bool):
-	DialogueStack.execute("%s.INIT" % id)
+	DialogueStack.execute(Soot.join_path([id, "INIT"]))
 	
 	if not loaded:
-		DialogueStack.do("=> %s.START" % id)
+		DialogueStack.goto(Soot.join_path([id, "START"]))
 
 func _property_changed(property: String):
-	DialogueStack.execute(DialogueStack.join_path([id, "CHANGED:%s" % property]))
+	DialogueStack.execute(Soot.join_path([id, "CHANGED:%s" % property]))
 
 func _get_tool_buttons():
 	if has_soot():

@@ -1,13 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://31s0g83d0w0i"]
+[gd_scene load_steps=9 format=3 uid="uid://b0v05js0hc5gq"]
 
 [ext_resource type="Script" path="res://addons/visual_novel/ui/ui_caption.gd" id="1_me3hd"]
 [ext_resource type="Script" path="res://addons/rich_text/RichTextLabel2.gd" id="2_w06q7"]
 [ext_resource type="Font" path="res://fonts/robotomono/robotomono_bi.tres" id="3_ccacc"]
-[ext_resource type="Script" path="res://addons/rich_text/RichTextAnimation.gd" id="3_es7ai"]
 [ext_resource type="Font" path="res://fonts/robotomono/robotomono_i.tres" id="3_lrkqk"]
 [ext_resource type="Texture2D" uid="uid://b3vywvjoc08be" path="res://icon.png" id="4_3n06j"]
 [ext_resource type="Font" path="res://fonts/robotomono/robotomono_b.tres" id="4_e85rd"]
 [ext_resource type="Font" path="res://fonts/robotomono/robotomono_r.tres" id="5_c8524"]
+[ext_resource type="Script" path="res://addons/rich_text/RichTextAnimation.gd" id="7_eg04a"]
 
 [node name="caption" type="VBoxContainer" groups=["caption"]]
 anchor_left = 0.5
@@ -28,7 +28,7 @@ _option_menu = NodePath("")
 
 [node name="from" type="RichTextLabel" parent="."]
 offset_left = 512.0
-offset_top = 88.0
+offset_top = 61.0
 offset_right = 512.0
 offset_bottom = 88.0
 size_flags_horizontal = 4
@@ -79,9 +79,7 @@ bbcode_enabled = true
 fit_content_height = true
 meta_underlined = false
 hint_underlined = false
-script = ExtResource( "3_es7ai" )
-outline_colored = 4
-effect_time = 98.3922
+script = ExtResource( "7_eg04a" )
 _triggers = {}
 _alpha_real = []
 _alpha_goal = []
