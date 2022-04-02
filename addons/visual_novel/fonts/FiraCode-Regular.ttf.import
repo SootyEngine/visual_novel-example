@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontData"
-uid="uid://binc0g6hmbhkc"
-path="res://.godot/imported/Hack-Italic.ttf-500531454464340ba57e01dd46e5a2a3.fontdata"
+uid="uid://cohov48blw51e"
+path="res://.godot/imported/FiraCode-Regular.ttf-2085dcd5f0914a589a0833dd243f1af0.fontdata"
 
 [deps]
 
-source_file="res://addons/sooty_engine/fonts/Hack-Italic.ttf"
-dest_files=["res://.godot/imported/Hack-Italic.ttf-500531454464340ba57e01dd46e5a2a3.fontdata"]
+source_file="res://addons/visual_novel/fonts/FiraCode-Regular.ttf"
+dest_files=["res://.godot/imported/FiraCode-Regular.ttf-2085dcd5f0914a589a0833dd243f1af0.fontdata"]
 
 [params]
 
@@ -19,6 +19,8 @@ msdf_size=48
 force_autohinter=false
 hinting=1
 subpixel_positioning=1
+embolden=0.0
+transform=Transform2D(1, 0, 0, 1, 0, 0)
 oversampling=0.0
 compress=true
 opentype_feature_overrides={}

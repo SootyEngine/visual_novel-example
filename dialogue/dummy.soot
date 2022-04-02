@@ -1,14 +1,15 @@
 === START
 	
-	Testing [meta=ok^Hover text]and then what it is[] it happened.
+	Once upon a time
+	I saw a dime
 	
-	Once *upon* a time.
-	john: Want more [b;tomato]points[]?
-		- Yes, of course
-			~score += 10
-			There you go.
-		- No, I don't
-			~score -= 3
-			Bye bye points.
-	
-	=> START
+	Continue ?
+		- yes => START
+		- jump => jump
+		- no
+
+=== jump
+	Ok, we jumped.
+		- go back => START
+		- again => jump
+		- done

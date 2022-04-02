@@ -1,20 +1,20 @@
 [gd_scene load_steps=8 format=3 uid="uid://d1csgqju2u32x"]
 
-[ext_resource type="Script" path="res://addons/sooty_engine/ui/ui_console.gd" id="1_uuj7a"]
+[ext_resource type="Script" path="res://addons/visual_novel/ui/ui_console.gd" id="1_3nupt"]
 [ext_resource type="Shader" path="res://addons/sooty_engine/ui/screen_blur.gdshader" id="2_d20gb"]
-[ext_resource type="Font" uid="uid://dpy1gmyfrww2t" path="res://addons/sooty_engine/fonts/font-r.tres" id="3_bs55e"]
-[ext_resource type="Font" uid="uid://2j2j280vtmte" path="res://addons/sooty_engine/fonts/font-bi.tres" id="4_kppjx"]
-[ext_resource type="Font" uid="uid://b0o1i3qufj2wj" path="res://addons/sooty_engine/fonts/font-i.tres" id="5_hd6el"]
-[ext_resource type="Font" uid="uid://dyigxv1dsx6yj" path="res://addons/sooty_engine/fonts/font-b.tres" id="6_0nw0g"]
+[ext_resource type="Font" uid="uid://dpy1gmyfrww2t" path="res://addons/visual_novel/fonts/font-r.tres" id="3_jsqp7"]
+[ext_resource type="Font" uid="uid://2j2j280vtmte" path="res://addons/visual_novel/fonts/font-bi.tres" id="4_uj662"]
+[ext_resource type="Font" uid="uid://b0o1i3qufj2wj" path="res://addons/visual_novel/fonts/font-i.tres" id="5_7d76x"]
+[ext_resource type="Font" uid="uid://dyigxv1dsx6yj" path="res://addons/visual_novel/fonts/font-b.tres" id="6_by110"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rhy81"]
+render_priority = 0
 shader = ExtResource( "2_d20gb" )
-shader_param/blur = null
 
 [node name="console" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( "1_uuj7a" )
+script = ExtResource( "1_3nupt" )
 
 [node name="backing" type="ColorRect" parent="."]
 material = SubResource( "ShaderMaterial_rhy81" )
@@ -30,20 +30,20 @@ mouse_filter = 2
 
 [node name="c" type="HBoxContainer" parent="c"]
 offset_right = 1024.0
-offset_bottom = 565.0
+offset_bottom = 568.0
 size_flags_vertical = 3
 mouse_filter = 2
 
 [node name="output" type="RichTextLabel" parent="c/c"]
 offset_right = 910.0
-offset_bottom = 565.0
+offset_bottom = 568.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_fonts/mono_font = ExtResource( "3_bs55e" )
-theme_override_fonts/bold_italics_font = ExtResource( "4_kppjx" )
-theme_override_fonts/italics_font = ExtResource( "5_hd6el" )
-theme_override_fonts/bold_font = ExtResource( "6_0nw0g" )
-theme_override_fonts/normal_font = ExtResource( "3_bs55e" )
+theme_override_fonts/mono_font = ExtResource( "3_jsqp7" )
+theme_override_fonts/bold_italics_font = ExtResource( "4_uj662" )
+theme_override_fonts/italics_font = ExtResource( "5_7d76x" )
+theme_override_fonts/bold_font = ExtResource( "6_by110" )
+theme_override_fonts/normal_font = ExtResource( "3_jsqp7" )
 theme_override_font_sizes/mono_font_size = 16
 theme_override_font_sizes/bold_italics_font_size = 16
 theme_override_font_sizes/italics_font_size = 16
@@ -55,7 +55,7 @@ scroll_following = true
 [node name="c" type="VBoxContainer" parent="c/c"]
 offset_left = 914.0
 offset_right = 1024.0
-offset_bottom = 565.0
+offset_bottom = 568.0
 size_flags_vertical = 3
 mouse_filter = 2
 
@@ -90,9 +90,10 @@ offset_bottom = 166.0
 text = "User Input"
 
 [node name="input" type="LineEdit" parent="c"]
-offset_top = 569.0
+offset_top = 572.0
 offset_right = 1024.0
 offset_bottom = 600.0
+theme_override_fonts/font = ExtResource( "3_jsqp7" )
 placeholder_text = "Input"
 clear_button_enabled = true
 caret_blink = true

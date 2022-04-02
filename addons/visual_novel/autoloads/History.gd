@@ -10,7 +10,6 @@ var steps := []
 enum { STEP_TEXT, STEP_CHOICE, STEP_STATE }
 
 func _ready() -> void:
-#	DialogueStack.tick_started.connect(_tick_started)
 	DialogueStack.on_line.connect(_on_line)
 	DialogueStack.option_selected.connect(_option_selected)
 	State.changed_from_to.connect(_changed_from_to)

@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontData"
-uid="uid://clhwxaddv5c3f"
-path="res://.godot/imported/FiraCode-Bold.ttf-34a66817623db4e31c84ecba3bc6f5c8.fontdata"
+uid="uid://dnpkycrl8e5qo"
+path="res://.godot/imported/Hack-BoldItalic.ttf-dda408a4311c3fd4bbff9a9af4cce4a4.fontdata"
 
 [deps]
 
-source_file="res://addons/sooty_engine/fonts/FiraCode-Bold.ttf"
-dest_files=["res://.godot/imported/FiraCode-Bold.ttf-34a66817623db4e31c84ecba3bc6f5c8.fontdata"]
+source_file="res://addons/visual_novel/fonts/Hack-BoldItalic.ttf"
+dest_files=["res://.godot/imported/Hack-BoldItalic.ttf-dda408a4311c3fd4bbff9a9af4cce4a4.fontdata"]
 
 [params]
 
@@ -19,6 +19,8 @@ msdf_size=48
 force_autohinter=false
 hinting=1
 subpixel_positioning=1
+embolden=0.0
+transform=Transform2D(1, 0, 0, 1, 0, 0)
 oversampling=0.0
 compress=true
 opentype_feature_overrides={}

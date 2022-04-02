@@ -46,7 +46,7 @@ func _flow_ended(flow: String):
 	UDict.tick(State.flow_visited, flow) # tick number of times visited
 	
 	# goto the ending node
-	if len(State.flow_history) and State.flow_history[-1] != Soot.M_FLOW_END and DialogueStack.has(Soot.M_FLOW_END):
+	if len(State.flow_history) and State.flow_history[-1] != Soot.M_FLOW_END and Dialogues.has_dialogue_flow(Soot.M_FLOW_END):
 		DialogueStack.goto(Soot.M_FLOW_END)
 
 func _caption_msg(msg_type: String, msg: Variant = null):

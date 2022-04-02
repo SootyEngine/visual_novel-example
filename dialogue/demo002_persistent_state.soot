@@ -1,5 +1,5 @@
 === INIT
-	// When a game is saved, it will show this caption.
+	# When a game is saved, it will show this caption.
 	~save_caption = "The Beach"
 	
 	{{beach_is_night}}
@@ -19,7 +19,7 @@
 	@blur
 	godette: Hey, have you heard about the [$godot_game_engine]?
 		- No.
-			godette: Oh, well, go learn it.
+			godette: Oh, well, go learn about it [cyan;meta https://godotengine.org/^Godot Engine Website]here[].
 		- Yes.
 			godette: Cool, me too!
 	@camera.target main

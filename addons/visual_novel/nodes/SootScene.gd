@@ -17,16 +17,18 @@ func get_soot_path() -> String:
 
 func _start(loaded: bool):
 	var fi := Soot.join_path([id, "INIT"])
-	if DialogueStack.has(fi):
+	if Dialogues.has_dialogue_flow(fi):
 		DialogueStack.execute(fi)
 	
 	if not loaded:
 		var fs := Soot.join_path([id, "START"])
-		if DialogueStack.has(fs):
+		if Dialogues.has_dialogue_flow(fs):
 			DialogueStack.goto(fs)
 
 func _property_changed(property: String):
-	DialogueStack.execute(Soot.join_path([id, "CHANGED:%s" % property]))
+	var fs := Soot.join_path([id, "CHANGED:%s" % property])
+	if Dialogues.has_dialogue_flow(fs):
+		DialogueStack.execute(fs)
 
 func _get_tool_buttons():
 	if has_soot():

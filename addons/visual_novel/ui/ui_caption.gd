@@ -1,5 +1,4 @@
-@tool
-extends Control#"res://addons/visual_novel/ui/EdgeClampContainer.gd"
+extends Control
 
 @export var _rtl_from: NodePath = ""
 @export var _rtl_text: NodePath = ""
@@ -31,7 +30,7 @@ func _ready() -> void:
 	indicator.modulate.a = 0.0
 
 func _input(event: InputEvent) -> void:
-	if DialogueStack.is_active() and visible:
+	if visible:
 		if event.is_action_pressed("advance"):
 			var waiting_for := []
 			_do("advance", waiting_for)

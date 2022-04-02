@@ -5,7 +5,10 @@ func _ready() -> void:
 	
 	var text := []
 	var meta := {}
-	for scene in Scene.scenes:
+	var scenes = Scene.scenes.keys()
+	scenes.sort()
+	
+	for scene in scenes:
 		text.append("[meta %s]%s[]" % [scene, scene])
 		meta[scene] = _goto_scene.bind(scene)
 	var rt: RichTextLabel = $RichTextLabel

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://g0r32usbah2f"]
+[gd_scene load_steps=25 format=3 uid="uid://c8cwv58hdo1xp"]
 
 [ext_resource type="PackedScene" uid="uid://b0v05js0hc5gq" path="res://addons/visual_novel/ui/ui_caption.tscn" id="1_5fvuj"]
 [ext_resource type="Script" path="res://addons/visual_novel/autoloads/VisualNovel.gd" id="1_41ilk"]
@@ -6,21 +6,20 @@
 [ext_resource type="Shader" path="res://addons/visual_novel/ui/ui_gradient_blur.gdshader" id="3_kr04k"]
 [ext_resource type="PackedScene" uid="uid://cc3g0jdrjk1ie" path="res://addons/visual_novel/ui/options/ui_option_menu.tscn" id="3_so0hf"]
 [ext_resource type="PackedScene" uid="uid://byq8g7ltwrr5u" path="res://addons/visual_novel/ui/notifications/ui_notifications.tscn" id="4_sf4ru"]
-[ext_resource type="PackedScene" uid="uid://bfngd7b38mvow" path="res://addons/sooty_engine/ui/ui_debug.tscn" id="5_ojci6"]
+[ext_resource type="PackedScene" uid="uid://bfngd7b38mvow" path="res://addons/visual_novel/ui/ui_debug.tscn" id="5_ojci6"]
+[ext_resource type="PackedScene" uid="uid://dtn61u6e41p7x" path="res://scenes/huds/main_hud.tscn" id="6_aiu80"]
 [ext_resource type="PackedScene" path="res://addons/visual_novel/ui/ui_quest_list.tscn" id="6_e6odl"]
 [ext_resource type="PackedScene" path="res://addons/visual_novel/ui/notifications/ui_notification.tscn" id="6_ep3a5"]
-[ext_resource type="PackedScene" uid="uid://dtn61u6e41p7x" path="res://huds/main.tscn" id="6_npbco"]
 [ext_resource type="Script" path="res://addons/visual_novel/ui/ui_debug_menu.gd" id="6_rc2au"]
 [ext_resource type="PackedScene" uid="uid://dlrxahqihqtqi" path="res://addons/visual_novel/ui/achievements/ui_achievements.tscn" id="7_s3pqk"]
-[ext_resource type="PackedScene" uid="uid://n3vre2c67qxi" path="res://huds/pause_menu.tscn" id="8_t3cnj"]
-[ext_resource type="Shader" path="res://addons/sooty_engine/ui/screen_blur.gdshader" id="9_dbl8f"]
-[ext_resource type="PackedScene" uid="uid://d1csgqju2u32x" path="res://addons/sooty_engine/ui/ui_console.tscn" id="12_t3jm4"]
+[ext_resource type="PackedScene" uid="uid://n3vre2c67qxi" path="res://scenes/huds/pause_menu.tscn" id="7_x38qc"]
+[ext_resource type="Shader" path="res://addons/visual_novel/ui/screen_blur.gdshader" id="11_wfx34"]
+[ext_resource type="PackedScene" uid="uid://d1csgqju2u32x" path="res://addons/visual_novel/ui/ui_console.tscn" id="12_t3jm4"]
 [ext_resource type="PackedScene" path="res://addons/visual_novel/ui/ui_mods.tscn" id="13_ljjo8"]
-[ext_resource type="Script" path="res://addons/visual_novel/ui/ui_overdraw.gd" id="14_57xfr"]
 [ext_resource type="Script" path="res://addons/visual_novel/ui/ui_debug_scenes.gd" id="15_tuye1"]
 [ext_resource type="Script" path="res://addons/rich_text/RichTextLabel2.gd" id="16_roqut"]
 [ext_resource type="Script" path="res://addons/visual_novel/ui/ui_debug_dialogues.gd" id="17_4ysal"]
-[ext_resource type="Script" path="res://addons/sooty_engine/ui/ui_debug_audio.gd" id="19_ptcwf"]
+[ext_resource type="Script" path="res://addons/visual_novel/ui/ui_debug_audio.gd" id="20_phiuh"]
 [ext_resource type="Script" path="res://addons/visual_novel/ui/ui_history.gd" id="22_4vv54"]
 [ext_resource type="Script" path="res://addons/visual_novel/autoloads/History.gd" id="23_ayw2o"]
 
@@ -28,7 +27,7 @@
 shader = ExtResource( "3_kr04k" )
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_adcva"]
-shader = ExtResource( "9_dbl8f" )
+shader = ExtResource( "11_wfx34" )
 shader_param/blur = null
 
 [node name="simple_vn" type="Node"]
@@ -56,14 +55,14 @@ _option_menu = NodePath("../bottom/option_menu")
 [node name="bottom" type="VBoxContainer" parent="captions"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 642.0
-offset_bottom = 42.0
+offset_top = 639.0
+offset_bottom = 39.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 alignment = 2
 script = ExtResource( "2_mqxw1" )
-margin = 4.0
+margin = 16.0
 
 [node name="bottom" parent="captions/bottom" instance=ExtResource( "1_5fvuj" )]
 visible = false
@@ -94,16 +93,16 @@ theme_override_constants/margin_left = 240
 
 [node name="hud" type="CanvasLayer" parent="."]
 
-[node name="main_hud" parent="hud" instance=ExtResource( "6_npbco" )]
+[node name="main_hud" parent="hud" instance=ExtResource( "6_aiu80" )]
+
+[node name="pause_menu" parent="." instance=ExtResource( "7_x38qc" )]
+visible = false
 
 [node name="notification" parent="." groups=["notification_manager"] instance=ExtResource( "4_sf4ru" )]
 prefab = ExtResource( "6_ep3a5" )
 
-[node name="pause_menu" parent="." instance=ExtResource( "8_t3cnj" )]
-
 [node name="debug" type="CanvasLayer" parent="."]
 process_mode = 3
-visible = false
 script = ExtResource( "6_rc2au" )
 
 [node name="backing" type="ColorRect" parent="debug"]
@@ -118,14 +117,13 @@ drag_to_rearrange_enabled = true
 
 [node name="debug" parent="debug/debug_menu" instance=ExtResource( "5_ojci6" )]
 offset_top = 31.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="console" parent="debug/debug_menu" instance=ExtResource( "12_t3jm4" )]
 visible = false
 
 [node name="mods" parent="debug/debug_menu" instance=ExtResource( "13_ljjo8" )]
 visible = false
+offset_top = 31.0
 
 [node name="quests" parent="debug/debug_menu" instance=ExtResource( "6_e6odl" )]
 visible = false
@@ -158,7 +156,7 @@ script = ExtResource( "15_tuye1" )
 [node name="RichTextLabel" type="RichTextLabel" parent="debug/debug_menu/scenes"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_colors/font_outline_color = Color(0.67, 0.67, 0.67, 1)
 theme_override_constants/outline_size = 0
 theme_override_font_sizes/mono_font_size = 16
 theme_override_font_sizes/bold_italics_font_size = 16
@@ -168,24 +166,33 @@ theme_override_font_sizes/normal_font_size = 16
 meta_underlined = false
 script = ExtResource( "16_roqut" )
 alignment = 0
+outline_adjust = 0.5
 markdown_enabled = false
 
 [node name="dialogue" type="Control" parent="debug/debug_menu"]
-visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource( "17_4ysal" )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="debug/debug_menu/dialogue"]
+[node name="VBoxContainer" type="VBoxContainer" parent="debug/debug_menu/dialogue"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
-[node name="RichTextLabel" type="RichTextLabel" parent="debug/debug_menu/dialogue/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="debug/debug_menu/dialogue/VBoxContainer"]
+offset_right = 304.0
+offset_bottom = 18.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="dialogues" type="RichTextLabel" parent="debug/debug_menu/dialogue/VBoxContainer/HBoxContainer"]
 minimum_size = Vector2(300, 0)
 offset_right = 300.0
-offset_bottom = 40.0
+offset_bottom = 18.0
 size_flags_vertical = 3
-theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_colors/font_outline_color = Color(0.67, 0.67, 0.67, 1)
 theme_override_constants/outline_size = 0
 theme_override_font_sizes/mono_font_size = 16
 theme_override_font_sizes/bold_italics_font_size = 16
@@ -196,16 +203,17 @@ meta_underlined = false
 autowrap_mode = 0
 script = ExtResource( "16_roqut" )
 alignment = 0
+outline_adjust = 0.5
 markdown_enabled = false
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="debug/debug_menu/dialogue/HBoxContainer"]
+[node name="stack" type="RichTextLabel" parent="debug/debug_menu/dialogue/VBoxContainer/HBoxContainer"]
 offset_left = 304.0
 offset_right = 304.0
-offset_bottom = 40.0
+offset_bottom = 18.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 2
-theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_colors/font_outline_color = Color(0.67, 0.67, 0.67, 1)
 theme_override_constants/outline_size = 0
 theme_override_font_sizes/mono_font_size = 16
 theme_override_font_sizes/bold_italics_font_size = 16
@@ -218,18 +226,42 @@ meta_underlined = false
 autowrap_mode = 0
 script = ExtResource( "16_roqut" )
 alignment = 0
+outline_adjust = 0.5
+markdown_enabled = false
+
+[node name="halting_for" type="RichTextLabel" parent="debug/debug_menu/dialogue/VBoxContainer"]
+offset_top = 22.0
+offset_right = 304.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_mode = 2
+theme_override_colors/font_outline_color = Color(0.67, 0.67, 0.67, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/mono_font_size = 16
+theme_override_font_sizes/bold_italics_font_size = 16
+theme_override_font_sizes/italics_font_size = 16
+theme_override_font_sizes/bold_font_size = 16
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+selection_enabled = true
+meta_underlined = false
+autowrap_mode = 0
+script = ExtResource( "16_roqut" )
+alignment = 0
+outline_adjust = 0.5
 markdown_enabled = false
 
 [node name="audio" type="Control" parent="debug/debug_menu"]
 visible = false
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource( "19_ptcwf" )
+script = ExtResource( "20_phiuh" )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="debug/debug_menu/audio"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_colors/font_outline_color = Color(0.67, 0.67, 0.67, 1)
 theme_override_constants/outline_size = 0
 theme_override_font_sizes/mono_font_size = 16
 theme_override_font_sizes/bold_italics_font_size = 16
@@ -239,6 +271,7 @@ theme_override_font_sizes/normal_font_size = 16
 meta_underlined = false
 script = ExtResource( "16_roqut" )
 alignment = 0
+outline_adjust = 0.5
 markdown_enabled = false
 
 [node name="history" type="Control" parent="debug/debug_menu"]
@@ -267,7 +300,7 @@ offset_right = 158.0
 offset_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_colors/font_outline_color = Color(0.67, 0.67, 0.67, 1)
 theme_override_constants/outline_size = 0
 theme_override_font_sizes/mono_font_size = 16
 theme_override_font_sizes/bold_italics_font_size = 16
@@ -276,9 +309,4 @@ theme_override_font_sizes/bold_font_size = 16
 theme_override_font_sizes/normal_font_size = 16
 meta_underlined = false
 script = ExtResource( "16_roqut" )
-
-[node name="overdraw" type="CanvasLayer" parent="."]
-layer = 128
-
-[node name="ui_overdraw" type="Node2D" parent="overdraw"]
-script = ExtResource( "14_57xfr" )
+outline_adjust = 0.5

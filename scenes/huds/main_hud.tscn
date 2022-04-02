@@ -1,12 +1,12 @@
 [gd_scene load_steps=2 format=3 uid="uid://dtn61u6e41p7x"]
 
-[ext_resource type="Script" path="res://huds/main_hud.gd" id="1_e4m1v"]
+[ext_resource type="Script" path="res://scenes/huds/main_hud.gd" id="1_njokt"]
 
 [node name="main_hud" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-script = ExtResource( "1_e4m1v" )
+script = ExtResource( "1_njokt" )
 
 [node name="Label" type="Label" parent="."]
 offset_left = 293.0

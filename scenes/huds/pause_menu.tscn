@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://n3vre2c67qxi"]
 
-[ext_resource type="Script" path="res://scenes/menus/pause_menu.gd" id="1_xpgds"]
+[ext_resource type="Script" path="res://scenes/huds/pause_menu.gd" id="1_wwqvn"]
 [ext_resource type="Shader" path="res://addons/visual_novel/screen_effects/blur/blur.gdshader" id="2_g01dm"]
 [ext_resource type="PackedScene" uid="uid://bxkconmuncr0c" path="res://addons/visual_novel/ui/settings/ui_settings.tscn" id="3_mstfr"]
 [ext_resource type="PackedScene" uid="uid://3kiavxcgtsmg" path="res://addons/visual_novel/ui/saver/ui_save_load.tscn" id="4_0dlk1"]
@@ -11,7 +11,7 @@ shader_param/amount = 1.0
 shader_param/power = 1.0
 
 [node name="pause_menu" type="CanvasLayer"]
-script = ExtResource( "1_xpgds" )
+script = ExtResource( "1_wwqvn" )
 _buttons = NodePath("MarginContainer/HBoxContainer/items")
 _screen_parent = NodePath("MarginContainer/HBoxContainer/Control")
 _save_load_screen = NodePath("MarginContainer/HBoxContainer/Control/save_load")
