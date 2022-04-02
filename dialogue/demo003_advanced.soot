@@ -1,10 +1,6 @@
+// Demonstrates achievements, quests, and inventory system.
 === START
 	~save_caption = "The Jail Cell"
-	
-	"The Stranger": How do you do?
-	: My name is paul.
-	paul: I was wondering.
-	=> START
 	
 	"Stranger": And who might you be?
 		- Just a random game developer.
@@ -12,7 +8,7 @@
 			: I need a favor.
 			: You can call me [$mr_bool].
 			=> favor
-			
+		
 		- Who wants to know?
 			"Stranger": (Chuckles)
 			: I never had a government name.
@@ -21,4 +17,4 @@
 			=> favor
 
 === favor
-	mr_bool: I need you to get me .
+	mr_bool: I need you to get me something.

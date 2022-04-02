@@ -38,5 +38,6 @@ fill_to = Vector2(0.5, 0)
 [node name="GPUParticles2D" type="GPUParticles2D"]
 amount = 128
 lifetime = 8.0
+preprocess = 4.0
 process_material = SubResource( "ParticlesMaterial_qjagb" )
 texture = SubResource( "GradientTexture2D_4bsqk" )
