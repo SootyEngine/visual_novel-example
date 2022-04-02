@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://boxwiy10iq2jc"]
+[gd_scene load_steps=6 format=3 uid="uid://n3vre2c67qxi"]
 
 [ext_resource type="Script" path="res://scenes/menus/pause_menu.gd" id="1_xpgds"]
 [ext_resource type="Shader" path="res://addons/visual_novel/screen_effects/blur/blur.gdshader" id="2_g01dm"]

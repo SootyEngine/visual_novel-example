@@ -25,8 +25,8 @@ var hovered := 0:
 
 func _ready() -> void:
 	button_parent.remove_child(button_prefab)
-	Saver.pre_load.connect(_hide)
-	Global.ended.connect(_hide)
+	DialogueStack._refresh.connect(_hide)
+	DialogueStack.ended.connect(_hide)
 
 func _input(event: InputEvent) -> void:
 	if visible:

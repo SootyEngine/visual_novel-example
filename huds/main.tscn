@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://dtn61u6e41p7x"]
+
+[ext_resource type="Script" path="res://huds/main_hud.gd" id="1_e4m1v"]
+
+[node name="main_hud" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( "1_e4m1v" )
+
+[node name="Label" type="Label" parent="."]
+offset_left = 293.0
+offset_top = 7.0
+offset_right = 715.0
+offset_bottom = 58.0
+text = "HUD"
+horizontal_alignment = 1
+vertical_alignment = 1
+__meta__ = {
+"_edit_layout_mode": 0,
+"_edit_use_custom_anchors": false
+}

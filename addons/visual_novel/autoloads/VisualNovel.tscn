@@ -1,6 +1,6 @@
-[gd_scene load_steps=25 format=3 uid="uid://divhmakl2ewrr"]
+[gd_scene load_steps=26 format=3 uid="uid://g0r32usbah2f"]
 
-[ext_resource type="PackedScene" uid="uid://31s0g83d0w0i" path="res://addons/visual_novel/ui/ui_caption.tscn" id="1_5fvuj"]
+[ext_resource type="PackedScene" uid="uid://b0v05js0hc5gq" path="res://addons/visual_novel/ui/ui_caption.tscn" id="1_5fvuj"]
 [ext_resource type="Script" path="res://addons/visual_novel/autoloads/VisualNovel.gd" id="1_41ilk"]
 [ext_resource type="Script" path="res://addons/visual_novel/ui/EdgeClampContainer.gd" id="2_mqxw1"]
 [ext_resource type="Shader" path="res://addons/visual_novel/ui/ui_gradient_blur.gdshader" id="3_kr04k"]
@@ -9,9 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://bfngd7b38mvow" path="res://addons/sooty_engine/ui/ui_debug.tscn" id="5_ojci6"]
 [ext_resource type="PackedScene" path="res://addons/visual_novel/ui/ui_quest_list.tscn" id="6_e6odl"]
 [ext_resource type="PackedScene" path="res://addons/visual_novel/ui/notifications/ui_notification.tscn" id="6_ep3a5"]
+[ext_resource type="PackedScene" uid="uid://dtn61u6e41p7x" path="res://huds/main.tscn" id="6_npbco"]
 [ext_resource type="Script" path="res://addons/visual_novel/ui/ui_debug_menu.gd" id="6_rc2au"]
 [ext_resource type="PackedScene" uid="uid://dlrxahqihqtqi" path="res://addons/visual_novel/ui/achievements/ui_achievements.tscn" id="7_s3pqk"]
-[ext_resource type="PackedScene" uid="uid://boxwiy10iq2jc" path="res://scenes/menus/pause_menu.tscn" id="8_t3cnj"]
+[ext_resource type="PackedScene" uid="uid://n3vre2c67qxi" path="res://huds/pause_menu.tscn" id="8_t3cnj"]
 [ext_resource type="Shader" path="res://addons/sooty_engine/ui/screen_blur.gdshader" id="9_dbl8f"]
 [ext_resource type="PackedScene" uid="uid://d1csgqju2u32x" path="res://addons/sooty_engine/ui/ui_console.tscn" id="12_t3jm4"]
 [ext_resource type="PackedScene" path="res://addons/visual_novel/ui/ui_mods.tscn" id="13_ljjo8"]
@@ -90,6 +91,10 @@ size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_constants/margin_right = 240
 theme_override_constants/margin_left = 240
+
+[node name="hud" type="CanvasLayer" parent="."]
+
+[node name="main_hud" parent="hud" instance=ExtResource( "6_npbco" )]
 
 [node name="notification" parent="." groups=["notification_manager"] instance=ExtResource( "4_sf4ru" )]
 prefab = ExtResource( "6_ep3a5" )

@@ -25,9 +25,8 @@ func _ready() -> void:
 	rtl_text.clear()
 	rtl_text.faded_in.connect(set_show_indicator.bind(true))
 	rtl_text.started.connect(set_show_indicator.bind(false))
-	Saver.pre_load.connect(_hide)
-	Global.ended.connect(_hide)
 	DialogueStack._refresh.connect(_hide)
+	DialogueStack.ended.connect(_hide)
 	visible = false
 	indicator.modulate.a = 0.0
 

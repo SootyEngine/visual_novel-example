@@ -1,0 +1,126 @@
+{
+	"0!2": {
+		"id": "",
+		"file": 0,
+		"line": 2,
+		"type": "action",
+		"action": "~save_caption = \"The Jail Cell\""
+	},
+	"0!6": {
+		"id": "",
+		"file": 0,
+		"line": 6,
+		"type": "text",
+		"text": "Okay.",
+		"from": "\"Stranger\""
+	},
+	"0!7": {
+		"id": "",
+		"file": 0,
+		"line": 7,
+		"type": "text",
+		"text": "I need a favor.",
+		"from": "\"Stranger\""
+	},
+	"0!8": {
+		"id": "",
+		"file": 0,
+		"line": 8,
+		"type": "text",
+		"text": "You can call me [$mr_bool].",
+		"from": "\"Stranger\""
+	},
+	"0!9": {
+		"id": "",
+		"file": 0,
+		"line": 9,
+		"type": "goto",
+		"goto": "demo003_advanced/favor"
+	},
+	"0!5": {
+		"id": "",
+		"file": 0,
+		"line": 5,
+		"type": "option",
+		"text": "Just a random game developer.",
+		"then": [
+			"0!6",
+			"0!7",
+			"0!8",
+			"0!9"
+		]
+	},
+	"0!12": {
+		"id": "",
+		"file": 0,
+		"line": 12,
+		"type": "text",
+		"text": "(Chuckles)",
+		"from": "\"Stranger\""
+	},
+	"0!13": {
+		"id": "",
+		"file": 0,
+		"line": 13,
+		"type": "text",
+		"text": "I never had a government name.",
+		"from": "\"Stranger\""
+	},
+	"0!14": {
+		"id": "",
+		"file": 0,
+		"line": 14,
+		"type": "text",
+		"text": "But you can call me [$mr_bool] for convenience.",
+		"from": "\"Stranger\""
+	},
+	"0!15": {
+		"id": "",
+		"file": 0,
+		"line": 15,
+		"type": "text",
+		"text": "I want to ask a favor of you.",
+		"from": "mr_bool"
+	},
+	"0!16": {
+		"id": "",
+		"file": 0,
+		"line": 16,
+		"type": "goto",
+		"goto": "demo003_advanced/favor"
+	},
+	"0!11": {
+		"id": "",
+		"file": 0,
+		"line": 11,
+		"type": "option",
+		"text": "Who wants to know?",
+		"then": [
+			"0!12",
+			"0!13",
+			"0!14",
+			"0!15",
+			"0!16"
+		]
+	},
+	"0!4": {
+		"id": "",
+		"file": 0,
+		"line": 4,
+		"type": "text",
+		"text": "And who might you be?",
+		"from": "\"Stranger\"",
+		"options": [
+			"0!5",
+			"0!11"
+		]
+	},
+	"0!19": {
+		"id": "",
+		"file": 0,
+		"line": 19,
+		"type": "text",
+		"text": "I need you to get me something.",
+		"from": "mr_bool"
+	}
+}

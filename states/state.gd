@@ -1,6 +1,6 @@
 extends Node
 
-var beach_is_night := true
+var beach_is_night := false
 var save_caption := "The Quest"
 
 var score := 0

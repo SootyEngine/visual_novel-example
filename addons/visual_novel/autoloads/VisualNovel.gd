@@ -7,8 +7,6 @@ const FORMAT_PREDICATE := "[dim]%s[]"
 const FORMAT_QUOTE := "[q]%s[]"
 const FORMAT_INNER_QUOTE := "[i]%s[]"
 const QUOTE_DELAY := 0.25 # a delay between predicates and quotes.
-#const QUOTES := "“%s”" # nice quotes
-#const INNER_QUOTES := "‘%s’" # nice inner quotes
 
 class Debug:
 	# when displaying dialogue options, do you want hidden ones to be shown?
@@ -18,9 +16,6 @@ class Debug:
 	var allow_debug_menu := true
 
 var debug := Debug.new()
-
-func _init():
-	add_to_group("sa:visual_novel_version")
 
 func _ready() -> void:
 	Mods._add_mod("res://addons/visual_novel", true)
@@ -34,7 +29,7 @@ func _ready() -> void:
 	
 	$captions/backing.visible = false
 
-func visual_novel_version() -> String:
+func version() -> String:
 	return "[%s]%s[]" % [Color.TOMATO, VERSION]
 
 func _dialogue_started():
@@ -51,8 +46,8 @@ func _flow_ended(flow: String):
 	UDict.tick(State.flow_visited, flow) # tick number of times visited
 	
 	# goto the ending node
-	if len(State.flow_history) and State.flow_history[-1] != "MAIN.FLOW_END":
-		DialogueStack.goto("MAIN.FLOW_END", DialogueStack.STEP_GOTO)
+	if len(State.flow_history) and State.flow_history[-1] != Soot.M_FLOW_END and DialogueStack.has(Soot.M_FLOW_END):
+		DialogueStack.goto(Soot.M_FLOW_END)
 
 func _caption_msg(msg_type: String, msg: Variant = null):
 	Global.call_group_flags(SceneTree.GROUP_CALL_REALTIME, "caption", "_caption", [State.caption_at, msg_type, msg])
