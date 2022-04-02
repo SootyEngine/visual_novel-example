@@ -1,4 +1,5 @@
 extends BaseButton
+class_name SootButton
 
 const FADEOUT_TIME := 0.25
 
@@ -38,10 +39,11 @@ func _ready() -> void:
 func _pressed() -> void:
 	release_focus()
 	
-	if DialogueStack.can_do(action):
-		DialogueStack.do(action)
-	else:
-		StringAction.do(action)
+	if action:
+		if DialogueStack.can_do(action):
+			DialogueStack.do(action)
+		else:
+			StringAction.do(action)
 	
 	if goto_scene_flow:
 		DialogueStack.do("=> %s.%s" % [Scene.id, goto_scene_flow])
