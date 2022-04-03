@@ -1,16 +1,16 @@
 [gd_scene load_steps=12 format=3 uid="uid://ragqmevkcirt"]
 
 [ext_resource type="Script" path="res://addons/visual_novel/nodes/SootScene.gd" id="1_47eh7"]
-[ext_resource type="Texture2D" path="res://bgs/beach_night.webp" id="1_wo2ev"]
+[ext_resource type="Texture2D" uid="uid://c4i2bldgp27xh" path="res://bgs/beach_night.webp" id="1_wo2ev"]
 [ext_resource type="Script" path="res://addons/visual_novel/nodes/Background.gd" id="2_vvle1"]
-[ext_resource type="Texture2D" path="res://bgs/beach_noon.webp" id="3_i2w6y"]
+[ext_resource type="Texture2D" uid="uid://cwxshyarxpvpl" path="res://bgs/beach_noon.webp" id="3_i2w6y"]
 [ext_resource type="PackedScene" path="res://addons/visual_novel/screen_effects/blur/blur.tscn" id="4_elwk2"]
-[ext_resource type="Texture2D" path="res://icon.png" id="4_wu014"]
-[ext_resource type="Texture2D" path="res://chars/godette/godette_main.webp" id="5_8g0n1"]
+[ext_resource type="Texture2D" uid="uid://b3vywvjoc08be" path="res://icon.png" id="4_wu014"]
+[ext_resource type="Texture2D" uid="uid://dhkhavn25pwqi" path="res://chars/godette/godette_main.webp" id="5_8g0n1"]
 [ext_resource type="Script" path="res://addons/visual_novel/nodes/Camera.gd" id="7_0b8xy"]
 [ext_resource type="Script" path="res://addons/visual_novel/nodes/Sprite2DAnimations.gd" id="7_kldqt"]
 [ext_resource type="Script" path="res://addons/visual_novel/nodes/SpriteButton.gd" id="10_pr3i0"]
-[ext_resource type="Texture2D" path="res://common/kenney_d4.png" id="11_o44cl"]
+[ext_resource type="Texture2D" uid="uid://b4kdu7pggbasc" path="res://common/kenney_d4.png" id="11_o44cl"]
 
 [node name="the_beach" type="Control"]
 anchor_right = 1.0
@@ -92,3 +92,6 @@ rotation = -1.57079
 scale = Vector2(0.631689, 0.631689)
 texture = ExtResource( "11_o44cl" )
 script = ExtResource( "10_pr3i0" )
+goto_scene = "demo003_advanced"
+fadeout_on_disabled = true
+goto_scene = "demo003_advanced"

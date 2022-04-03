@@ -28,7 +28,7 @@ func _redraw_stack():
 	var meta := {}
 	for part in DialogueStack._stack:
 		text.append(str(part))
-		var d: Dialogue = Dialogues.get_dialogue(part.did)
+		var d: Dialogue = Dialogues.get_dialogue(part.d_id)
 		for i in range(len(part.lines)):
 			var line = d.get_line(part.lines[i])
 			if i < part.step:

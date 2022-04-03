@@ -1,9 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://3qt13hepll4t"]
 
-[ext_resource type="Texture2D" path="res://common/kenney_d4.png" id="1_4544p"]
+[ext_resource type="Texture2D" uid="uid://b4kdu7pggbasc" path="res://common/kenney_d4.png" id="1_4544p"]
 [ext_resource type="Script" path="res://addons/visual_novel/nodes/SootButton.gd" id="2_6nhwl"]
 
 [node name="arrow" type="Sprite2D"]
+process_mode = 3
 rotation = -1.57079
 texture = ExtResource( "1_4544p" )
 script = ExtResource( "2_6nhwl" )

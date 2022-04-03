@@ -1,12 +1,9 @@
 === START
 	
-	Once upon a time
-	I saw a dime
-	
-	Continue ?
-		- yes => START
-		- jump => jump
-		- no
+	Score is [~score]!
+	@Scene.goto demo002_persistent_state
+	Some text to show at beach.
+	and then...
 
 === jump
 	Ok, we jumped.

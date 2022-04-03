@@ -44,7 +44,6 @@ func _input(event: InputEvent) -> void:
 		# detect mouse over
 		if event is InputEventMouseMotion:
 			_hovered = _is_pixel_opaque()
-#			prints(name, _hovered)
 		
 		# detect pressed
 		elif event is InputEventMouseButton:

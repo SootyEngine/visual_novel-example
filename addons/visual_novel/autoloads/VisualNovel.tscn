@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c8cwv58hdo1xp"]
+[gd_scene load_steps=24 format=3 uid="uid://c8cwv58hdo1xp"]
 
 [ext_resource type="PackedScene" uid="uid://b0v05js0hc5gq" path="res://addons/visual_novel/ui/ui_caption.tscn" id="1_5fvuj"]
 [ext_resource type="Script" path="res://addons/visual_novel/autoloads/VisualNovel.gd" id="1_41ilk"]
@@ -7,12 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://cc3g0jdrjk1ie" path="res://addons/visual_novel/ui/options/ui_option_menu.tscn" id="3_so0hf"]
 [ext_resource type="PackedScene" uid="uid://byq8g7ltwrr5u" path="res://addons/visual_novel/ui/notifications/ui_notifications.tscn" id="4_sf4ru"]
 [ext_resource type="PackedScene" uid="uid://bfngd7b38mvow" path="res://addons/visual_novel/ui/ui_debug.tscn" id="5_ojci6"]
-[ext_resource type="PackedScene" uid="uid://dtn61u6e41p7x" path="res://scenes/huds/main_hud.tscn" id="6_aiu80"]
 [ext_resource type="PackedScene" path="res://addons/visual_novel/ui/ui_quest_list.tscn" id="6_e6odl"]
 [ext_resource type="PackedScene" path="res://addons/visual_novel/ui/notifications/ui_notification.tscn" id="6_ep3a5"]
 [ext_resource type="Script" path="res://addons/visual_novel/ui/ui_debug_menu.gd" id="6_rc2au"]
+[ext_resource type="Script" path="res://addons/visual_novel/nodes/SceneInstancer.gd" id="7_8v3aq"]
 [ext_resource type="PackedScene" uid="uid://dlrxahqihqtqi" path="res://addons/visual_novel/ui/achievements/ui_achievements.tscn" id="7_s3pqk"]
-[ext_resource type="PackedScene" uid="uid://n3vre2c67qxi" path="res://scenes/huds/pause_menu.tscn" id="7_x38qc"]
 [ext_resource type="Shader" path="res://addons/visual_novel/ui/screen_blur.gdshader" id="11_wfx34"]
 [ext_resource type="PackedScene" uid="uid://d1csgqju2u32x" path="res://addons/visual_novel/ui/ui_console.tscn" id="12_t3jm4"]
 [ext_resource type="PackedScene" path="res://addons/visual_novel/ui/ui_mods.tscn" id="13_ljjo8"]
@@ -92,11 +91,12 @@ theme_override_constants/margin_right = 240
 theme_override_constants/margin_left = 240
 
 [node name="hud" type="CanvasLayer" parent="."]
+script = ExtResource( "7_8v3aq" )
+scene_id = "main_hud"
 
-[node name="main_hud" parent="hud" instance=ExtResource( "6_aiu80" )]
-
-[node name="pause_menu" parent="." instance=ExtResource( "7_x38qc" )]
-visible = false
+[node name="pause_menu" type="CanvasLayer" parent="."]
+script = ExtResource( "7_8v3aq" )
+scene_id = "pause_menu"
 
 [node name="notification" parent="." groups=["notification_manager"] instance=ExtResource( "4_sf4ru" )]
 prefab = ExtResource( "6_ep3a5" )
@@ -170,6 +170,7 @@ outline_adjust = 0.5
 markdown_enabled = false
 
 [node name="dialogue" type="Control" parent="debug/debug_menu"]
+visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource( "17_4ysal" )

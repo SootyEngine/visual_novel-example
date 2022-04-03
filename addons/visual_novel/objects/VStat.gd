@@ -43,5 +43,5 @@ func _operator_set(x):
 	if x is int:
 		value = x
 
-func to_string() -> String:
+func as_string() -> String:
 	return "[b;%s]%s[]" % [color, value]

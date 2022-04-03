@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=7 format=3 uid="uid://dbjtk46y6c357"]
 
 [ext_resource type="Script" path="res://addons/visual_novel/ui/options/ui_option_button.gd" id="1_ptcho"]
 [ext_resource type="Font" path="res://fonts/robotomono/robotomono_bi.tres" id="2_82qb6"]
@@ -10,15 +10,26 @@
 [node name="option" type="Button"]
 self_modulate = Color(1, 1, 1, 0)
 offset_right = 1024.0
-offset_bottom = 31.0
+offset_bottom = 36.0
 theme_override_font_sizes/font_size = 20
 script = ExtResource( "1_ptcho" )
-_label = NodePath("RichTextLabel")
+_label = NodePath("CenterContainer/RichTextLabel")
+_backing = NodePath("ColorRect")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = 27.0
+color = Color(0.09, 0.35, 0.7, 0.25)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CenterContainer"]
+offset_left = 512.0
+offset_top = 4.0
+offset_right = 512.0
+offset_bottom = 31.0
 theme_override_colors/font_outline_color = Color(0.67, 0.67, 0.67, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.25098)
 theme_override_constants/shadow_offset_x = 2

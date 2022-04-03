@@ -27,20 +27,25 @@ func _ready() -> void:
 	button_parent.remove_child(button_prefab)
 	DialogueStack._refresh.connect(_hide)
 	DialogueStack.ended.connect(_hide)
+	set_enabled(false)
+
+func _process(delta: float) -> void:
+	for i in button_parent.get_child_count():
+		if button_parent.get_child(i).is_mouse_over():
+			hovered = i
 
 func _input(event: InputEvent) -> void:
-	if visible:
-		if event.is_action_pressed("ui_up"):
-			hovered -= 1
-			get_viewport().set_input_as_handled()
-		
-		elif event.is_action_pressed("ui_down"):
-			hovered += 1
-			get_viewport().set_input_as_handled()
-		
-		elif event.is_action_pressed("advance") and _can_select:
-			_select(_options[hovered])
-			get_viewport().set_input_as_handled()
+	if event.is_action_pressed("ui_up"):
+		hovered -= 1
+		get_viewport().set_input_as_handled()
+	
+	elif event.is_action_pressed("ui_down"):
+		hovered += 1
+		get_viewport().set_input_as_handled()
+	
+	elif event.is_action_pressed("advance") and _can_select:
+		_select(_options[hovered])
+		get_viewport().set_input_as_handled()
 
 func has_options() -> bool:
 	return len(_options) > 0
@@ -53,10 +58,15 @@ func _set_line(line: DialogueLine):
 	else:
 		_options = []
 	
-	visible = true
+	set_enabled(true)
 	modulate.a = 0.0
 	_can_select = false
 	_create_options()
+
+func set_enabled(e):
+	visible = e
+	set_process(e)
+	set_process_input(e)
 
 func _show_options():
 	modulate.a = 1.0
@@ -88,7 +98,7 @@ func _select(option: DialogueLine):
 	DialogueStack.select_option(option)
 
 func _hide():
-	visible = false
+	set_enabled(false)
 	
 	for button in button_parent.get_children():
 		button_parent.remove_child(button)

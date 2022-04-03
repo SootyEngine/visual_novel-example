@@ -42,7 +42,7 @@ func __target(tween: Tween, id: String, snap := false):
 		zoom = targ.zoom
 	
 	else:
-		var time := 1.0
+		var time := 0.5
 		tween.set_parallel()
 		tween.tween_property(self, "position", targ.position, time)
 		tween.tween_property(self, "rotation", targ.rotation, time)
@@ -91,7 +91,7 @@ func _draw() -> void:
 var _tween: Tween
 func _get_tween() -> Tween:
 	if _tween:
-		_tween.stop()
+		_tween.kill()
 	_tween = get_tree().create_tween()
 	_tween.bind_node(self)
 	return _tween

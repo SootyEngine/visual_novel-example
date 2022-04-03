@@ -22,11 +22,13 @@ func _start(loaded: bool):
 	
 	if not loaded:
 		var fs := Soot.join_path([id, "START"])
-		if Dialogues.has_dialogue_flow(fs):
+		if DialogueStack.is_active():
+			DialogueStack.ended.connect(DialogueStack.goto.bind(fs), CONNECT_ONESHOT)
+		else:
 			DialogueStack.goto(fs)
 
 func _property_changed(property: String):
-	var fs := Soot.join_path([id, "CHANGED:%s" % property])
+	var fs := Soot.join_path([id, "CHANGED_%s" % property])
 	if Dialogues.has_dialogue_flow(fs):
 		DialogueStack.execute(fs)
 

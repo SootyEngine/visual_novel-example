@@ -86,6 +86,12 @@ func flip():
 	var t := _create()
 	_add_flip(t)
 
+func hide():
+	modulate.a = 0.0
+
+func show():
+	modulate.a = 1.0
+
 func radiate():
 	var t := _create()
 	t.tween_property(self, "modulate:g", 1.0, 0.5).from(100.0)\

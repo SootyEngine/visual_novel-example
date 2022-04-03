@@ -8,15 +8,26 @@ const FADEOUT_TIME := 0.25
 @export var goto_scene_flow := ""
 @export var action := ""
 @export var condition_visible := ""
-@export var fadeout_on_diabled := false
+@export var fadeout_on_disabled := false
 var _tween: Tween
 
-func _init() -> void:
-	if not Engine.is_editor_hint():
-		DialogueStack.started.connect(_disable)
-		DialogueStack.ended.connect(_enable)
-		self.pressed.connect(_on_pressed)
-		process_mode = Node.PROCESS_MODE_ALWAYS
+#func _init() -> void:
+#	process_mode = Node.PROCESS_MODE_ALWAYS
+	
+func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+	
+	DialogueStack.started.connect(_disable)
+	DialogueStack.ended.connect(_enable)
+	self.pressed.connect(_on_pressed)
+	
+	if len(condition_visible):
+		self.visible = true if State._eval(condition_visible) else false
+	
+	if DialogueStack.is_active():
+		if fadeout_on_disabled:
+			self.modulate.a = 0.0
 
 func _get_property_list() -> Array:
 	var props := PropList.new().category("SootButton")
@@ -33,31 +44,29 @@ func _get_property_list() -> Array:
 	
 	return props.done()
 
+func _init_tween():
+	if _tween:
+		_tween.kill()
+	_tween = get_tree().create_tween()
+	_tween.bind_node(self)
+	_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+
 func _disable():
 	self.disabled = true
 	
-	if fadeout_on_diabled:
-		if _tween:
-			_tween.kill()
-		_tween = get_tree().create_tween()
-		_tween.bind_node(self)
+	if fadeout_on_disabled:
+		_init_tween()
 		_tween.tween_property(self, "modulate:a", 0.0, FADEOUT_TIME)
 		_tween.tween_callback(self.set_visible.bind(false))
 
 func _enable():
 	self.disabled = false
 	
-	if fadeout_on_diabled:
-		if _tween:
-			_tween.kill()
-		_tween = get_tree().create_tween()
-		_tween.bind_node(self)
+	if fadeout_on_disabled:
+		_init_tween()
+#		_tween.tween_interval(.1)
 		_tween.tween_callback(self.set_visible.bind(true))
 		_tween.tween_property(self, "modulate:a", 1.0, FADEOUT_TIME)
-
-func _ready() -> void:
-	if len(condition_visible):
-		self.visible = true if State._eval(condition_visible) else false
 
 func _on_pressed() -> void:
 	if has_method("release_focus"):
@@ -69,8 +78,11 @@ func _on_pressed() -> void:
 		else:
 			StringAction.do(action)
 	
-	if goto_scene_flow:
+	elif goto_scene_flow:
 		DialogueStack.goto(Soot.join_path([Scene.id, goto_scene_flow]))
 	
-	if not len(action) and not len(goto_scene_flow):
-		push_warning("No action or goto_scene_flow in %s." % self)
+	elif goto_scene:
+		Scene.goto(goto_scene)
+	
+	else:
+		push_warning("No action or goto_scene_flow or goto_scene in %s." % self)

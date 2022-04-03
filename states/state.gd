@@ -17,6 +17,8 @@ var chris := Character.new({name="Chris", color=Color.DEEP_SKY_BLUE})
 var paul := Character.new({name="Paul", color=Color.GREEN_YELLOW})
 var john := Character.new({name="John", color=Color.TOMATO})
 
+var zone := Location.new({name="The Zone", color=Color.TEAL})
+
 #func _init() -> void:
 #	Saver._get_state_info.connect(_get_state_info)
 #

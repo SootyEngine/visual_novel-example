@@ -26,7 +26,7 @@ func parse(file: String) -> Dictionary:
 	while i < len(text_lines):
 		var uncommented := text_lines[i]
 		var id := ""
-		var line := i
+		var line := i+1 # prevent off by ones 
 		
 		# remove comment
 		if Soot.COMMENT in uncommented:
@@ -61,10 +61,10 @@ func parse(file: String) -> Dictionary:
 		
 		# ignore empty lines
 		elif len(stripped):
-			var did: String = UFile.get_file_name(file)
+			var d_id: String = UFile.get_file_name(file)
 			var deep := _count_leading_tabs(text_lines[i])
 			dict_lines.append({
-				did=did,
+				d_id=d_id,
 				id=id,
 				file=0,
 				line=line,
@@ -169,7 +169,7 @@ func _clean(line: Dictionary, all_lines: Dictionary) -> String:
 		line.erase("flat")
 	
 	if not DEBUG_KEEP_DICTS:
-		_erase(line, ["did", "deep", "tabbed"])
+		_erase(line, ["d_id", "deep", "tabbed"])
 #		_erase(line, ["file", "line"])
 	
 	match line.type:
@@ -289,9 +289,9 @@ func _line_as_condition(line: Dictionary):
 		line.cond = "true"
 	
 	# match condition
-	elif cond.begins_with("*"):
+	elif cond.begins_with("match "):
 		line.cond_type = "match"
-		line.match = line.cond.substr(1)
+		line.match = line.cond.trim_prefix("match ").strip_edges()
 		line.cases = []
 		line.case_lines = []
 		for tabbed_line in line.tabbed:
@@ -330,8 +330,8 @@ func _line_as_option(line: Dictionary):
 		var p = line.text.split(Soot.FLOW_GOTO, true, 1)
 		line.text = p[0].strip_edges()
 		var i = 1000
-		var id = "%s_%s"%[line.flat, i] if "flat" in line else str(i)
-		var fstep = _add_flow_action({did=line.did, file=line.file, line=line.line, flat=id}, "goto", p[1].strip_edges())
+		var id =  "%s_%s"%[line.flat, i] if "flat" in line else str(i)
+		var fstep = _add_flow_action({d_id=line.d_id, file=line.file, line=line.line, flat=id}, "goto", p[1].strip_edges())
 		lines.append(fstep)
 	
 	line.then = lines
@@ -353,7 +353,7 @@ func _line_as_flow_end(line: Dictionary):
 func _add_flow_action(line: Dictionary, type: String, f_action: String):
 	line.type = type
 	# if full path wasn't typed out, add file id as head.
-	line[type] = f_action if Soot.is_path(f_action) else Soot.join_path([line.did, f_action])
+	line[type] = f_action if Soot.is_path(f_action) else Soot.join_path([line.d_id, f_action])
 	return line
 
 func _line_as_action(line: Dictionary):
@@ -432,7 +432,7 @@ func _extract_flat_lines(line: Dictionary) -> Array:
 			var id = "%s_%s"%[line.flat, i] if "flat" in line else str(i)
 			var f_line = {
 				id="",
-				did=line.did,
+				d_id=line.d_id,
 				file=line.file,
 				line=line.line,
 				deep=line.deep+1,

@@ -21,5 +21,5 @@ func _operator_set(v):
 	if v is String:
 		value = v
 
-func to_string() -> String:
+func as_string() -> String:
 	return text.get(value, "NO_STATE:%s" % value)

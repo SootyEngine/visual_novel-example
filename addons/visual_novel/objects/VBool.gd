@@ -24,5 +24,5 @@ func _operator_set(v):
 	if v is bool:
 		value = v
 
-func to_string() -> String:
+func as_string() -> String:
 	return text_true if value else text_false
