@@ -1,5 +1,5 @@
 === INIT
-	// When a game is saved, it will show this caption.
+	# When a game is saved, it will show this caption.
 	~save_caption = "The Beach"
 	
 	{{beach_is_night}}
@@ -31,8 +31,8 @@
 	@unblur
 
 === godot
-	// @camera.target godot
-	// @blur
+	# @camera.target godot
+	# @blur
 	godot: ...
 		- Go to evening. {{not beach_is_night}}
 			~beach_is_night = true

@@ -1,0 +1,32 @@
+<-> ok231 # res://dialogue/dummy.soot @ 3
+	# Show this line if english.
+	This line got translated.
+	john: More text.
+
+<-> 23kdsad # res://dialogue/dummy.soot @ 4
+	# john: Okay
+	
+
+<-> EzcYZ # res://dialogue/dummy.soot @ 6
+	# Show this line if french.
+	
+
+<-> 7ldvJ # res://dialogue/dummy.soot @ 9
+	# Show this line no matter waht.
+	
+
+<-> ydue0 # res://dialogue/dummy.soot @ 11
+	# Score is [~score]!
+	
+
+<-> 7AlJI # res://dialogue/dummy.soot @ 13
+	# Some text to show at beach.
+	
+
+<-> XNAwA # res://dialogue/dummy.soot @ 14
+	# and then...
+	
+
+<-> tuS1E # res://dialogue/dummy.soot @ 17
+	# Ok, we jumped.
+	

@@ -18,6 +18,9 @@ const C_TAG := Color(1, 1, 1, .5)
 const C_SYMBOL := Color(1, 1, 1, 0.33)
 const C_FLAT_LINE := Color(1, 1, 1, 0.5)
 
+const C_FLAG := Color.SALMON
+const C_LANG := Color.YELLOW_GREEN
+
 const C_PROPERTY := Color(1, 1, 1, .25)
 const C_VAR_BOOL := Color.AQUAMARINE
 const C_VAR_FLOAT := Color.DARK_TURQUOISE
@@ -27,9 +30,9 @@ const C_VAR_CONSTANT := Color.DARK_GRAY
 const C_VAR_STATE_PROPERTY := Color.SPRING_GREEN
 
 const C_COMMENT := Color(1.0, 1.0, 1.0, 0.25)
-const C_FE_TAG := Color.PALE_VIOLET_RED
+const C_COMMENT_LANG := Color(0.5, 1.0, 0.0, 0.5)
+
 const C_ACTION_EVAL := Color(0, 1, 0.5, 0.8)
-const C_ACTION_NODE := Color.SALMON
 const C_ACTION_GROUP := Color.MEDIUM_PURPLE
 const C_ACTION_STATE := Color.DEEP_SKY_BLUE
 
@@ -40,15 +43,17 @@ const C_FLOW_END := Color.TOMATO
 
 const C_CONDITION := Color.WHEAT
 const C_OPTION_FLAG := Color(0.25, 0.88, 0.82, 0.5)
-const C_OPTION_TEXT := Color.TAN
+const C_OPTION_TEXT := Color.WHEAT
 
 # strings
+const S_FLAG := "\t#?"
+
 const S_PROPERTY := "|"
 const S_OPTION := "- "
 const S_OPTION_ADD := "+ "
 
 const S_ACTION_EVAL := "~"
-const S_ACTION_NODE := "#"
+#const S_ACTION_NODE := "#"
 const S_ACTION_GROUP := "@"
 const S_ACTION_STATE := "$"
 
@@ -62,6 +67,117 @@ const S_COND_END := "}}"
 var index := 0
 var state := {}
 var text := ""
+
+func _get_line_syntax_highlighting(line: int) -> Dictionary:
+	text = get_text_edit().get_line(line)
+	state = {}
+	index = 0
+	var stripped = text.strip_edges()
+	var out = state
+	
+	# flag line
+	if text.begins_with(S_FLAG):
+		var drk = C_FLAG.darkened(.33)
+		_c(1, drk)
+		_c(1+len(S_FLAG), C_FLAG)
+		for i in range(1+len(S_FLAG)+1, len(text)):
+			if text[i] in ",;:&|":
+				_c(i, C_SYMBOL)
+				_c(i+1, C_FLAG)
+		return out
+	
+	# lang lines
+	elif text.begins_with(Soot.LANG):
+		_c(0, C_SYMBOL)
+		_c(len(Soot.LANG), C_LANG)
+	# gone lang lines 
+	elif text.begins_with(Soot.LANG_GONE):
+		_c(0, C_SYMBOL)
+		_c(len(Soot.LANG), Color.TOMATO)
+	
+	# normal lines
+	else:
+		var from := 0
+		
+		# alternative line
+		if stripped.begins_with("?"):
+			var start := text.find("?")
+			var end := text.find(" ", start+1)
+			_c(start, C_SYMBOL)
+			_c(start+1, Color.ORANGE)
+			for i in range(start+1, end):
+				if text[i] in ",:":
+					_c(i, C_SYMBOL)
+					_c(i+1, Color.ORANGE)
+			from = end+1
+			
+		_c(from, C_TEXT)
+		var to = _h_flatline(C_TEXT, from)
+		
+		# flow
+		if text.begins_with(Soot.FLOW):
+			_c(0, C_SYMBOL)
+			_c(len(Soot.FLOW), C_FLOW)
+		
+		else:
+			# condition
+			var a := text.find(S_COND_START)
+			var b := text.rfind(S_COND_END)
+			var f := from
+			if a != -1 and b != -1:
+				_c(a, C_SYMBOL)
+				_c(b, C_SYMBOL, len(S_COND_END))
+				_co(C_TEXT)
+				_h_conditional(a+len(S_COND_START), b-1)
+				f = b+len(S_COND_END)
+			
+			# highlight line after conditional, in case of 'match'
+			_h_line(f, to if to>0 else len(text))
+			
+			f = text.find('""""')
+			if f != -1:
+				_c(f, C_SYMBOL)
+	
+	# comments
+	index = text.find(Soot.COMMENT)
+	if index != -1:
+		_co(C_COMMENT)
+		# erase all colors afterwards
+		for k in state.keys():
+			if k > index:
+				state.erase(k)
+	
+	# line id for lang
+	index = text.rfind(Soot.COMMENT_LANG)
+	if index != -1:
+		_c(index, C_SYMBOL)
+		_c(index+len(Soot.COMMENT_LANG), C_COMMENT_LANG)
+	
+	return state
+
+static func split_string(s: String) -> Array:
+	var out := [""]
+	var in_quotes := false
+	for c in s:
+		if c == '"':
+			if in_quotes:
+				in_quotes = false
+				out[-1] += '"'
+			else:
+				in_quotes = true
+				if out[-1] == "":
+					out[-1] += '"'
+				else:
+					out.append('"')
+		
+		elif c == " " and not in_quotes:
+			if out[-1] != "":
+				out.append("")
+		
+		else:
+			out[-1] += c
+	return out
+
 
 func _co(clr: Color, offset := 0):
 	state[index] = {color=clr}
@@ -155,31 +271,23 @@ func _h_conditional(from: int, to: int):
 			_c(off, C_ACTION_EVAL)
 		off += len(part)+1
 	
-#	if parts[0] in ["if", "elif", "else", "match", "not", "and", "or"]:
-#		var part = parts.pop_front()
-#		_c(off, C_SYMBOL)
-#		off += len(part)+1
-#		if part == "else":
-#			return
-#
-#	_c(off, C_ACTION_EVAL)
 	return
-	
-	var is_assign = len(parts)==3 and parts[1] in OP_ALL
-	var is_match := false
-	
-	for i in len(parts):
-		var part = parts[i]
-		
-		# match
-		if part.begins_with("*"):
-			part = part.substr(1)
-			state[off] = { color=C_SYMBOL }
-			is_match = true
-			off += 1
-		
-		_set_var_color(off, part)
-		off += len(part) + 1
+#
+#	var is_assign = len(parts)==3 and parts[1] in OP_ALL
+#	var is_match := false
+#
+#	for i in len(parts):
+#		var part = parts[i]
+#
+#		# match
+#		if part.begins_with("*"):
+#			part = part.substr(1)
+#			state[off] = { color=C_SYMBOL }
+#			is_match = true
+#			off += 1
+#
+#		_set_var_color(off, part)
+#		off += len(part) + 1
 
 func _h_flatline(default: Color, from: int):
 	var i := text.find(S_FLATLINE_START, from)
@@ -218,8 +326,8 @@ func _h_bbcode(from: int, to: int, default: Color):
 					# colorize action tags
 					if tag.begins_with(S_ACTION_EVAL):
 						_h_action(off, off+len(tag), C_ACTION_EVAL)
-					elif tag.begins_with(S_ACTION_NODE):
-						_h_action(off, off+len(tag), C_ACTION_NODE)
+#					elif tag.begins_with(S_ACTION_NODE):
+#						_h_action(off, off+len(tag), C_ACTION_NODE)
 					elif tag.begins_with(S_ACTION_GROUP):
 						_h_action(off, off+len(tag), C_ACTION_GROUP)
 					elif tag.begins_with(S_ACTION_STATE):
@@ -278,13 +386,13 @@ func _h_line(from: int, to: int):
 	elif t.begins_with(S_ACTION_GROUP):
 		_h_action(text.find(S_ACTION_GROUP, from), to, C_ACTION_GROUP)
 	# node calls
-	elif t.begins_with(S_ACTION_NODE):
-		_h_action(text.find(S_ACTION_NODE, from), to, C_ACTION_NODE)
+#	elif t.begins_with(S_ACTION_NODE):
+#		_h_action(text.find(S_ACTION_NODE, from), to, C_ACTION_NODE)
 	# eval calls
 	elif t.begins_with(S_ACTION_EVAL):
 		_h_action_expression(text.find(S_ACTION_EVAL, from), to)
 	
-	# node options
+	# options
 	elif t.begins_with(S_OPTION):
 		var s := text.find(S_OPTION)
 		var c_option_icon = C_OPTION_TEXT
@@ -293,6 +401,23 @@ func _h_line(from: int, to: int):
 		_c(s+1, C_OPTION_TEXT)
 		_h_bbcode(s+1, to, C_OPTION_TEXT)
 		_h_flow()
+	
+	# options: add
+	elif t.begins_with(S_OPTION_ADD):
+		var s := text.find(S_OPTION_ADD)
+		var c_option_icon = C_OPTION_TEXT
+		c_option_icon.h = wrapf(c_option_icon.h + .5, 0.0, 1.0)
+		var c_option_add = C_OPTION_TEXT
+		c_option_add.h = wrapf(c_option_add.h + .5, 0.0, 1.0)
+		c_option_add.v = clampf(c_option_add.v - 0.25, 0.0, 1.0)
+		_c(s, c_option_icon, 1)
+		_c(s+1, c_option_add)
+		s = text.find("*", s)
+		if s != -1:
+			_c(s, C_SYMBOL)
+			_c(s+1, c_option_add)
+#		_h_bbcode(s+1, to, C_OPTION_TEXT)
+#		_h_flow()
 	
 	# flow actions
 	elif t.begins_with(Soot.FLOW_GOTO) or t.begins_with(Soot.FLOW_CALL):
@@ -339,70 +464,3 @@ func _find_speaker_start(from: int) -> int:
 		if text[i] in "}":
 			return i+1
 	return 0
-
-func _get_line_syntax_highlighting(line: int) -> Dictionary:
-	text = get_text_edit().get_line(line)
-	state = {}
-	index = 0
-	_c(0, C_TEXT)
-	var stripped = text.strip_edges()
-	var out = state
-	
-	var to := _h_flatline(C_TEXT, 0)
-	
-	# flow
-	if text.begins_with(Soot.FLOW):
-		_c(0, C_SYMBOL)
-		_c(len(Soot.FLOW), C_FLOW)
-	
-	else:
-		# condition
-		var a := text.find(S_COND_START)
-		var b := text.rfind(S_COND_END)
-		var from := 0
-		if a != -1 and b != -1:
-			_c(a, C_SYMBOL)
-			_c(b, C_SYMBOL, len(S_COND_END))
-			_co(C_TEXT)
-			_h_conditional(a+len(S_COND_START), b-1)
-#			from = b+len(S_COND_END)
-		
-		_h_line(from, to if to>0 else len(text))
-		
-		var f := text.find('""""')
-		if f != -1:
-			_c(f, C_SYMBOL)
-	
-	# comments
-	index = text.find(Soot.COMMENT)
-	if index != -1:
-		_co(C_COMMENT)
-		# erase all colors afterwards
-		for k in state.keys():
-			if k > index:
-				state.erase(k)
-	
-	return state
-
-static func split_string(s: String) -> Array:
-	var out := [""]
-	var in_quotes := false
-	for c in s:
-		if c == '"':
-			if in_quotes:
-				in_quotes = false
-				out[-1] += '"'
-			else:
-				in_quotes = true
-				if out[-1] == "":
-					out[-1] += '"'
-				else:
-					out.append('"')
-		
-		elif c == " " and not in_quotes:
-			if out[-1] != "":
-				out.append("")
-		
-		else:
-			out[-1] += c
-	return out

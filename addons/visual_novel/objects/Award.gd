@@ -1,11 +1,8 @@
 extends BaseDataClass
-class_name Achievement
+class_name Award
 
 func get_class() -> String:
-	return "Achievement"
-	
-const MSG_ACHIEVEMENT_PROGRESS := "achievement_progress"
-const MSG_ACHIEVEMENT_UNLOCKED := "achievement_unlocked"
+	return "Award"
 
 var name := ""
 var desc := ""
@@ -28,3 +25,9 @@ var tick := 0:
 		tick = clampi(x, 0, toll)
 		if _unlocked:
 			date = DateTime.create_from_current().total_seconds
+
+func gain():
+	_unlocked = true
+
+func lose():
+	_unlocked = false

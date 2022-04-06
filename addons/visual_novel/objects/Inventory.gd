@@ -4,14 +4,30 @@ class_name Inventory
 func get_class() -> String:
 	return "Inventory"
 
-signal gained(type: Item, quantity: int)
-signal lost(type: Item, quantity: int)
-signal equipped(type: Item, slot: String)
-signal unequipped(type: Item, slot: String)
+signal gained(item_info: ItemInfo, quantity: int)
+signal lost(item_info: ItemInfo, quantity: int)
 
-var items := []
-var worn := {}
-var slots := ""
+var _character: Character
+var slots := []
+
+# called by UObject
+func _added(parent: BaseDataClass):
+	_character = parent
+
+func _patch(key: String, type: String, patch: Variant, sources: Array):
+#	match key:
+#		"items":
+		patch = UObject.patch_to_var(patch, sources, TYPE_INT)
+		gain.call_deferred(key, patch)
+#		match typeof(patch):
+#			TYPE_ARRAY:
+#				for item in patch:
+#					gain(item)
+#			TYPE_DICTIONARY:
+#				for k in patch:
+#					gain(k, patch[k])
+#			_:
+#				push_error("Not implemented %s %s." % [key, patch])
 
 func _get(property: StringName):
 	if has(str(property)):
@@ -19,38 +35,32 @@ func _get(property: StringName):
 
 func has(type: String, quantity := 1) -> bool:
 	var q := 0
-	for i in len(items):
-		if items[i].type == type:
-			q += items[i].total
+	for i in len(slots):
+		if slots[i].id == type:
+			q += slots[i].sum
 		if q >= quantity:
 			return true
 	return false
 
-func get_slot_info() -> EquipmentSlots:
-	if State._has(slots):
-		return State._get(slots)
-	return EquipmentSlots.new()
-
 func count(type: String) -> int:
 	var out := 0
-	for i in len(items):
-		if items[i].type == type:
-			out += items[i].total
+	for i in len(slots):
+		if slots[i].id == type:
+			out += slots[i].sum
 	return out
 
 func gain(type: String, quantity := 1, _meta := {}):
-	if not Item.exists(type):
-		push_error("No item type '%s'." % type)
+	var all_items: ItemInfos = State.item_info
+	var info: ItemInfo = all_items.find(type, "gain")
+	if not info:
 		return
 	
-	var info := Item.get_item(type)
-	var q := quantity
-	
 	# try to append to previous slots
-	for item in items:
-		if item.type == type and item.total < info.slot_max:
+	var q := quantity
+	for slot in slots:
+		if slot.id == type and slot.sum < info.slot_max:
 			var amount := mini(info.slot_max, q)
-			item.total += amount
+			slot.sum += amount
 			q -= amount
 			if q <= 0:
 				break
@@ -59,66 +69,30 @@ func gain(type: String, quantity := 1, _meta := {}):
 	for i in ceil(q / float(info.slot_max)):
 		var amount := mini(info.slot_max, q)
 		q -= amount
-		items.append({ type=type, total=amount })
+		_add_slot(type, amount)
 	
 	var dif := quantity - q
 	gained.emit(info, dif)
 
 func lose(type: String, quantity := 1, _meta := {}):
-	if not Item.exists(type):
-		push_error("No item type '%s'." % type)
+	var all_items: ItemInfos = State.item_info
+	var info: ItemInfo = all_items.find(type, "gain")
+	if not info:
 		return
 	
-	var info := Item.get_item(type)
 	var q := quantity
-	
-	for i in range(len(items)-1, -1, -1):
-		var item = items[i]
-		if item.type == type:
-			var amount := mini(item.total, q)
-			item.total -= amount
+	for i in range(len(slots)-1, -1, -1):
+		var slot: InventoryItem = slots[i]
+		if slot.id == type:
+			var amount := mini(slot.sum, q)
+			slot.sum -= amount
 			q -= amount
 			if q <= 0:
-				items.remove_at(i)
+				slots.remove_at(i)
 				break
 	
 	var dif := quantity - q
 	lost.emit(info, dif)
 
-func wear(type: String, slot: String = "", gain_if_has_not := false):
-	var info := Item.get_item(type)
-	# does slot exist?
-	if not get_slot_info().has_slot(slot):
-		push_error("No slot '%s' in '%s'." % [slot])
-		return
-	
-	# not wearable
-	if not info.is_wearable():
-		push_error("Item '%s' isn't wearable.")
-		return
-	
-	# don't have it
-	if not has(type) and not gain_if_has_not:
-		push_error("Can't wear item you don't have. Call wear(id, slot, true).")
-		return
-	
-	# take off items in other slots
-	if slot in worn:
-		bare_at(slot)
-	
-	# bare any other slots
-	for b in get_slot_info().slots[slot].bare:
-		bare_at(b)
-	
-	worn[slot] = { type=type }
-
-func bare(type: String):
-	for slot in worn:
-		if worn[slot].type == type:
-			worn.erase(slot)
-			break
-
-func bare_at(slot: String):
-	if slot in worn:
-		pass
-
+func _add_slot(type: String, total: int):
+	slots.append(InventoryItem.new(type, total))

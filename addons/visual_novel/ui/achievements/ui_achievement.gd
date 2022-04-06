@@ -7,7 +7,7 @@ extends Node
 @onready var icon: TextureRect = get_node(_icon)
 @onready var progress: ProgressBar = get_node(_progress)
 
-func _setup(a: Achievement):
+func _setup(a: Award):
 	if a.toll > 1:
 		progress.visible = true
 		progress.value = a._progress * progress.max_value
@@ -20,4 +20,4 @@ func _setup(a: Achievement):
 		label.set_bbcode("[b;dodger_blue]%s[]\n%s\n[dim;dim;i]%s[]" % [a.name, a.desc, when])
 	else:
 		icon.modulate.v = 0.125
-		label.set_bbcode("[b;deep_sky_blue;dim]%s[]\n[i;dim]%s[]" % [a.name, "???"])
+		label.set_bbcode("[b;deep_sky_blue;dim]%s[]\n[i;dim]%s[]" % [a.name, a.desc + "???"])

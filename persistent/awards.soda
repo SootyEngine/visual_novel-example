@@ -1,0 +1,17 @@
+awards:
+	started:
+		name: Started
+		desc: Started the Quest
+	
+	first_quest:
+		name: First Quest
+		desc: Beat the first Quest
+	
+	multi:
+		name: Defeat 3 Drain-Dragons
+		desc: Sharpen those fists and kill 3 dracos.
+		toll: 3
+	
+	master_troll:
+		name: Be a master troll
+		desc: Who cares?

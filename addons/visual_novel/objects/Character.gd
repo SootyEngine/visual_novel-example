@@ -1,4 +1,4 @@
-extends BaseDataClassExtra
+extends BaseDataClassExtendable
 class_name Character
 
 func get_class() -> String:
@@ -9,24 +9,29 @@ var format := ""
 var gender := ""
 var at := ""
 var color := Color.WHITE
-var inventory := Inventory.new()
 
 func _get(property: StringName):
 	var k := str(property)
-	match k:
-		"items": return inventory
-		
-		"they": return "he" if gender=="m" else "she" if gender=="f" else "they"
-		"They": return "He" if gender=="m" else "She" if gender=="f" else "They"
-		"theyll": return "he'll" if gender=="m" else "she'll" if gender=="f" else "they'll"
-		"Theyll": return "He'll" if gender=="m" else "She'll" if gender=="f" else "They'll"
-		"theyd": return "he'd" if gender=="m" else "she's" if gender=="f" else "they'd"
-		"Theyd": return "He'd" if gender=="m" else "She's" if gender=="f" else "They'd"
-		"their": return "his" if gender=="m" else "her" if gender=="f" else "their"
-		"Their": return "His" if gender=="m" else "Her" if gender=="f" else "Their"
-		"theyre": return "he's" if gender=="m" else "she's" if gender=="f" else "they're"
-		"Theyre": return "He's" if gender=="m" else "She's" if gender=="f" else "They're"
 	
+	var lower = k.to_lower()
+	if lower in VisualNovel.PRONOUNS:
+		if gender in VisualNovel.PRONOUNS[lower]:
+			if UString.is_capitalized(k[0]):
+				return VisualNovel.PRONOUNS[lower][gender].capitalized()
+			else:
+				return VisualNovel.PRONOUNS[lower][gender]
+#	match k:
+#		"they": return "he" if gender=="m" else "she" if gender=="f" else "they"
+#		"They": return "He" if gender=="m" else "She" if gender=="f" else "They"
+#		"theyll": return "he'll" if gender=="m" else "she'll" if gender=="f" else "they'll"
+#		"Theyll": return "He'll" if gender=="m" else "She'll" if gender=="f" else "They'll"
+#		"theyd": return "he'd" if gender=="m" else "she's" if gender=="f" else "they'd"
+#		"Theyd": return "He'd" if gender=="m" else "She's" if gender=="f" else "They'd"
+#		"their": return "his" if gender=="m" else "her" if gender=="f" else "their"
+#		"Their": return "His" if gender=="m" else "Her" if gender=="f" else "Their"
+#		"theyre": return "he's" if gender=="m" else "she's" if gender=="f" else "they're"
+#		"Theyre": return "He's" if gender=="m" else "She's" if gender=="f" else "They're"
+#
 	return super._get(property)
 
 #func as_string() -> String:

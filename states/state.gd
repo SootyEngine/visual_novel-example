@@ -1,5 +1,9 @@
 extends Node
 
+var item_info := ItemInfos.new()
+var equipment_slots := EquipmentSlots.new()
+var characters := Characters.new()
+
 var beach_is_night := false
 var save_caption := "The Quest"
 

@@ -1,0 +1,37 @@
+<-> T1Lpk # res://dialogue/dummy.soot @ 2
+	# Shortcut [~p] test and [~inv].
+	
+
+<-> ok2314 # res://dialogue/dummy.soot @ 5 - 7
+	# john: Hey
+	# mary: Whatup
+	# Show this line if english.
+	
+
+<-> kMTKx # res://dialogue/dummy.soot @ 15
+	# Show this line no matter waht.
+	
+
+<-> zOuBB # res://dialogue/dummy.soot @ 17
+	# Score is [~score]!
+	
+
+<-> 0j5jF # res://dialogue/dummy.soot @ 19
+	# Some text to show at beach.
+	
+
+<-> iQzpu # res://dialogue/dummy.soot @ 20
+	# and then...
+	
+
+<-> caEyN # res://dialogue/dummy.soot @ 23
+	# Ok, we jumped.
+	
+
+# ok231 doesn't exist in REMOVED: REMOVED: REMOVED: REMOVED: res://dialogue/dummy.soot anymore.
+# Did you mean: ok2314?
+# Sooty will keep this flow in case it comes back.
+# To remove it: Erase <-> ok231 from res://lang/dummy-fr.sola.
+<?> ok231 # REMOVED: REMOVED: REMOVED: REMOVED: REMOVED: res://dialogue/dummy.soot @ 5 - 7
+	john: Bonjour
+	: Who are you?

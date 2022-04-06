@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bfngd7b38mvow"]
 
 [ext_resource type="Script" path="res://addons/visual_novel/ui/ui_debug.gd" id="1_6bneo"]
-[ext_resource type="Script" path="res://addons/rich_text/RichTextLabel2.gd" id="2_ktixg"]
+[ext_resource type="Font" uid="uid://dpy1gmyfrww2t" path="res://addons/visual_novel/fonts/font-r.tres" id="2_tt7y6"]
 
 [node name="ui_debug" type="Control"]
 anchor_right = 1.0
@@ -16,49 +16,53 @@ anchor_bottom = 1.0
 offset_right = 1024.0
 offset_bottom = 31.0
 
-[node name="persistent" type="CheckButton" parent="VBoxContainer/HBoxContainer"]
-offset_right = 126.0
-offset_bottom = 31.0
-text = "Persistent"
-
-[node name="only_modified" type="CheckButton" parent="VBoxContainer/HBoxContainer"]
-offset_left = 130.0
-offset_right = 287.0
-offset_bottom = 31.0
-button_pressed = true
-text = "Only Modified"
-
 [node name="filter" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
-offset_left = 291.0
-offset_right = 655.0
+offset_right = 294.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 placeholder_text = "Filter"
 clear_button_enabled = true
 
+[node name="persistent" type="CheckButton" parent="VBoxContainer/HBoxContainer"]
+offset_left = 298.0
+offset_right = 424.0
+offset_bottom = 31.0
+hint_tooltip = "Show Persistent data instead of State data?"
+text = "Persistent"
+
+[node name="only_modified" type="CheckButton" parent="VBoxContainer/HBoxContainer"]
+offset_left = 428.0
+offset_right = 585.0
+offset_bottom = 31.0
+hint_tooltip = "Only show data modified since initialization?"
+text = "Only Modified"
+
+[node name="hide_empty" type="CheckButton" parent="VBoxContainer/HBoxContainer"]
+offset_left = 589.0
+offset_right = 726.0
+offset_bottom = 31.0
+hint_tooltip = "Hide empty/blank properties?"
+text = "Hide Empty"
+
 [node name="force_update" type="Button" parent="VBoxContainer/HBoxContainer"]
-offset_left = 659.0
+offset_left = 730.0
 offset_right = 1024.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "update"
+text = "Force Update"
 
-[node name="output" type="RichTextLabel" parent="VBoxContainer"]
+[node name="CodeEdit" type="CodeEdit" parent="VBoxContainer"]
 offset_top = 35.0
 offset_right = 1024.0
 offset_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
-theme_override_constants/outline_size = 0
-theme_override_font_sizes/mono_font_size = 16
-theme_override_font_sizes/bold_italics_font_size = 16
-theme_override_font_sizes/italics_font_size = 16
-theme_override_font_sizes/bold_font_size = 16
-theme_override_font_sizes/normal_font_size = 16
-script = ExtResource( "2_ktixg" )
-alignment = 0
-nicer_quotes_enabled = false
-markdown_enabled = false
+theme_override_fonts/font = ExtResource( "2_tt7y6" )
+highlight_all_occurrences = true
+highlight_current_line = true
+draw_tabs = true
+line_folding = true
+gutters_draw_line_numbers = true
+gutters_draw_fold_gutter = true

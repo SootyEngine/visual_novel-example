@@ -1,4 +1,4 @@
-extends BaseDataClassExtra
+extends BaseDataClassExtendable
 class_name Location
 
 func get_class() -> String:

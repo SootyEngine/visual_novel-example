@@ -8,24 +8,21 @@ extends Node
 func _ready() -> void:
 	parent.remove_child(prefab)
 	
-	_ready_deferred.call_deferred()
-	Global.message.connect(_global_message)
+	await get_tree().process_frame
+	var awards: Awards = Persistent.awards
+	awards.unlocked.connect(_update)
+	awards.progress.connect(_update)
+	_update()
 
-func _global_message(msg: String, payload: Variant):
-	match msg:
-		Achievement.MSG_ACHIEVEMENT_PROGRESS, Achievement.MSG_ACHIEVEMENT_UNLOCKED:
-			_ready_deferred()
-
-func _ready_deferred():
+func _update(_x=null):
 	for child in parent.get_children():
 		parent.remove_child(child)
 		child.queue_free()
 	
-	var achievements := Persistent._get_all_of_type(Achievement)
-	for id in achievements:
-		var a: Achievement = achievements[id]
+	for id in Persistent.awards:
+		var a: Award = Persistent.awards[id]
 		var btn = prefab.duplicate()
 		parent.add_child(btn)
 		btn.get_child(0)._setup(a)
-		btn.get_child(1).pressed.connect(Persistent._set.bind(id+".tick", a.tick-1))
-		btn.get_child(2).pressed.connect(Persistent._set.bind(id+".tick", a.tick+1))
+		btn.get_child(1).pressed.connect(Persistent._set.bind("awards.%s.tick"%id, a.tick-1))
+		btn.get_child(2).pressed.connect(Persistent._set.bind("awards.%s.tick"%id, a.tick+1))

@@ -60,66 +60,136 @@ const GLOBAL_SCOPE_METHODS := [
 static func get_class_name(o: Object) -> String:
 	return o.get_script().resource_path.get_file().split(".", true, 1)[0]
 
-static func get_state(o: Object) -> Dictionary:
-	var out := {}
-	for prop in o.get_property_list():
-		if prop.usage & PROPERTY_USAGE_SCRIPT_VARIABLE != 0 and prop.name[0] != "_":
-			match prop.type:
-				TYPE_OBJECT:
-					out[prop.name] = get_state(o[prop.name])
-				TYPE_DICTIONARY:
-					out[prop.name] = _get_dict_state(o[prop.name])
-				_:
-					out[prop.name] = o[prop.name]
-	return out
+# looks for an object of given type
+# call(player, HealthInfo) would look for "var health:HealthInfo" and return a reference to it.
+static func get_first_property_of_object_type(target: Object, object_type: Variant):
+	for k in get_state_properties(target):
+		if target[k] is object_type:
+			return target[k]
+	return null
 
-static func _get_dict_state(dict: Dictionary) -> Dictionary:
-	var out := {}
-	for k in dict:
-		match typeof(dict[k]):
-			TYPE_OBJECT:
-				out[k] = get_state(dict[k])
-			TYPE_DICTIONARY:
-				out[k] = _get_dict_state(dict[k])
-			_:
-				out[k] = dict[k]
-	return out
+# get a serializable state. (can be Color and Vector2, but not Objects.)
+static func get_state(target: Variant) -> Variant:
+	if target is Object and target.has_method("_get_state"):
+		return target._get_state()
+	elif target is Array:
+		return target.map(func(x): return get_state(x))
+	else:
+		var out := {}
+		for k in get_state_properties(target):
+			match typeof(target[k]):
+				TYPE_OBJECT, TYPE_DICTIONARY, TYPE_ARRAY: out[k] = get_state(target[k])
+				_: out[k] = target[k]
+		return out
 
-static func set_state(o: Object, data: Dictionary):
-	for prop in o.get_property_list():
-		if prop in data and prop.usage & PROPERTY_USAGE_SCRIPT_VARIABLE != 0 and prop.name[0] != "_":
-			match prop.type:
-				TYPE_OBJECT:
-					set_state(o[prop.name], data[prop.name])
-				_:
-					o[prop.name] = data[prop.name]
+# set a serializable state.
+static func set_state(target: Variant, state: Variant):
+	if target is Object and target.has_method("_set_state"):
+		target._set_state(state)
+	elif target is Array:
+		for i in len(state):
+			set_state(target[i], state[i])
+	elif state is Dictionary:
+		for k in state:
+			if k in target:
+				match typeof(target[k]):
+					TYPE_OBJECT, TYPE_DICTIONARY, TYPE_ARRAY: set_state(target[k], state[k])
+					_: target[k] = state[k]
+			else:
+				push_error("No property '%s' in %s." % [k, target])
+	else:
+		assert(false)
 
-static func patch(target: Variant, patch: Dictionary, erase_patched := false) -> int:
-	var lines_changed := 0
-	for k in patch.keys():
-		if k in target:
-			var p = patch[k]
-			var t = target[k]
-			
-			if patch[k] is Dictionary:
-				lines_changed += patch(target[k], patch[k])
-			
-			elif t != p:
-				target[k] = patch[k]
-				lines_changed += 1
-				if erase_patched:
-					patch.erase(k)
-		
-		elif target is Dictionary:
-			target[k] = patch[k]
-			lines_changed += 1
-			if erase_patched:
-				patch.erase(k)
-		
-		elif not erase_patched:
-			push_error("Couldn't find '%s' in %s." % [k, target])
+# get list of script variables not starting in a _
+static func get_state_properties(target: Variant) -> Array:
+	match typeof(target):
+		TYPE_OBJECT:
+			if target.has_method("_get_state_properties"):
+				return target._get_state_properties()
+			else:
+				return _get_state_properties(target)
+		TYPE_DICTIONARY:
+			return target.keys()
+		_:
+			return []
+
+static func _get_state_properties(target: Object) -> Array:
+	return target.get_property_list()\
+		.filter(func(x): return x.usage & PROPERTY_USAGE_SCRIPT_VARIABLE != 0 and x.name[0] != "_")\
+		.map(func(x): return x.name)
+
+# patches contain file index and line index for debug purposes
+# it keeps everything as a string until it's time to apply to an object
+# this will clean it all and auto convert strings to variants
+static func patch_to_var(patch: Variant, sources: Array, explicit_type := -1) -> Variant:
+	match typeof(patch):
+		TYPE_STRING:
+			var info = patch.split("!", true, 2)
+			var file: String = sources[info[0].to_int()]
+			var line: String = info[1]
+			var data: String = info[2]
+			if explicit_type != -1:
+				return UString.str_to_type(data, explicit_type)
+			else:
+				return UString.str_to_var(data)
+		TYPE_DICTIONARY:
+			var out := {}
+			for k in patch:
+				patch[k] = patch_to_var(patch[k], sources, explicit_type)
+			return out
+		TYPE_ARRAY:
+			var out := []
+			for i in patch:
+				out.append(patch_to_var(i, sources, explicit_type))
+			return out
+		_:
+			assert(false)
+	return null
+
+static func patch(target: Object, patch: Dictionary, sources: Array):
+	if target.has_method("_patch"):
+		for k in patch:
+			var v = patch[k]
+			var p = UString.get_key_var(k, "=")
+			k = p[0]
+			var type = p[1]
+			target._patch(k, type, v, sources)
 	
-	return lines_changed
+	else:
+		for k in patch:
+			var v = patch[k]
+			var p = UString.get_key_var(k, "=")
+			k = p[0]
+			var type = p[1]
+			
+			# create if it didn't exist
+			if not k in target:
+				if v is Dictionary:
+					if target.has_method("_add_object"):
+						var new_obj = target._add_object(k, type)
+						if new_obj.has_method("_added"):
+							new_obj._added(target)
+					else:
+						push_error("Ignoring %s. No _add_object in %s." % [v, target])
+				
+				else:
+					if target.has_method("_add_property"):
+						target._add_property(k, patch_to_var(v, sources))
+					else:
+						push_error("No %s in %s for %s." % [k, target, v])
+			
+			if k in target:
+				var target_type = typeof(target[k])
+				# recursively check sub objects.
+				if target_type == TYPE_OBJECT:
+					patch(target[k], v, sources)
+				
+				else:
+					var value = patch_to_var(v, sources)
+					if typeof(value) == target_type:
+						target[k] = value
+					else:
+						push_error("Couldn't convert '%s' for property %s." % [v, k])
 
 static func get_operator_value(v):
 	if v is Object:
@@ -293,13 +363,13 @@ static func _parse_method_arguments(s: String) -> Dictionary:
 	return out
 
 static func get_class_from_name(name: String) -> Variant:
-	for item in ProjectSettings.get_setting("_global_script_class"):
+	for item in ProjectSettings.get_setting("_global_script_classes"):
 		if item["class"] == name:
 			return load(item.path)
 	return null
-
-static func create(name: String, args := []) -> Variant:
-	var obj = get_class_from_name(name)
+	
+static func create(type: String, args := []) -> Variant:
+	var obj = get_class_from_name(type)
 	if obj != null:
 		match len(args):
 			0: return obj.new()
@@ -310,3 +380,15 @@ static func create(name: String, args := []) -> Variant:
 			5: return obj.new(args[0], args[1], args[2], args[3], args[4])
 			_: push_error("Not implemented.")
 	return null
+
+# force grab the class_name from the source code.
+static func _to_string_nice(obj: Object) -> String:
+	var c := obj.get_class()
+	var s: Script = obj.get_script()
+	for line in s.source_code.split("\n", false, 2):
+		if line.begins_with("class_name"):
+			c = line.split("class_name", true, 1)[1].strip_edges()
+			break
+	var p = var2str(get_state(obj))
+	p = p.replace(": ", ":").replace("\n", " ").replace('"', '').replace("{ ", "(").replace(" }", ")")
+	return "%s%s" % [c, p]

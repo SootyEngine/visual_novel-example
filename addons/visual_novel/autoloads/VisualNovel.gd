@@ -17,6 +17,15 @@ class Debug:
 
 var debug := Debug.new()
 
+# TODO: put this in a grammar class or something
+var PRONOUNS := {
+	they=	{m="he", 		s="she", 		n="they"},
+	theyll=	{m="he'll", 	s="she'll", 	n="they'll"},
+	theyd=	{m="he'd", 		s="she'd", 		n="they'd"},
+	theyre=	{m="he's", 		s="she's", 		n="they're"},
+	their=	{m="his", 		s="her", 		n="their"},
+}
+
 func _ready() -> void:
 	Mods._add_mod("res://addons/visual_novel", true)
 	
@@ -40,6 +49,7 @@ func _dialogue_ended():
 	$captions/backing.visible = false
 
 func _flow_started(flow: String):
+	print("append to flow: ", flow)
 	State.flow_history.append(flow)
 
 func _flow_ended(flow: String):

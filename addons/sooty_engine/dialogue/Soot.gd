@@ -2,8 +2,22 @@
 extends Resource
 class_name Soot
 
-const COMMENT := "// "
+const COMMENT := "# "
+const COMMENT_LANG := "#id="
+const COMMENT_FLAG := "#?"
 
+# dialogue extension
+const EXT_DIALOGUE := ".soot"
+# data extension
+const EXT_DATA := ".soda"
+# language file extension
+const EXT_LANG := ".sola"
+# markdown file extension
+const EXT_TEXT := ".soma" # for use with things like notes, creature databases...
+
+# flow control symbols
+const LANG := "<->"
+const LANG_GONE := "<?>" # translation that is currently missing. it's data will be kept around.
 const FLOW := "==="
 const FLOW_GOTO := "=>"
 const FLOW_CALL := "=="
@@ -11,9 +25,9 @@ const FLOW_ENDD := "><"
 
 const FLOW_PATH_DIVIDER := "/"
 
-# Called when the main game starts.
+# called when the main game starts.
 const M_START := "MAIN" + FLOW_PATH_DIVIDER + "START"
-# Called when a flow ends.
+# called when a flow ends.
 const M_FLOW_END := "MAIN" + FLOW_PATH_DIVIDER + "FLOW_END"
 
 static func is_path(path: String) -> bool:

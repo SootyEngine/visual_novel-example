@@ -1,9 +1,7 @@
-extends BaseDataClass
+extends BaseDataManagerClass
 class_name EquipmentSlots
 
-func get_class() -> String:
-	return "EquipmentSlots"
-
-var name := ""
-var desc := ""
 var slots := {}
+
+func _get_data_class() -> String:
+	return "EquipmentSlot"

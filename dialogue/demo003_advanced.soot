@@ -1,4 +1,4 @@
-// Demonstrates achievements, quests, and inventory system.
+# Demonstrates achievements, quests, and inventory system.
 === START
 	~save_caption = "The Jail Cell"
 	

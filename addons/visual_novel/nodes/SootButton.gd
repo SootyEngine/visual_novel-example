@@ -36,7 +36,7 @@ func _get_property_list() -> Array:
 		props.prop_enum("goto_scene", TYPE_STRING, Scene.get_main_scene_ids())
 		
 		# scene flow ids
-		var file := UFile.get_file_name(owner.scene_file_path) + ".soot"
+		var file: String = UFile.get_file_name(owner.scene_file_path) + Soot.EXT_DIALOGUE
 		var path := UFile.get_file_in_dir("res://dialogue", file)
 		if path:
 			var scene_flows: Array = DialogueParser.new().parse(path).flows.keys()

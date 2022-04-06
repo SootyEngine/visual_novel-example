@@ -1,22 +1,37 @@
 extends BaseDataClass
-class_name BaseDataClassExtra
+class_name BaseDataClassExtendable
 
 const DEFAULT_FORMAT := "[b]{name}[]"
-var data := {}
+var _extra := {}
 
 func _init(d := {}):
-	UObject.patch(self, d, true)
+	UObject.set_state(self, d)
 	for k in d:
-		data[k] = d[k]
+		if not k in self:
+			_extra[k] = d[k]
 	_post_init.call_deferred()
 
+# along with public properties, include the _extra keys when saving/loading
+func _get_state_properties() -> Array:
+	return UObject._get_state_properties(self) + _extra.keys()
+
+# called by UObject, typically.
+func _add_property(property: String, value: Variant):
+	print("ADD PROPERTY %s=%s to %s" % [property, value, self])
+	_extra[property] = value
+
+# called by UObject, typically.
+func _add_object(property: String, type: String) -> Object:
+	_extra[property] = UObject.create(type)
+	return _extra[property]
+
 func _get(property: StringName):
-	if str(property) in data:
-		return data[str(property)]
+	if str(property) in _extra:
+		return _extra[str(property)]
 
 func _set(property: StringName, value) -> bool:
-	if str(property) in data:
-		data[str(property)] = value
+	if str(property) in _extra:
+		_extra[str(property)] = value
 		return true
 	return false
 

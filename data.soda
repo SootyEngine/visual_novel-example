@@ -1,0 +1,47 @@
+quest=Task: { alpha: true, wall, ok: false }
+	name: The Royal
+	desc: Who cares?
+
+data=Quest:
+	name: The Boss Man
+	score: 100_230 # Same line comment.
+	multiline: """"
+		This text will all be shown.
+		# Comment that will not show a newline.
+		Togther."""" # Comment
+	
+	multiline2:
+		""""
+		This text will all be shown.
+		
+		Togther.
+		""""
+	
+	array1: [1, 2, 3, 4]
+	array3:
+		- 1
+		- okay: it's on
+		- 3
+	
+	items:
+		coin: 2
+		sword:
+			from: quest_giver
+		items:
+			okay
+	
+	array_dict:
+		- quest:
+			the world
+		
+		- {a: true, b: false}
+		
+		- name: Paul
+		  tint: White
+		
+		- name: Paul
+		  tint: White
+		
+		-
+		name: Mary
+		tint: White

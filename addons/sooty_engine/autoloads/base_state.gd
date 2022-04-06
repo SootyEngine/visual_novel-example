@@ -1,12 +1,13 @@
 extends Node
 class_name BaseState
 
-signal changed(property: String)
-signal changed_to(property: String, to: Variant)
-signal changed_from_to(property: String, from: Variant, to: Variant)
+signal changed(property: Array)
+signal changed_to(property: Array, to: Variant)
+signal changed_from_to(property: Array, from: Variant, to: Variant)
 
 var _silent := false # won't emit signals when changing things.
 var _changed := false # state has changed.
+var _shortcuts := {} # shorter keys to nested data. (ie: p = characters:player)
 var _default := {}
 var _children := []
 
@@ -20,37 +21,65 @@ func _save_state(data: Dictionary):
 func _load_state(data: Dictionary):
 	_silent = true
 	_reset()
-	_patch(data.get(_get_subdir(), {}))
+	UObject.set_state(self, data.get(_get_subdir(), {}))
 	_silent = false
 
 func _ready() -> void:
 	child_entered_tree.connect(_child_added)
 	Mods.pre_loaded.connect(_clear_mods)
 	Mods.load_all.connect(_load_mods)
+	Mods.loaded.connect(_loaded_mods)
 
 func _clear_mods():
+	_shortcuts.clear()
+	
 	for child in get_children():
 		remove_child(child)
 		child.queue_free()
 
 func _load_mods(mods: Array):
 	var subdir := _get_subdir()
+	
+	# init nodes from .gd scripts.
 	for mod in mods:
 		mod.meta[subdir] = []
+		
 		var head = mod.dir.plus_file(subdir)
 		for script_path in UFile.get_files(head, ".gd"):
 			var state = load(script_path).new()
 			if state is Node:
-				mod.meta[subdir].append(script_path)
-				state.set_name(UFile.get_file_name(script_path))#.get_file().split(".", true, 1)[0])
+				mod.meta[subdir].append(script_path) # tell Mods what file has been installed
+				state.set_name(UFile.get_file_name(script_path))
 				add_child(state)
 			else:
 				# TODO: Allow resources.
 				push_error("States must be node. Can't load %s." % script_path)
+	
+	# install .data
+	for mod in mods:
+		var head = mod.dir.plus_file(subdir)
+		for data_path in UFile.get_files(head, Soot.EXT_DATA):
+			mod.meta[subdir].append(data_path) # tell Mods what file has been installed
+			var state = DataParser.new().parse(data_path)
+			
+			# patch state objects
+			UObject.patch(self, state.data, [data_path])
+			
+			# collect shortcuts
+			for k in state.shortcuts:
+				if not k in _shortcuts:
+					_shortcuts[k] = state.shortcuts[k]
+				else:
+					var new = state.shortcuts[k]
+					var old = _shortcuts[k]
+					push_error("Trying to use the same shortcut '%s' for %s and %s." % [k, old, new])
+
+func _loaded_mods():
+	print("DEFAULT STAE FOR %s." % _get_subdir())
 	_default = _get_state()
 
 func _reset():
-	_patch(_default)
+	UObject.set_state(self, _default)
 
 func _child_added(_n: Node):
 	_children = get_children()
@@ -96,16 +125,9 @@ func _call(method: String, args: Array = [], default = null) -> Variant:
 func _reset_state():
 	UObject.set_state(self, _default)
 
-func _patch(state: Dictionary):
-	UObject.patch(self, state)
-
 func _get_changed_states() -> Dictionary:
-	var current := _get_state()# UObject.get_state(self)
+	var current := _get_state()
 	return UDict.get_different(_default, current)
-
-func _set_state(state: Dictionary):
-	_reset_state()
-	UObject.patch(self, state)
 
 func _get_state() -> Dictionary:
 	var out := {}
@@ -113,27 +135,33 @@ func _get_state() -> Dictionary:
 		UDict.merge(out, UObject.get_state(child), true)
 	return out
 
-func _has(property: StringName) -> bool:
-	var path := str(property).split(".")
-	property = path[-1]
+func _get_property_path(property: StringName) -> Array:
+	var p := str(property)
+	if p in _shortcuts:
+		p = _shortcuts[p]
+	return Array(p.split("."))
+	
+func _has(pname: StringName) -> bool:
+	var path := _get_property_path(pname)
+	var property = path[-1]
 	for m in _children:
 		var o = UObject.get_penultimate(m, path)
 		if o != null and property in o:
 			return true
 	return false
 
-func _get(property: StringName):
-	var path := str(property).split(".")
-	property = path[-1]
+func _get(pname: StringName):
+	var path := _get_property_path(pname)
+	var property = path[-1]
 	for m in _children:
 		var o = UObject.get_penultimate(m, path)
 		if o != null:
 			if property in o:
 				return o[property]
 
-func _set(property_path: StringName, value) -> bool:
-	var path := str(property_path).split(".")
-	var property := path[-1]
+func _set(pname: StringName, value) -> bool:
+	var path = _get_property_path(pname)
+	var property = path[-1]
 	for m in _children:
 		var o = UObject.get_penultimate(m, path)
 		if o != null and property in o:
@@ -146,11 +174,11 @@ func _set(property_path: StringName, value) -> bool:
 			if old != new:
 				if not _silent:
 					_changed = true
-					changed.emit(property_path)
-					changed_to.emit(property_path, new)
-					changed_from_to.emit(property_path, old, new)
+					changed.emit(path)
+					changed_to.emit(path, new)
+					changed_from_to.emit(path, old, new)
 			return true
-	push_error("No %s in State. (Attempted '%s = %s')" % [property_path, property, value])
+	push_error("No %s in %s. (Attempted '%s = %s')" % [pname, _get_state(), property, value])
 	return true
 
 func _get_all_of_type(type: Variant) -> Dictionary:

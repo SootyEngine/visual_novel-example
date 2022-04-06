@@ -1,5 +1,20 @@
 === START
 	
+	Shortcut [~p] test and [~inv].
+	
+	
+	john: Hey		#id=ok2314
+	mary: Whatup	#id=+
+	Show this line if english.      #id=+
+	
+	#? en
+	john: Okay                      #id=23kdsad
+	#? fr
+	Show this line if french.
+	#?
+	
+	Show this line no matter waht.
+	
 	Score is [~score]!
 	@Scene.goto demo002_persistent_state
 	Some text to show at beach.
