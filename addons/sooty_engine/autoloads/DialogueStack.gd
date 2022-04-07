@@ -27,6 +27,7 @@ func _init(em := false) -> void:
 
 func _ready():
 	if not Engine.is_editor_hint() and not _execute_mode:
+		await get_tree().process_frame
 		Saver._get_state.connect(_save_state)
 		Saver._set_state.connect(_load_state)
 		Saver.pre_load.connect(_game_loaded)
@@ -92,22 +93,23 @@ func start(id: String):
 		return
 	
 	# start dialogue
-	if Soot.is_path(id):
-		goto(id, STEP_GOTO)
+	goto(id)
 	
 	# go to first flow of dialogue
-	else:
-		var d := Dialogues.get_dialogue(id)
-		if not d.has_flows():
-			push_error("No flows in '%s'." % id)
-		else:
-			var first = Dialogues.get_dialogue(id).flows.keys()[0]
-			goto(Soot.join_path([id, first]), STEP_GOTO)
+#	else:
+#		var d := Dialogues.get_dialogue(id)
+#		if not d.has_flows():
+#			push_error("No flows in '%s'." % id)
+#		else:
+#			var first = Dialogues.get_dialogue(id).flows.keys()[0]
+#			goto(Soot.join_path([id, first]), STEP_GOTO)
 
 func can_do(command: String) -> bool:
 	return command.begins_with(Soot.FLOW_GOTO)\
 		or command.begins_with(Soot.FLOW_CALL)\
-		or command.begins_with(Soot.FLOW_ENDD)
+		or command.begins_with(Soot.FLOW_PASS)\
+		or command.begins_with(Soot.FLOW_ENDD)\
+		or command.begins_with(Soot.FLOW_END_ALL)
 
 func do(command: String):
 	# => goto
@@ -116,13 +118,21 @@ func do(command: String):
 	# == call
 	elif command.begins_with(Soot.FLOW_CALL):
 		goto(command.trim_prefix(Soot.FLOW_CALL).strip_edges(), STEP_CALL)
-	# >< end
+	# __ pass
+	elif command.begins_with(Soot.FLOW_PASS):
+		# do nothing
+		pass
+	# >< end flow
 	elif command.begins_with(Soot.FLOW_ENDD):
-		end(command.trim_prefix(Soot.FLOW_ENDD).strip_edges())
+		_pop()
+	# >><< end dialogue
+	elif command.begins_with(Soot.FLOW_END_ALL):
+		end(command.trim_prefix(Soot.FLOW_END_ALL).strip_edges())
 	else:
 		push_error("Don't know what to do with '%s'." % command)
 
 func goto(dia_flow: String, step_type: int = STEP_GOTO) -> bool:
+	print("GOTO ", dia_flow)
 	return _goto(dia_flow, step_type)
 
 func _goto(dia_flow: String, step_type: int = STEP_GOTO) -> bool:
@@ -133,19 +143,19 @@ func _goto(dia_flow: String, step_type: int = STEP_GOTO) -> bool:
 	var p := Soot.split_path(dia_flow)
 	var d_id := p[0]
 	var flow := p[1]
-	
-	if not Dialogues.has_dialogue(d_id):
-		push_error("No dialogue %s." % d_id)
+	# dialogue exists?
+	var d: Dialogue = Dialogues.find(d_id)
+	if not d:
 		return false
 	
-	var d := Dialogues.get_dialogue(d_id)
-	if not d.has_flow(flow):
-		push_error("No flow '%s' in '%s'." % [flow, d_id])
+	# flow exists?
+	var f: Dictionary = d.find(flow)
+	if not len(f):
 		return false
 	
 	var lines := d.get_flow_lines(flow)
 	if not len(lines):
-		push_error("Can't find lines for %s." % flow)
+		push_error("Can't find lines for '%s'." % flow)
 		return false
 	
 	# if the stack is cleared, it means this was a "goto" not a "call"
@@ -228,7 +238,13 @@ func _tick():
 				# call main stack, since this could be run in _execute_mode
 				DialogueStack._goto(line.line.call, STEP_CALL)
 			
+			"pass":
+				pass
+			
 			"end":
+				_pop()
+			
+			"end_all":
 				end(line.line.end)
 				break
 			
@@ -271,7 +287,7 @@ func _pop_next_line() -> Dictionary:
 			_pop()
 			continue
 		
-		var dilg := Dialogues.get_dialogue(step_info.d_id)
+		var dilg: Dialogue = Dialogues.get_dialogue(step_info.d_id)
 		var line: Dictionary = dilg.get_line(step_info.lines[step_info.step])
 		var d_id: String = step_info.d_id
 		var flow: String = step_info.flow

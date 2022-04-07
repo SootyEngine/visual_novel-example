@@ -1,4 +1,4 @@
-extends BaseDataClass
+extends Data
 class_name VStat
 
 const MSG_STAT_INCREASED := "state_increased"

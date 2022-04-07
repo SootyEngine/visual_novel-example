@@ -9,42 +9,27 @@
 config_version=5
 
 _global_script_classes=[{
-"base": "BaseDataClass",
+"base": "Data",
 "class": &"Award",
 "language": &"GDScript",
 "path": "res://addons/visual_novel/objects/Award.gd"
 }, {
-"base": "BaseDataManagerClass",
+"base": "DataManager",
 "class": &"Awards",
 "language": &"GDScript",
 "path": "res://addons/visual_novel/objects/Awards.gd"
-}, {
-"base": "Resource",
-"class": &"BaseDataClass",
-"language": &"GDScript",
-"path": "res://addons/visual_novel/objects/BaseDataClass.gd"
-}, {
-"base": "BaseDataClass",
-"class": &"BaseDataClassExtendable",
-"language": &"GDScript",
-"path": "res://addons/visual_novel/objects/BaseDataClassExtra.gd"
-}, {
-"base": "Resource",
-"class": &"BaseDataManagerClass",
-"language": &"GDScript",
-"path": "res://addons/visual_novel/objects/BaseDataManagerClass.gd"
 }, {
 "base": "Node",
 "class": &"BaseState",
 "language": &"GDScript",
 "path": "res://addons/sooty_engine/autoloads/base_state.gd"
 }, {
-"base": "BaseDataClassExtendable",
+"base": "PatchableData",
 "class": &"Character",
 "language": &"GDScript",
 "path": "res://addons/visual_novel/objects/Character.gd"
 }, {
-"base": "BaseDataManagerClass",
+"base": "DataManager",
 "class": &"Characters",
 "language": &"GDScript",
 "path": "res://addons/visual_novel/objects/Characters.gd"
@@ -54,15 +39,25 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://addons/util/Config.gd"
 }, {
+"base": "RefCounted",
+"class": &"Data",
+"language": &"GDScript",
+"path": "res://addons/sooty_engine/common/Data.gd"
+}, {
+"base": "Resource",
+"class": &"DataManager",
+"language": &"GDScript",
+"path": "res://addons/sooty_engine/common/DataManager.gd"
+}, {
 "base": "Resource",
 "class": &"DataParser",
 "language": &"GDScript",
 "path": "res://addons/sooty_engine/data/DataParser.gd"
 }, {
-"base": "BaseDataClass",
+"base": "Data",
 "class": &"DateTime",
 "language": &"GDScript",
-"path": "res://addons/visual_novel/objects/DateTime.gd"
+"path": "res://addons/sooty_engine/common/DateTime.gd"
 }, {
 "base": "Resource",
 "class": &"Dialogue",
@@ -89,17 +84,17 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://addons/rich_text/Emoji.gd"
 }, {
-"base": "BaseDataClass",
+"base": "Data",
 "class": &"Equipment",
 "language": &"GDScript",
 "path": "res://addons/visual_novel/objects/Equipment.gd"
 }, {
-"base": "BaseDataClass",
+"base": "DataManager",
 "class": &"EquipmentSlot",
 "language": &"GDScript",
 "path": "res://addons/visual_novel/objects/EquipmentSlot.gd"
 }, {
-"base": "BaseDataManagerClass",
+"base": "DataManager",
 "class": &"EquipmentSlots",
 "language": &"GDScript",
 "path": "res://addons/visual_novel/objects/EquipmentSlots.gd"
@@ -114,7 +109,7 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://addons/rich_text/FontHelper.gd"
 }, {
-"base": "BaseDataClass",
+"base": "Data",
 "class": &"Inventory",
 "language": &"GDScript",
 "path": "res://addons/visual_novel/objects/Inventory.gd"
@@ -124,17 +119,17 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://addons/visual_novel/objects/InventoryItem.gd"
 }, {
-"base": "BaseDataClassExtendable",
+"base": "PatchableData",
 "class": &"ItemInfo",
 "language": &"GDScript",
 "path": "res://addons/visual_novel/objects/ItemInfo.gd"
 }, {
-"base": "BaseDataManagerClass",
+"base": "DataManager",
 "class": &"ItemInfos",
 "language": &"GDScript",
 "path": "res://addons/visual_novel/objects/ItemInfos.gd"
 }, {
-"base": "BaseDataClassExtendable",
+"base": "PatchableData",
 "class": &"Location",
 "language": &"GDScript",
 "path": "res://addons/visual_novel/objects/Location.gd"
@@ -149,17 +144,22 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://addons/sooty_engine/data/ModInfo.gd"
 }, {
-"base": "BaseDataClass",
+"base": "Data",
 "class": &"Note",
 "language": &"GDScript",
 "path": "res://addons/visual_novel/objects/Note.gd"
+}, {
+"base": "Data",
+"class": &"PatchableData",
+"language": &"GDScript",
+"path": "res://addons/sooty_engine/common/PatchableData.gd"
 }, {
 "base": "Resource",
 "class": &"PropList",
 "language": &"GDScript",
 "path": "res://addons/util/PropList.gd"
 }, {
-"base": "BaseDataClassExtra",
+"base": "PatchableData",
 "class": &"Reward",
 "language": &"GDScript",
 "path": "res://addons/visual_novel/objects/Reward.gd"
@@ -199,12 +199,12 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://addons/visual_novel/shaders/SpriteTransition.gd"
 }, {
-"base": "BaseDataClass",
+"base": "Data",
 "class": &"Task",
 "language": &"GDScript",
 "path": "res://addons/visual_novel/objects/Task.gd"
 }, {
-"base": "BaseDataManagerClass",
+"base": "DataManager",
 "class": &"Tasks",
 "language": &"GDScript",
 "path": "res://addons/visual_novel/objects/Tasks.gd"
@@ -284,17 +284,17 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://addons/util/UType.gd"
 }, {
-"base": "BaseDataClass",
+"base": "Data",
 "class": &"VBool",
 "language": &"GDScript",
 "path": "res://addons/visual_novel/objects/VBool.gd"
 }, {
-"base": "BaseDataClass",
+"base": "Data",
 "class": &"VEnum",
 "language": &"GDScript",
 "path": "res://addons/visual_novel/objects/VEnum.gd"
 }, {
-"base": "BaseDataClass",
+"base": "Data",
 "class": &"VStat",
 "language": &"GDScript",
 "path": "res://addons/visual_novel/objects/VStat.gd"
@@ -302,13 +302,12 @@ _global_script_classes=[{
 _global_script_class_icons={
 "Award": "",
 "Awards": "",
-"BaseDataClass": "",
-"BaseDataClassExtendable": "",
-"BaseDataManagerClass": "",
 "BaseState": "",
 "Character": "",
 "Characters": "",
 "Config": "",
+"Data": "",
+"DataManager": "",
 "DataParser": "",
 "DateTime": "",
 "Dialogue": "",
@@ -329,6 +328,7 @@ _global_script_class_icons={
 "Markdown": "",
 "ModInfo": "",
 "Note": "",
+"PatchableData": "",
 "PropList": "",
 "Reward": "",
 "RichTextAnimation": "",
@@ -369,6 +369,7 @@ config/features=PackedStringArray("4.0", "Vulkan Clustered")
 
 [autoload]
 
+VisualNovel="*res://addons/visual_novel/autoloads/VisualNovel.tscn"
 Global="*res://addons/sooty_engine/autoloads/Global.gd"
 Mods="*res://addons/sooty_engine/autoloads/Mods.gd"
 Settings="*res://addons/sooty_engine/autoloads/Settings.gd"
@@ -381,7 +382,6 @@ Music="*res://addons/sooty_engine/autoloads/Music.gd"
 SFX="*res://addons/sooty_engine/autoloads/SFX.gd"
 Dialogues="*res://addons/sooty_engine/autoloads/Dialogues.gd"
 DialogueStack="*res://addons/sooty_engine/autoloads/DialogueStack.gd"
-VisualNovel="*res://addons/visual_novel/autoloads/VisualNovel.tscn"
 
 [editor_plugins]
 

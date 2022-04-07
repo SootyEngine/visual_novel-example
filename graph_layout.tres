@@ -1,0 +1,13 @@
+[gd_resource type="Resource" format=3 uid="uid://bqrjqkomw2b5w"]
+
+[resource]
+metadata/data = {
+"MAIN": Vector2(-160, 20),
+"SOOT_OVERVIEW": Vector2(-240, -720),
+"demo001_dialogue": Vector2(-160, -420),
+"demo002_persistent_state": Vector2(20, 120),
+"demo003_advanced": Vector2(-160, -340),
+"demo2": Vector2(80, -480),
+"dummy": Vector2(140, -180),
+"prefab": Vector2(0, 0)
+}

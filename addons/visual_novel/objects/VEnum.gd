@@ -1,4 +1,4 @@
-extends BaseDataClass
+extends Data
 class_name VEnum
 
 @export var text := {}

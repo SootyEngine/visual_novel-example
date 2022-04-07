@@ -1,4 +1,4 @@
-extends BaseDataClass
+extends Data
 class_name Task
 
 func get_class() -> String:

@@ -1,4 +1,4 @@
-extends BaseDataManagerClass
+extends DataManager
 class_name ItemInfos
 
 func _get_data_class() -> String:

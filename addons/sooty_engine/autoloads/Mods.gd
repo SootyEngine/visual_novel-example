@@ -19,7 +19,9 @@ func _init():
 			_add_mod(mod, AUTO_INSTALL_USER_MODS)
 
 func _ready() -> void:
-	_update.call_deferred()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	_load_mods()
 
 func get_user_mod_dirs() -> PackedStringArray:
 	return UFile.get_dirs("user://mods")
@@ -37,14 +39,14 @@ func get_uninstalled() -> Array:
 func install(dir: String):
 	if not mods[dir].installed:
 		mods[dir].installed = true
-		_update()
+		_load_mods()
 
 func uninstall(dir: String):
 	if mods[dir].installed:
 		mods[dir].installed = false
-		_update()
+		_load_mods()
 
-func _update():
+func _load_mods():
 	pre_loaded.emit()
 	
 	var installed := get_installed()
@@ -54,24 +56,32 @@ func _update():
 	load_all.emit(installed)
 	
 	# Display lists of what was added by the mods.
-	var loud := false
-	var meta := {}
-	for k in installed[0].meta.keys():
-		meta[k] = []
+	var loud := true
 	if loud:
+		var meta := {}
+		for k in installed[0].meta.keys():
+			meta[k] = []
+		# print mod list
 		print("[Mods - %s]" % [len(installed)])
-	for i in len(installed):
-		var mod = installed[i]
-		if loud:
+		for i in len(installed):
+			var mod = installed[i]
+			# mod name
 			print("\t%s %s" % [i+1, mod.dir])
-		for k in mod.meta:
-			meta[k].append_array(mod.meta[k])
-	if loud:
+			# collect it's files
+			for k in mod.meta:
+				meta[k].append_array(mod.meta[k])
+		# show all mod files clumped by type
+		var none := []
 		for k in meta:
-			print("[%s - %s]" % [k.capitalize(), len(meta[k])])
+			var total := len(meta[k])
+			if total == 0:
+				none.append(k.capitalize())
+			else:
+				print("[%s - %s]" % [k.capitalize(), total])
 			for i in len(meta[k]):
 				print("\t%s %s" % [i+1, meta[k][i].get_file()])
-	
+		if none:
+			print("[No %s found]" % ", ".join(none))
 	# wait a little for things to initialize.
 	await get_tree().process_frame
 	# alert everyone that mods were loaded.

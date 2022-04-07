@@ -17,49 +17,40 @@ class Debug:
 
 var debug := Debug.new()
 
-# TODO: put this in a grammar class or something
-var PRONOUNS := {
-	they=	{m="he", 		s="she", 		n="they"},
-	theyll=	{m="he'll", 	s="she'll", 	n="they'll"},
-	theyd=	{m="he'd", 		s="she'd", 		n="they'd"},
-	theyre=	{m="he's", 		s="she's", 		n="they're"},
-	their=	{m="his", 		s="her", 		n="their"},
-}
-
 func _ready() -> void:
+	await get_tree().process_frame
 	Mods._add_mod("res://addons/visual_novel", true)
+	Scene._goto = _goto_scene
 	
-	DialogueStack.started.connect(_dialogue_started)
-	DialogueStack.ended.connect(_dialogue_ended)
-	DialogueStack.flow_started.connect(_flow_started)
-	DialogueStack.flow_ended.connect(_flow_ended)
-	DialogueStack.on_line.connect(_on_text)
-	DialogueStack._refresh.connect(DialogueStack.unhalt.bind(self))
+	if not Engine.is_editor_hint():
+		DialogueStack.started.connect(_dialogue_started)
+		DialogueStack.ended.connect(_dialogue_ended)
+		DialogueStack.on_line.connect(_on_text)
+		DialogueStack._refresh.connect(DialogueStack.unhalt.bind(self))
 	
 	$captions/backing.visible = false
+
+func _goto_scene(id: String, kwargs := {}):
+	if Scene.find(id):
+		DialogueStack.halt(self)
+		Fader.create(
+			Scene.change.bind(Scene.scenes[id]),
+			DialogueStack.unhalt.bind(self))
+	else:
+		# Scene.find will push_error with more useful data.
+		pass
 
 func version() -> String:
 	return "[%s]%s[]" % [Color.TOMATO, VERSION]
 
 func _dialogue_started():
 	$captions/backing.visible = true
-	State.flow_history.clear()
 
 func _dialogue_ended():
 	$captions/backing.visible = false
 
-func _flow_started(flow: String):
-	print("append to flow: ", flow)
-	State.flow_history.append(flow)
-
-func _flow_ended(flow: String):
-	UDict.tick(State.flow_visited, flow) # tick number of times visited
-	
-	# goto the ending node
-	if len(State.flow_history) and State.flow_history[-1] != Soot.M_FLOW_END and Dialogues.has_dialogue_flow(Soot.M_FLOW_END):
-		DialogueStack.goto(Soot.M_FLOW_END)
-
 func _caption_msg(msg_type: String, msg: Variant = null):
+	return
 	Global.call_group_flags(SceneTree.GROUP_CALL_REALTIME, "caption", "_caption", [State.caption_at, msg_type, msg])
 
 func _on_text(line: DialogueLine):

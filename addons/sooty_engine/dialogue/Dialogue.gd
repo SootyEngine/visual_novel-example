@@ -8,6 +8,7 @@ class_name Dialogue
 @export var files := []
 @export var langs := []
 @export var modified_at := {} # values are modified times
+@export var has_IGNORE := false
 
 func _init(id: String, files: Array, langs := []):
 	self.id = id
@@ -22,17 +23,19 @@ func reload():
 	
 	# parse
 	var data := DialogueParser.new(id, files, langs).parse()
-	flows = data.flows
-	lines = data.lines
-#	UDict.log(out_flows)
-#	UDict.log(out_lines)
-	
-	if UFile.dir_exists("res://dialogue_debug"):
-		UFile.save_json("res://dialogue_debug/%s.flows.json" % [id], flows, true)
-		UFile.save_json("res://dialogue_debug/%s.lines.json" % [id], lines, true)
+	if data:
+		has_IGNORE = false
+		flows = data.flows
+		lines = data.lines
+		if UFile.dir_exists("res://dialogue_debug"):
+			UFile.save_json("res://dialogue_debug/%s.flows.json" % [id], flows, true)
+			UFile.save_json("res://dialogue_debug/%s.lines.json" % [id], lines, true)
+	else:
+		has_IGNORE = true
 
 func generate_language_file(lang: String):
-	DialogueParser.new(id, files).parse(lang)
+	if not has_IGNORE:
+		DialogueParser.new(id, files).parse(lang)
 
 func was_modified() -> bool:
 	for file in modified_at:
@@ -47,7 +50,13 @@ func has_flows() -> bool:
 	return len(flows) != 0
 
 func has_flow(flow: String) -> bool:
-	return to_flow_id(flow) in flows
+	return flow in flows
+
+func find(flow: String) -> Dictionary:
+	if flow in flows:
+		return flows[flow]
+	UString.push_error_similar("No '%s' in '%s'." % [flow, id], flow, flows.keys())
+	return {}
 
 func get_flow_lines(flow: String) -> Array[String]:
 	var out := []

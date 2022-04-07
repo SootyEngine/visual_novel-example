@@ -1,4 +1,4 @@
-extends BaseDataClassExtendable
+extends PatchableData
 class_name Character
 
 func get_class() -> String:
@@ -14,12 +14,13 @@ func _get(property: StringName):
 	var k := str(property)
 	
 	var lower = k.to_lower()
-	if lower in VisualNovel.PRONOUNS:
-		if gender in VisualNovel.PRONOUNS[lower]:
+	var c: Characters = State.characters
+	if lower in c.PRONOUNS:
+		if gender in c.PRONOUNS[lower]:
 			if UString.is_capitalized(k[0]):
-				return VisualNovel.PRONOUNS[lower][gender].capitalized()
+				return c.PRONOUNS[lower][gender].capitalized()
 			else:
-				return VisualNovel.PRONOUNS[lower][gender]
+				return c.PRONOUNS[lower][gender]
 #	match k:
 #		"they": return "he" if gender=="m" else "she" if gender=="f" else "they"
 #		"They": return "He" if gender=="m" else "She" if gender=="f" else "They"

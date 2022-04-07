@@ -1,3 +1,4 @@
+@tool
 extends Node
 
 const DIR := "user://saves"
@@ -34,15 +35,17 @@ func _init() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _ready() -> void:
+	await get_tree().process_frame
 	Mods.loaded.connect(_mods_loaded)
 	
 	var d := Directory.new()
 	if not d.dir_exists(DIR):
 		d.make_dir(DIR)
 	
-	add_child(_timer)
-	_timer.wait_time = 2.0
-	_timer.timeout.connect(_save_persistent)
+	if not Engine.is_editor_hint():
+		add_child(_timer)
+		_timer.wait_time = 2.0
+		_timer.timeout.connect(_save_persistent)
 
 func has_last_save() -> bool:
 	return _last_save_slot != "" and has_slot(_last_save_slot)
@@ -51,7 +54,13 @@ func load_last_save():
 	load_slot(_last_save_slot)
 
 func _mods_loaded():
-	load_persistent()
+	await get_tree().process_frame
+	pre_load_persistent.emit()
+	var data: Dictionary = UFile.load_from_resource(PATH_PERSISTENT, {})
+	_last_save_slot = data.get("last_save_slot", _last_save_slot)
+	_set_persistent.emit(data)
+	loaded_persistent.emit()
+	print("Loaded Persistent from user://persistent.tres.")
 
 func save_persistent():
 	_timer.start()
@@ -67,14 +76,6 @@ func _save_persistent():
 	UFile.save_to_resource("user://persistent.tres", data)
 	saved_persistent.emit()
 	print("Saved Persistent to user://persistent.tres.")
-
-func load_persistent():
-	pre_load_persistent.emit()
-	var data: Dictionary = UFile.load_from_resource(PATH_PERSISTENT, {})
-	_last_save_slot = data.get("last_save_slot", _last_save_slot)
-	_set_persistent.emit(data)
-	loaded_persistent.emit()
-	print("Loaded Persistent to user://persistent.tres.")
 
 func get_all_saved_slots() -> PackedStringArray:
 	return UFile.get_dirs(DIR)

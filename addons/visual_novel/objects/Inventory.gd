@@ -1,4 +1,4 @@
-extends BaseDataClass
+extends Data
 class_name Inventory
 
 func get_class() -> String:
@@ -11,14 +11,14 @@ var _character: Character
 var slots := []
 
 # called by UObject
-func _added(parent: BaseDataClass):
+func _added(parent: Object):
 	_character = parent
 
-func _patch(key: String, type: String, patch: Variant, sources: Array):
-#	match key:
-#		"items":
-		patch = UObject.patch_to_var(patch, sources, TYPE_INT)
-		gain.call_deferred(key, patch)
+#func _patch(key: String, type: String, patch: Variant, sources: Array):
+##	match key:
+##		"items":
+#		patch = UObject.patch_to_var(patch, sources, TYPE_INT)
+#		gain.call_deferred(key, patch)
 #		match typeof(patch):
 #			TYPE_ARRAY:
 #				for item in patch:

@@ -1,4 +1,4 @@
-extends BaseDataClass
+extends Data
 class_name Equipment
 
 func get_class() -> String:
@@ -12,7 +12,7 @@ var _inventory: Inventory
 var worn := {}
 
 # called by UObject when added to an object
-func _added(parent: BaseDataClassExtendable):
+func _added(parent: Object):
 	_character = parent
 	_inventory = UObject.get_first_property_of_object_type(parent, Inventory)
 

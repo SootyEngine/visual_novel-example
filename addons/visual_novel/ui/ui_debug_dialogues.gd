@@ -4,7 +4,7 @@ func _ready():
 	DialogueStack.tick.connect(_redraw_stack)
 	DialogueStack._halt_list_changed.connect(_redraw_halting)
 	
-	await get_tree().process_frame
+	await Mods.loaded
 	
 	_redraw_dialogues()
 	_redraw_stack()
@@ -13,13 +13,13 @@ func _ready():
 func _redraw_dialogues():
 	var text := []
 	var meta := {}
-	for did in Dialogues.cache:
-		var d: Dialogue = Dialogues.cache[did]
-		text.append("[b]%s[]" % [did])
-		for fid in d.flows:
-			var flow := "%s.%s" % [did, fid]
-			text.append("\t[meta %s]%s[]" % [flow, fid])
-			meta[flow] = DialogueStack.goto.bind(flow, DialogueStack.STEP_GOTO)
+	for d_id in Dialogues.cache:
+		var d: Dialogue = Dialogues.cache[d_id]
+		text.append("[b]%s[]" % [d_id])
+		for f_id in d.flows:
+			var flow := Soot.join_path([d_id, f_id])
+			text.append("\t[meta %s]%s[]" % [flow, f_id])
+			meta[flow] = DialogueStack.goto.bind(flow)
 	$VBoxContainer/HBoxContainer/dialogues.set_bbcode("\n".join(text))
 	$VBoxContainer/HBoxContainer/dialogues._meta = meta
 

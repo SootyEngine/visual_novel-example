@@ -1,4 +1,4 @@
-extends BaseDataClass
+extends DataManager
 class_name EquipmentSlot
 
 var name := ""

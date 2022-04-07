@@ -4,8 +4,23 @@ extends EditorPlugin
 const AUTOLOADS := ["Global", "Mods", "Settings", "Scene", "Saver", "Persistent", "State", "StringAction", "Music", "SFX", "Dialogues", "DialogueStack"]
 const SOOT_HIGHLIGHTER = preload("res://addons/sooty_engine/dialogue/DialogueHighlighter.gd")
 const DATA_HIGHLIGHTER = preload("res://addons/sooty_engine/data/DataHighlighter.gd")
+const EDITOR = preload("res://addons/sooty_engine/ui/ui_map_gen.tscn")
 var soot_highlighter := SOOT_HIGHLIGHTER.new()
 var data_highlighter := DATA_HIGHLIGHTER.new()
+var editor
+
+#func _has_main_screen() -> bool:
+#	return true
+
+func _get_plugin_name() -> String:
+	return "Sooty"
+
+func _make_visible(visible: bool) -> void:
+	if editor:
+		editor.visible = visible
+
+func _get_plugin_icon() -> Texture2D:
+	return get_editor_interface().get_base_control().get_icon("Node", "EditorIcons")
 
 func _enter_tree() -> void:
 	# load all autoloads in order.
@@ -26,6 +41,20 @@ func _enter_tree() -> void:
 	se.register_syntax_highlighter(data_highlighter)
 	# track scripts opened/closed to can add highliter.
 	se.editor_script_changed.connect(_editor_script_changed)
+	
+	editor = preload("res://addons/sooty_engine/ui/ui_map_gen.tscn").instantiate()
+	editor.is_plugin_hint = true
+	editor.plugin = self
+	add_control_to_dock(EditorPlugin.DOCK_SLOT_LEFT_BR, editor)
+#	add_control_to_bottom_panel(editor, "Dialogue")
+	
+
+# find a code editor for a given text file.
+func get_code_edit(path: String) -> CodeEdit:
+	for e in get_editor_interface().get_script_editor().get_open_script_editors():
+		if e.has_meta("_edit_res_path") and e.get_meta("_edit_res_path") == path:
+			return e.get_base_editor()
+	return null
 
 func _editor_script_changed(s):
 	# auto add highlighters
@@ -45,10 +74,15 @@ func _editor_script_changed(s):
 				c.syntax_highlighter = soot_highlighter
 
 func _exit_tree() -> void:
+#	if editor:
+#		editor.queue_free()
+	
+	if editor:
+		remove_control_from_docks(editor)
+	
 	# remove .soot highlighter.
 	get_editor_interface().get_script_editor().unregister_syntax_highlighter(soot_highlighter)
 	get_editor_interface().get_script_editor().unregister_syntax_highlighter(data_highlighter)
 	
-	for id in AUTOLOADS:
-		remove_autoload_singleton(id)
-	
+	for i in range(len(AUTOLOADS)-1, -1, -1):
+		remove_autoload_singleton(AUTOLOADS[i])

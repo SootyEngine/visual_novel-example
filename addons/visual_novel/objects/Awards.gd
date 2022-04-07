@@ -1,4 +1,4 @@
-extends BaseDataManagerClass
+extends DataManager
 class_name Awards
 
 const MSG_AWARD_PROGRESS := "award_progress"
@@ -10,8 +10,8 @@ signal progress(award: Award)
 func _get_data_class() -> String:
 	return "Award"
 
-func _connect() -> void:
-	super._connect()
+func _post_init() -> void:
+	super._post_init()
 	Persistent.changed.connect(_changed)
 
 func gain(id: String):

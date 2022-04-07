@@ -1,27 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://d1csgqju2u32x"]
+[gd_scene load_steps=6 format=3 uid="uid://d1csgqju2u32x"]
 
 [ext_resource type="Script" path="res://addons/visual_novel/ui/ui_console.gd" id="1_3nupt"]
-[ext_resource type="Shader" path="res://addons/sooty_engine/ui/screen_blur.gdshader" id="2_d20gb"]
 [ext_resource type="Font" uid="uid://dpy1gmyfrww2t" path="res://addons/visual_novel/fonts/font-r.tres" id="3_jsqp7"]
 [ext_resource type="Font" uid="uid://2j2j280vtmte" path="res://addons/visual_novel/fonts/font-bi.tres" id="4_uj662"]
 [ext_resource type="Font" uid="uid://b0o1i3qufj2wj" path="res://addons/visual_novel/fonts/font-i.tres" id="5_7d76x"]
 [ext_resource type="Font" uid="uid://dyigxv1dsx6yj" path="res://addons/visual_novel/fonts/font-b.tres" id="6_by110"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rhy81"]
-render_priority = 0
-shader = ExtResource( "2_d20gb" )
-
 [node name="console" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( "1_3nupt" )
-
-[node name="backing" type="ColorRect" parent="."]
-material = SubResource( "ShaderMaterial_rhy81" )
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-color = Color(0, 0, 0, 0.25)
 
 [node name="c" type="VBoxContainer" parent="."]
 anchor_right = 1.0

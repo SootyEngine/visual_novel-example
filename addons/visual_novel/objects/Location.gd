@@ -1,4 +1,4 @@
-extends BaseDataClassExtendable
+extends PatchableData
 class_name Location
 
 func get_class() -> String:

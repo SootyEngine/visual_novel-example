@@ -1,4 +1,4 @@
-extends BaseDataClass
+extends Data
 class_name VBool
 
 @export var text_true := ""

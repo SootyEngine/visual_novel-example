@@ -17,7 +17,7 @@ offset_right = 1024.0
 offset_bottom = 31.0
 
 [node name="filter" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
-offset_right = 294.0
+offset_right = 149.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -25,33 +25,48 @@ placeholder_text = "Filter"
 clear_button_enabled = true
 
 [node name="persistent" type="CheckButton" parent="VBoxContainer/HBoxContainer"]
-offset_left = 298.0
-offset_right = 424.0
+offset_left = 153.0
+offset_right = 279.0
 offset_bottom = 31.0
 hint_tooltip = "Show Persistent data instead of State data?"
 text = "Persistent"
 
 [node name="only_modified" type="CheckButton" parent="VBoxContainer/HBoxContainer"]
-offset_left = 428.0
-offset_right = 585.0
+offset_left = 283.0
+offset_right = 440.0
 offset_bottom = 31.0
 hint_tooltip = "Only show data modified since initialization?"
 text = "Only Modified"
 
 [node name="hide_empty" type="CheckButton" parent="VBoxContainer/HBoxContainer"]
-offset_left = 589.0
-offset_right = 726.0
+offset_left = 444.0
+offset_right = 581.0
 offset_bottom = 31.0
 hint_tooltip = "Hide empty/blank properties?"
 text = "Hide Empty"
 
+[node name="show_type" type="CheckButton" parent="VBoxContainer/HBoxContainer"]
+offset_left = 585.0
+offset_right = 716.0
+offset_bottom = 31.0
+hint_tooltip = "Show property types?"
+text = "Show Type"
+
 [node name="force_update" type="Button" parent="VBoxContainer/HBoxContainer"]
-offset_left = 730.0
-offset_right = 1024.0
+offset_left = 720.0
+offset_right = 870.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Force Update"
+
+[node name="force_reload" type="Button" parent="VBoxContainer/HBoxContainer"]
+offset_left = 874.0
+offset_right = 1024.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Force Reload"
 
 [node name="CodeEdit" type="CodeEdit" parent="VBoxContainer"]
 offset_top = 35.0

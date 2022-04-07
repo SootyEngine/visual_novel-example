@@ -1,0 +1,11 @@
+=== START
+	Once upon a time.
+	=> goto
+	== call
+	>< end
+	>><< end dialogue
+	__
+	=> the_store
+
+=== the_store
+	=> demo/START

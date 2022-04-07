@@ -9,6 +9,9 @@ func _ready() -> void:
 	parent.remove_child(prefab)
 	
 	await get_tree().process_frame
+	Mods.loaded.connect(_connect)
+
+func _connect():
 	var awards: Awards = Persistent.awards
 	awards.unlocked.connect(_update)
 	awards.progress.connect(_update)

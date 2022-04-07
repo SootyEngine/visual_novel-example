@@ -11,6 +11,7 @@
 === START
 	Welcome to the beach.
 
+
 === CHANGED_beach_is_night
 	{{beach_is_night}}
 		@bg.set_current beach_night

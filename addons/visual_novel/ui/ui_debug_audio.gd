@@ -1,6 +1,7 @@
 extends Node
 
-func _init() -> void:
+func _ready() -> void:
+	await get_tree().process_frame
 	Mods.loaded.connect(_redraw)
 
 func _redraw():

@@ -1,27 +1,18 @@
 === START
+	goto next
 	
-	Shortcut [~p] test and [~inv].
-	
-	
-	john: Hey		#id=ok2314
-	mary: Whatup	#id=+
-	Show this line if english.      #id=+
-	
-	#? en
-	john: Okay                      #id=23kdsad
-	#? fr
-	Show this line if french.
-	#?
-	
-	Show this line no matter waht.
-	
-	Score is [~score]!
-	@Scene.goto demo002_persistent_state
-	Some text to show at beach.
-	and then...
 
-=== jump
-	Ok, we jumped.
-		- go back => START
-		- again => jump
-		- done
+=== a
+	and then b
+	=> b
+
+=== b
+	c as sub-flow
+	== c
+	and now d
+
+=== c
+	a subroutine
+
+=== d
+	all done

@@ -1,6 +1,6 @@
 # shortcuts
-$p: characters.james
-$inv: characters.james.items
+~~p: characters.james
+~~inv: characters.james.items
 
 # multiline strings.
 desc:
@@ -17,20 +17,23 @@ dict: { same_line_property: my_dict, prop2: 3 }
 	new_line_property: [a, b, c, d]
 	array:
 		- { name: My Item, cost: 1_000 }
-		- { cost: 123, }
+		- { cost: 123 }
+	name: Reggie
+	age: 90123
+	coins: 3241
 
-characters:
-	james:
-		name: James
-		name-fr: French James
-		name-zh-tr: Chinese James
-		# create an Inventory object named 'items'
-		items=Inventory:
-			coin: 20
-			helmet: 2
-		# create an Equipment object named 'equip'
-		equip=Equipment:
-			head: helmet
+#characters:
+#	james:
+#		name: James
+#		# name?fr: French James
+#		# name?dbg?cheat: Chinese James
+#		# create an Inventory object named 'items'
+#		items=Inventory:
+#			coin: 20
+#			helmet: 2
+#		# create an Equipment object named 'equip'
+#		equip=Equipment:
+#			head: helmet
 
 equipment_slots:
 	head:

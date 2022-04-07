@@ -1,4 +1,4 @@
-extends BaseDataClass
+extends Data
 class_name Award
 
 func get_class() -> String:
@@ -9,7 +9,7 @@ var desc := ""
 var toll := 1
 var hide := true
 var icon := "res://icon.png"
-var date := -1
+var date := 0
 
 var _unlocked: bool = false:
 	get: return tick == toll
