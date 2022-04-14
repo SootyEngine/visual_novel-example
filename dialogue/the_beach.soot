@@ -1,6 +1,6 @@
 === the_beach
-	#.emoji: :)
-	#.tint: deep_sky_blue
+	#.icon: [ ]
+	#.progress: 50
 	
 	=== init
 		# When a game is saved, it will show this caption.

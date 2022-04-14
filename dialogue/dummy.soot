@@ -1,9 +1,23 @@
 === dummy
 	=== scene_started
+		@Tramp.hide
 		A strange man enters.
-		
+		@Tramp.fade_in
+		@Tramp.talk
 		"Strange Man": Who are you?
+		@Tramp.talk
+		: You look familiar.
 		
+		@Tramp.suspicious
+		Don't make eye contact with him.
+		
+		@Tramp.lean_back
+		Just keep walking. (Don't look back.)
+		
+		@Tramp.noise
+		: Get back here punk.
+		@Tramp.white_in
+		: I'm gonna eat you.
 	
 	
 	

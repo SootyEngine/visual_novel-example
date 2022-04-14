@@ -369,7 +369,7 @@ _global_script_class_icons={
 [application]
 
 config/name="sooty_example"
-run/main_scene="res://empty_scene.tscn"
+run/main_scene="res://scenes/dummy.tscn"
 config/icon="res://chars/godette/face_confused.webp"
 config/features=PackedStringArray("4.0", "Vulkan Clustered")
 

@@ -60,7 +60,7 @@ func _get_tool_buttons():
 #	trans.bind(preload("res://chars/20170305_concierge-female.png")),
 #	trans.bind(preload("res://chars/20191124_man4.png")),
 	
-	[white_in, radiate]
+	[white_in, black_in, radiate]
 ]
 
 var _tween: Tween
@@ -71,11 +71,21 @@ func wait():
 	Dialogue.wait(self)
 	_tween.tween_callback(Dialogue.unwait.bind(self))
 
-func white_in():
+func white_in(kwargs := {}):
 	var t := _create()
-	t.tween_property(self, "modulate", Color.WHITE, 0.5).from(Color(200, 200, 200, 1.0))\
+	var clr = UString.str_to_color(kwargs.get("color", "white"))
+	clr.r *= 200.0
+	clr.g *= 200.0
+	clr.b *= 200.0
+	t.tween_property(self, "modulate", Color.WHITE, 0.5).from(clr)\
 		.set_trans(Tween.TRANS_EXPO)\
 		.set_ease(Tween.EASE_OUT)
+
+func black_in(kwargs := {}):
+	var t := _create()
+	t.tween_property(self, "modulate", Color.WHITE, kwargs.get("time", 1.0)).from(Color.BLACK)#\
+#		.set_trans(Tween.TRANS_EXPO)\
+#		.set_ease(Tween.EASE_OUT)
 
 func flip():
 	var t := _create()

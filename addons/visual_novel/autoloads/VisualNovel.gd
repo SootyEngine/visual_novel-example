@@ -3,6 +3,9 @@ extends Waiter
 
 const VERSION := "1.0"
 
+signal caption_started(text: String, line: Dictionary)
+signal caption_ended()
+
 class Debug:
 	# when displaying dialogue options, do you want hidden ones to be shown?
 	var show_hidden_options := false
@@ -11,6 +14,7 @@ class Debug:
 	var allow_debug_menu := true
 
 var debug := Debug.new()
+var last_speaker: String
 
 func _init() -> void:
 	add_to_group("@:VN")
@@ -19,6 +23,26 @@ func _ready() -> void:
 	await get_tree().process_frame
 	Mods._add_mod("res://addons/visual_novel", true)
 	Scene._goto = _goto_scene
+	waiting_list_changed.connect(_waiting_list_changed)
+	Dialogue.caption.connect(_caption)
+
+func _caption(text: String, line := {}):
+	Dialogue.wait(self)
+	var info := DialogueTools.str_to_dialogue(text)
+	
+	if info.from == DialogueTools.LAST_SPEAKER:
+		info.from = last_speaker
+	elif info.from:
+		last_speaker = info.from
+	
+	var speaker: String = DialogueTools.str_to_speaker(info.from)
+	var caption: String = DialogueTools.str_to_caption(info.from, info.text)
+	caption_started.emit(speaker, caption, info)
+
+func _waiting_list_changed():
+	if not is_waiting():
+		caption_ended.emit()
+		Dialogue.unwait(self)
 
 func _goto_scene(id: String, kwargs := {}):
 	if Scene.find(id):

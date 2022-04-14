@@ -1,0 +1,89 @@
+[gd_scene load_steps=12 format=3 uid="uid://ragqmevkcirt"]
+
+[ext_resource type="Script" path="res://addons/visual_novel/nodes/SootScene.gd" id="1_4kmfv"]
+[ext_resource type="Texture2D" uid="uid://cwxshyarxpvpl" path="res://bgs/beach_noon.webp" id="2_b7bhy"]
+[ext_resource type="Script" path="res://addons/visual_novel/nodes/Background.gd" id="3_8rjhc"]
+[ext_resource type="Texture2D" uid="uid://c4i2bldgp27xh" path="res://bgs/beach_night.webp" id="4_j4gfm"]
+[ext_resource type="PackedScene" path="res://addons/visual_novel/screen_effects/blur/blur.tscn" id="5_dhv4q"]
+[ext_resource type="Script" path="res://addons/visual_novel/nodes/SpriteButton.gd" id="6_yeuix"]
+[ext_resource type="Texture2D" uid="uid://b3vywvjoc08be" path="res://icon.png" id="7_mt5f1"]
+[ext_resource type="Script" path="res://addons/visual_novel/nodes/Sprite2DAnimations.gd" id="8_kbomn"]
+[ext_resource type="Texture2D" uid="uid://dhkhavn25pwqi" path="res://chars/godette/godette_main.webp" id="9_p8uc7"]
+[ext_resource type="Script" path="res://addons/visual_novel/nodes/Camera.gd" id="10_40qsr"]
+[ext_resource type="Texture2D" uid="uid://b4kdu7pggbasc" path="res://common/kenney_d4.png" id="11_oe8sg"]
+
+[node name="the_beach" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( "1_4kmfv" )
+flow = "the_beach"
+
+[node name="BeachNoon" type="Sprite2D" parent="." groups=["bg"]]
+position = Vector2(512, 300)
+scale = Vector2(1.12, 1.12)
+texture = ExtResource( "2_b7bhy" )
+script = ExtResource( "3_8rjhc" )
+alternatives = [ExtResource( "2_b7bhy" ), ExtResource( "4_j4gfm" )]
+current = "beach_noon"
+
+[node name="blur" parent="." instance=ExtResource( "5_dhv4q" )]
+visible = false
+power = 1.2
+default_duration = 1.0
+
+[node name="godot" type="Node2D" parent="."]
+script = ExtResource( "6_yeuix" )
+goto_scene_flow = "godot"
+
+[node name="Godot" type="Sprite2D" parent="godot" groups=["godot", "godot_scene"]]
+position = Vector2(485, 397)
+texture = ExtResource( "7_mt5f1" )
+offset = Vector2(0, -32)
+script = ExtResource( "8_kbomn" )
+start_hidden = false
+current_shake = Vector2(7.83774e-15, 7.83774e-15)
+
+[node name="godette" type="Node2D" parent="."]
+script = ExtResource( "6_yeuix" )
+goto_scene_flow = "godette"
+
+[node name="GodetteMain" type="Sprite2D" parent="godette" groups=["godette", "godette_scene"]]
+position = Vector2(732, 470)
+scale = Vector2(0.30375, 0.296296)
+texture = ExtResource( "9_p8uc7" )
+offset = Vector2(0, -360)
+script = ExtResource( "8_kbomn" )
+start_hidden = false
+default_scale = Vector2(0.3, 0.3)
+current_shake = Vector2(0, 1.17566e-14)
+current_squish = 0.0125
+
+[node name="camera" type="Camera2D" parent="." groups=["camera"]]
+position = Vector2(538, 302)
+rotating = true
+current = true
+script = ExtResource( "10_40qsr" )
+
+[node name="cam_target_main" type="Camera2D" parent="." groups=["camera_target:main"]]
+position = Vector2(538, 302)
+rotating = true
+
+[node name="cam_target_godot" type="Camera2D" parent="." groups=["camera_target:godot"]]
+position = Vector2(487, 365)
+rotating = true
+zoom = Vector2(4, 4)
+
+[node name="cam_target_godette" type="Camera2D" parent="." groups=["camera_target:godette"]]
+position = Vector2(725, 318)
+rotating = true
+zoom = Vector2(4, 4)
+
+[node name="to_jail" type="Sprite2D" parent="."]
+position = Vector2(82.4279, 543.572)
+rotation = -1.57079
+scale = Vector2(0.631689, 0.631689)
+texture = ExtResource( "11_oe8sg" )
+script = ExtResource( "6_yeuix" )
+goto_scene = "demo003_advanced"
+fadeout_on_disabled = true
