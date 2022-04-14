@@ -1,0 +1,110 @@
+[gd_scene load_steps=6 format=3 uid="uid://n3vre2c67qxi"]
+
+[ext_resource type="Script" path="res://scenes/menus/pause_menu.gd" id="1_s13ly"]
+[ext_resource type="Shader" path="res://addons/visual_novel/screen_effects/blur/blur.gdshader" id="2_g01dm"]
+[ext_resource type="PackedScene" uid="uid://bxkconmuncr0c" path="res://addons/visual_novel/ui/settings/ui_settings.tscn" id="3_mstfr"]
+[ext_resource type="PackedScene" uid="uid://3kiavxcgtsmg" path="res://addons/visual_novel/ui/saver/ui_save_load.tscn" id="4_0dlk1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w3ekw"]
+shader = ExtResource( "2_g01dm" )
+shader_param/amount = 1.0
+shader_param/power = 1.0
+
+[node name="pause_menu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( "1_s13ly" )
+_buttons = NodePath("MarginContainer/HBoxContainer/items")
+_screen_parent = NodePath("MarginContainer/HBoxContainer/Control")
+_save_load_screen = NodePath("MarginContainer/HBoxContainer/Control/save_load")
+_settings_screen = NodePath("MarginContainer/HBoxContainer/Control/settings")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource( "ShaderMaterial_w3ekw" )
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+offset_left = 16.0
+offset_right = 1024.0
+offset_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="items" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+offset_right = 96.0
+offset_bottom = 600.0
+alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/items"]
+offset_top = 199.0
+offset_right = 96.0
+offset_bottom = 225.0
+text = "Paused"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="continue" type="Button" parent="MarginContainer/HBoxContainer/items"]
+offset_top = 229.0
+offset_right = 96.0
+offset_bottom = 260.0
+text = "Continue"
+
+[node name="settings" type="Button" parent="MarginContainer/HBoxContainer/items"]
+offset_top = 264.0
+offset_right = 96.0
+offset_bottom = 295.0
+text = "Settings"
+
+[node name="save" type="Button" parent="MarginContainer/HBoxContainer/items"]
+offset_top = 299.0
+offset_right = 96.0
+offset_bottom = 330.0
+text = "Save"
+
+[node name="load" type="Button" parent="MarginContainer/HBoxContainer/items"]
+offset_top = 334.0
+offset_right = 96.0
+offset_bottom = 365.0
+text = "Load
+"
+
+[node name="main_menu" type="Button" parent="MarginContainer/HBoxContainer/items"]
+offset_top = 369.0
+offset_right = 96.0
+offset_bottom = 400.0
+text = "Main Menu
+"
+
+[node name="Control" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+offset_left = 100.0
+offset_right = 1008.0
+offset_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_left = 32
+
+[node name="settings" parent="MarginContainer/HBoxContainer/Control" instance=ExtResource( "3_mstfr" )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 32.0
+offset_right = 876.0
+offset_bottom = 600.0
+
+[node name="save_load" parent="MarginContainer/HBoxContainer/Control" instance=ExtResource( "4_0dlk1" )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 32.0
+offset_right = 876.0
+offset_bottom = 600.0
