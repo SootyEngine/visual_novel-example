@@ -1,5 +1,7 @@
 extends DataManager
 class_name Awards
+func get_class() -> String:
+	return "Awards"
 
 const MSG_AWARD_PROGRESS := "award_progress"
 const MSG_AWARD_UNLOCKED := "award_unlocked"
@@ -34,7 +36,7 @@ func _changed(property: Array):
 			Global.notify({
 				type=MSG_AWARD_PROGRESS,
 				text=[ a.name, a.desc ],
-				prog=a._progress,
+				prog=a.get_progress(),
 				play="award_progress"
 			})
 			progress.emit(a)

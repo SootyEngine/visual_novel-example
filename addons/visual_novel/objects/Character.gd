@@ -35,12 +35,3 @@ func _get(property: StringName):
 #
 	return super._get(property)
 
-#func as_string() -> String:
-#	return "[{color}]{name}[]".format(UObject.get_state(self))
-#	if format == "":
-#		if Global.config.has_section_key("default_formats", "character_name"):
-#			var fmt = Global.config.get_value("default_formats", "character_name", "{name}")
-#		else:
-#			return name
-#	else:
-#		return format.format(UObject.get_state(self))

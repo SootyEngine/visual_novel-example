@@ -1,3 +1,6 @@
+#.IGNORE
+#.at: items
+
 quest=Task: { alpha: true, wall, ok: false }
 	name: The Royal
 	desc: Who cares?

@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=5 format=3 uid="uid://8oa31xfjblq8"]
 
 [ext_resource type="Script" path="res://addons/visual_novel/ui/notifications/ui_notification.gd" id="1_m2nm3"]
-[ext_resource type="Texture2D" uid="uid://b3vywvjoc08be" path="res://icon.png" id="1_wxrxi"]
 [ext_resource type="Script" path="res://addons/rich_text/RichTextLabel2.gd" id="3_g8y6o"]
 
 [sub_resource type="Gradient" id="Gradient_bysfr"]
@@ -58,11 +57,11 @@ theme_override_constants/margin_left = 4
 theme_override_constants/margin_bottom = 4
 
 [node name="icon" type="TextureRect" parent="ColorRect/MarginContainer/HBoxContainer2/MarginContainer"]
+minimum_size = Vector2(64, 64)
 offset_left = 4.0
 offset_top = 4.0
 offset_right = 68.0
 offset_bottom = 68.0
-texture = ExtResource( "1_wxrxi" )
 stretch_mode = 5
 
 [node name="MarginContainer2" type="MarginContainer" parent="ColorRect/MarginContainer/HBoxContainer2"]

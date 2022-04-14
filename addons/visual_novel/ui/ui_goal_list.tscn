@@ -1,0 +1,70 @@
+[gd_scene load_steps=3 format=3 uid="uid://frhg24r5fgul"]
+
+[ext_resource type="Script" path="res://addons/visual_novel/ui/ui_goal_list.gd" id="1_5cjib"]
+[ext_resource type="Script" path="res://addons/rich_text/RichTextLabel2.gd" id="2_ldrbs"]
+
+[node name="goals" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( "1_5cjib" )
+_list = NodePath("HBoxContainer/list")
+_info = NodePath("HBoxContainer/VBoxContainer/info")
+_subtask_list = NodePath("HBoxContainer/VBoxContainer/subgoal")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="list" type="RichTextLabel" parent="HBoxContainer"]
+offset_right = 510.0
+offset_bottom = 600.0
+size_flags_horizontal = 3
+theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/mono_font_size = 16
+theme_override_font_sizes/bold_italics_font_size = 16
+theme_override_font_sizes/italics_font_size = 16
+theme_override_font_sizes/bold_font_size = 16
+theme_override_font_sizes/normal_font_size = 16
+script = ExtResource( "2_ldrbs" )
+alignment = 1
+markdown_enabled = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+offset_left = 514.0
+offset_right = 1024.0
+offset_bottom = 600.0
+size_flags_horizontal = 3
+
+[node name="info" type="RichTextLabel" parent="HBoxContainer/VBoxContainer"]
+offset_right = 510.0
+offset_bottom = 298.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/mono_font_size = 16
+theme_override_font_sizes/bold_italics_font_size = 16
+theme_override_font_sizes/italics_font_size = 16
+theme_override_font_sizes/bold_font_size = 16
+theme_override_font_sizes/normal_font_size = 16
+script = ExtResource( "2_ldrbs" )
+alignment = 1
+markdown_enabled = false
+
+[node name="subgoal" type="RichTextLabel" parent="HBoxContainer/VBoxContainer"]
+offset_top = 302.0
+offset_right = 510.0
+offset_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/mono_font_size = 16
+theme_override_font_sizes/bold_italics_font_size = 16
+theme_override_font_sizes/italics_font_size = 16
+theme_override_font_sizes/bold_font_size = 16
+theme_override_font_sizes/normal_font_size = 16
+script = ExtResource( "2_ldrbs" )
+alignment = 1
+markdown_enabled = false

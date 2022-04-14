@@ -5,7 +5,7 @@ class_name Sprite2DAnimations
 @export var start_hidden := true
 
 @export var tint := Color.WHITE
-@export var unit := 32
+@export var unit := 64
 @export var default_scale := Vector2.ONE
 @export var flip_scale := Vector2.ONE:
 	set = set_flip
@@ -29,52 +29,47 @@ class_name Sprite2DAnimations
 	set = set_origin
 
 func _get_tool_buttons():
-	return [fade_in, fade_out, noise,
-	noise.bind(1, 1, {yscale=2.0}),
-	blink,
-	[blink, noise],
-	shift,
-	[fade_in, shift.bind(-1, 0, 0.5, true)],
-	shift_in,
-	from_left, from_right, from_top,
+	return [
+		[fade_in, fade_out],
+		{text="Shake In", call=[fade_in, noise]},
+		[
+			noise,
+			{text="Y Noise", call=noise.bind(1, {xscale=0.125, yscale=2.0})},
+			{text="X Noise", call=noise.bind(1, {xscale=2.0, yscale=0.125})}
+		],
+#	blink,
+#	[blink, noise],
+#	shift,
+#	[fade_in, shift.bind(-1, 0, 0.5, true)],
+#	shift_in,
+	[from_left, from_right, from_top],
 	
 	flip,
 	
-	zoom.bind(.9),
-	zoom,
-	zoom.bind(1.1),
+	[zoom.bind(.9), zoom, zoom.bind(1.1)],
+	[squash.bind(-1.25), squash, squash.bind(1.25)],
+	[lean.bind(-1), lean, lean.bind(1)],
+	[rotate.bind(-10), rotate, rotate.bind(10)],
 	
-	squash.bind(-1),
-	squash.bind(1),
-	squash,
+	[laugh, sigh, unsigh, talk, dance, suspicious],
+	[lean_back, gross],
 	
-	lean.bind(-1),
-	lean,
-	lean.bind(1),
+	[shake_yes, shake_no],
+	[breath, pant, stop, woozy],
 	
-	rotate.bind(-10),
-	rotate,
-	rotate.bind(10),
+#	trans.bind(preload("res://chars/20170305_concierge-female.png")),
+#	trans.bind(preload("res://chars/20191124_man4.png")),
 	
-	laugh, sigh, talk, dance, suspicious,
-	lean_back, gross,
-	
-	shake_yes, shake_no,
-	breath, pant, stop, woozy,
-	
-	trans.bind(preload("res://chars/20170305_concierge-female.png")),
-	trans.bind(preload("res://chars/20191124_man4.png")),
-	
-	white_in,
-	radiate
+	[white_in, radiate]
 ]
 
 var _tween: Tween
+var _tween_frame: int
 
 # will prevent dialogue stack from running until all tweens finish.
 func wait():
-	DialogueStack.halt(self)
-	_tween.tween_callback(DialogueStack.unhalt.bind(self))
+	Dialogue.wait(self)
+	_tween.tween_callback(Dialogue.unwait.bind(self))
 
 func white_in():
 	var t := _create()
@@ -131,7 +126,7 @@ func from_top():
 func laugh():
 	var t := _create()
 	t.set_parallel()
-	_add_shake(t, 0.5, 1.0, {ytimes=4.0, yscale=0.5})
+	_add_shake(t, 0.5, {ytimes=4.0, yscale=0.5})
 	_add_rotate(t, -4.0)
 	_add_squash(t, -1)
 	_add_squash(t.chain())
@@ -143,7 +138,7 @@ func suspicious():
 	_add_flip(t, -1)
 	t.chain()
 	_add_squash(t, 2.0)
-	_add_lean(t, -1, 1.0)
+	_add_lean(t, -1)
 	t.chain()
 	_add_squash(t, 0.0)
 	_add_lean(t, 0.0)
@@ -151,7 +146,7 @@ func suspicious():
 	_add_flip(t, 1)
 	t.chain()
 	_add_squash(t, 2.0)
-	_add_lean(t, 1, 1.0)
+	_add_lean(t, 1.0)
 	t.chain()
 	_add_squash(t, 0.0)
 	_add_lean(t, 0.0)
@@ -160,7 +155,6 @@ func suspicious():
 
 func lean_back():
 	var t := _create()
-	t.set_parallel()
 	_add_lean(t, 2.0)
 	_add_squash(t, 2.0)
 	t.chain()
@@ -168,25 +162,30 @@ func lean_back():
 
 func gross():
 	var t := _create()
-	t.set_parallel()
 	_add_shift(t, -4.0, 0.0, {time=0.5})
-	_add_lean(t, 2.0 * -sign(flip_scale.x))
+	_add_lean(t, 2.0 * -sign(flip_scale.x), {time=0.5})
 	_add_blink(t, Color.TOMATO)
 	t.chain()
 	_add_shift(t, 0.0, 0.0, {time=0.5})
 	_add_lean(t)
 	_add_color(t)
 
-func woozy():
-	var mat = load("res://addons/visual_novel/nodes/sprite_2d_animations/woozy.tres")
+func woozy(kwargs := {}):
+	var gds: GDScript = get_script()
+	var path : = gds.resource_path.get_base_dir()
+	path = path.plus_file("sprite_2d_animations").plus_file("woozy.tres")
+	var mat = load(path)
 	mat.set_shader_param("noise_scale", 0.0)
 	var t := _create()
+	t.chain()
 	t.tween_callback(set_material.bind(mat))
+	t.chain()
 	t.tween_method(func(x):
 		x = 1.0 - abs(x - .5) * 2.0
 		x *= x
 		mat.set_shader_param("noise_scale", x * 64.0),
-		0.0, 1.0, 3.0)
+		0.0, 1.0, kwargs.get("time", 4.0))
+	t.chain()
 	t.tween_callback(set_material.bind(null))
 
 func trans(next: Texture):
@@ -201,15 +200,13 @@ func trans(next: Texture):
 	t.tween_callback(set_texture.bind(next))
 	t.tween_callback(set_material.bind(null))
 
-func dance(kwargs := {}):
-	var time: float = kwargs.get("time", 0.5)
-	var amount: float = kwargs.get("scale", 0.5)
+func dance(amount := 0.5, kwargs := {}):
 	var t := _create()
-	_add_lean(t, -amount, time)
-	_add_lean(t, amount, time)
-	_add_lean(t, -amount, time)
-	_add_lean(t, amount, time)
-	_add_lean(t, 0, time)
+	_add_lean(t, -amount, kwargs)
+	_add_lean(t, amount, kwargs)
+	_add_lean(t, -amount, kwargs)
+	_add_lean(t, amount, kwargs)
+	_add_lean(t, 0, kwargs)
 
 func talk(dir := 1.1):
 	var t := _create()
@@ -218,56 +215,68 @@ func talk(dir := 1.1):
 	_add_squash(t.chain(), 0.0)
 
 func _create(kwargs := {}) -> Tween:
-	if _tween:
+	var t_frame := get_tree().get_frame()
+	if t_frame == _tween_frame:
+		return _tween
+	
+	if _tween and _tween_frame:
 		_tween.kill()
 	_tween = get_tree().create_tween()
 	_tween.bind_node(self)
-#	active.bind_node(self)
+	_tween.set_parallel(true)
+	_tween_frame = t_frame
+	
 	if "loop" in kwargs:
 		_tween.set_loops(kwargs.loop)
+	
 	return _tween
 
 func sigh():
 	var t := _create()
-	_add_squash(t, -.2, 0.25, {trans="linear", ease="out"})
-	_add_squash(t, 1.25, 2.0)
+	_add_squash(t, -.2, {time=0.25, trans="linear", ease="out"})
+	_add_squash(t.chain(), 1.25, {time=2.0})
+
+func unsigh():
+	var t := _create()
+	_add_squash(t, 0.0, {trans="linear", ease="out"})
+	_add_squash(t.chain(), 1.25, {time=2.0})
 
 func shake_yes():
-	var t := _create().set_parallel()
-	_add_shake(t, 0.5, 1.0, {yscale=1.0, ytimes=3, xscale=0.0})
+	var t := _create()
+	_add_shake(t.chain(), 0.5, {yscale=1.0, ytimes=3, xscale=0.0})
 	_add_blink(t, Color.AQUAMARINE)
 
 func shake_no():
-	var t := _create().set_parallel()
-	_add_shake(t, 0.5, 1.0, {yscale=0.0, xtimes=3, xscale=1.0})
+	var t := _create()
+	_add_shake(t.chain(), 0.5, {yscale=0.0, xtimes=3, xscale=1.0})
 	_add_blink(t, Color.TOMATO)
 
 func breath():
 	var t := _create()
-	_add_squash(t, -0.1, 1.5, {trans=Tween.TRANS_SINE})
-	_add_squash(t, 0.5, 1.5, {trans=Tween.TRANS_SINE})
+	_add_squash(t, -0.1, {time=1.5, trans=Tween.TRANS_SINE})
+	_add_squash(t, 0.5, {time=1.5, trans=Tween.TRANS_SINE})
 	t.set_loops(5.0)
 
-func pant(p := 1.0, dur := 0.5):
+func pant(p := 1.0):
 	var t := _create()
-	_add_squash(t, -0.25 * p, dur, {ease=Tween.EASE_OUT})
-	_add_squash(t, 0.25 * p, dur, {ease=Tween.EASE_OUT})
+	_add_squash(t.chain(), -0.25 * p, {ease=Tween.EASE_OUT})
+	_add_squash(t.chain(), 0.25 * p, {ease=Tween.EASE_OUT})
 	t.set_loops(5)
 
 func stop():
 	if _tween:
 		_tween.kill()
 
-func _add_color(t: Tween, c: Variant = Color.WHITE, kwargs := {}):
+func _add_color(t: Tween, c := Color.WHITE, kwargs := {}):
 	t.tween_property(self, "modulate", c, kwargs.get("time", 1.0))\
 		.set_trans(UTween.find_trans(kwargs.get("trans", Tween.TRANS_LINEAR)))\
 		.set_ease(UTween.find_ease(kwargs.get("ease", Tween.EASE_IN_OUT)))
 
-func noise(power := 1.0, dur := 1.0, kwargs := {}):
-	_add_noise(_create(), power, dur, kwargs)
+func noise(power := 1.0, kwargs := {}):
+	_add_noise(_create(), power, kwargs)
 
-func _add_noise(t: Tween, power := 1.0, dur := 1.0, kwargs := {}):
-	return t.tween_method(_noise.bind(power, kwargs), 0.0, 1.0, dur)\
+func _add_noise(t: Tween, power := 1.0, kwargs := {}):
+	return t.tween_method(_noise.bind(power, kwargs), 0.0, 1.0, kwargs.get("time", 1.0))\
 		.set_trans(UTween.find_trans(kwargs.get("trans", Tween.TRANS_LINEAR)))\
 		.set_ease(UTween.find_ease(kwargs.get("ease", Tween.EASE_IN_OUT)))
 
@@ -281,11 +290,11 @@ func _noise(t: float, power: float, kwargs: Dictionary):
 	n *= t * power
 	current_noise = n
 
-func shake(power := 1.0, dur := 1.0, kwargs := {}):
-	_add_shake(_create(), power, dur, kwargs)
+func shake(power := 1.0, kwargs := {}):
+	_add_shake(_create(), power, kwargs)
 
-func _add_shake(t: Tween, power := 1.0, dur := 1.0, kwargs := {}):
-	return t.tween_method(_shake.bind(power, kwargs), 0.0, 1.0, dur).set_trans(Tween.TRANS_SINE)
+func _add_shake(t: Tween, power := 1.0, kwargs := {}):
+	return t.tween_method(_shake.bind(power, kwargs), 0.0, 1.0, kwargs.get("time", 1.0)).set_trans(Tween.TRANS_SINE)
 
 func _shake(t: float, power: float, kwargs: Dictionary):
 	var sh := Vector2(
@@ -322,18 +331,18 @@ func shift_in(x := 0.0, y := 0.0, dur := 0.5, from_start := true, kwargs := {}):
 		.set_trans(UTween.find_trans(kwargs.get("trans", Tween.TRANS_BACK)))\
 		.set_ease(UTween.find_ease(kwargs.get("ease", Tween.EASE_IN_OUT)))
 
-func zoom(to := 1.0, dur := 0.5, kwargs := {}):
+func zoom(to := 1.0, kwargs := {}):
 	var t := _create()
-	t.tween_method(set_zoom, current_zoom, to, dur)\
+	t.tween_method(set_zoom, current_zoom, to, kwargs.get("time", 1.0))\
 		.set_trans(UTween.find_trans(kwargs.get("trans", Tween.TRANS_BACK)))\
 		.set_ease(UTween.find_ease(kwargs.get("ease", Tween.EASE_IN_OUT)))
 	return t
 	
-func squash(x := 0.0, dur := 0.5, kwargs := {}):
-	_add_squash(_create(), x, dur, kwargs)
+func squash(x := 0.0, kwargs := {}):
+	_add_squash(_create(), x, kwargs)
 
-func _add_squash(t: Tween, x := 0.0, dur := 0.5, kwargs := {}):
-	return t.tween_property(self, "current_squish", x * .05, dur)\
+func _add_squash(t: Tween, x := 0.0, kwargs := {}):
+	return t.tween_property(self, "current_squish", x * .05, kwargs.get("time", 1.0))\
 		.set_trans(UTween.find_trans(kwargs.get("trans", Tween.TRANS_BACK)))\
 		.set_ease(UTween.find_ease(kwargs.get("ease", Tween.EASE_IN_OUT)))
 
@@ -342,11 +351,12 @@ func _add_flip(t: Tween, f: float = -sign(flip_scale.x)):
 		.set_trans(Tween.TRANS_BACK)\
 		.set_ease(Tween.EASE_OUT)
 
-func lean(l := 0.0, dur := 0.5):
-	_add_lean(_create(), l, dur)
+func lean(l := 0.0, kwargs := {}):
+	_add_lean(_create(), l, kwargs)
 
-func _add_lean(t: Tween, l := 0.0, dur := 0.5):
-	t.tween_property(self, "skew", l * .1, dur).set_trans(Tween.TRANS_BACK)
+func _add_lean(t: Tween, l := 0.0, kwargs := {}):
+	t.tween_property(self, "skew", l * .1, kwargs.get("time", 1.0))\
+		.set_trans(Tween.TRANS_BACK)
 
 func rotate(x := 0.0, time := 0.5):
 	_add_rotate(_create(), x, time)

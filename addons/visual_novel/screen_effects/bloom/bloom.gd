@@ -14,7 +14,7 @@ extends "res://addons/visual_novel/screen_effects/screen_effect.gd"
 		$ColorRect.material.set_shader_param("amount", amount)
 
 func _init():
-	add_to_group("bloom")
+	add_to_group("@:bloom")
 
 func _get_tool_buttons():
 	return [from_white, to_white, pulse, bloom, unbloom]

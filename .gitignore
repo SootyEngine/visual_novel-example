@@ -1,4 +1,7 @@
 # Godot 4+ specific ignores
 .godot/
 
-/dialogue_debug/
+/debug_output/
+
+bind.sh
+unbind.sh

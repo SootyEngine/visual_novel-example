@@ -1,11 +1,23 @@
-=== START
-	Once upon a time.
-	=> goto
-	== call
-	>< end
-	>><< end dialogue
-	__
-	=> the_store
-
-=== the_store
-	=> demo/START
+=== started
+	#.id: Ass
+	Is it time || john: okay[b]asd[] {{score > 20}}
+	=> /dummy/he_haw
+	=> /dummy/scene_started
+	=> /the_beach/godette
+	
+	~ $save_caption = "%s score" % $score
+	
+	What are [$score;score;$save_caption].
+	
+	@Music.play nice_song true ass true
+	
+	@VN.version
+	What do you want!?
+		--- Everything [light_green]okay, who cares!?[]
+			Once upon a time.
+			There lived a dragon.
+		--- Nothing
+			We all go through the rinng
+	
+	=== westward
+		Once upon a time, there lived.

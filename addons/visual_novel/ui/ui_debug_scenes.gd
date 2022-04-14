@@ -16,5 +16,5 @@ func _ready() -> void:
 	rt._meta = meta
 
 func _goto_scene(scene: String):
-	DialogueStack.end()
+	Dialogue.end()
 	Scene.change(scene)

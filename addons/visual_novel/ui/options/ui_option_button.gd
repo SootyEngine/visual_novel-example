@@ -5,8 +5,7 @@ extends Button
 @onready var label: RichTextLabel2 = get_node(_label)
 @onready var backing: ColorRect = get_node(_backing)
 
-var option: DialogueLine:
-	set = set_option
+var option: Dictionary
 
 var hovered := false:
 	set(h):
@@ -18,13 +17,13 @@ var hovered := false:
 func _ready() -> void:
 	backing.modulate.a = 0.0
 
-func set_option(o: DialogueLine):
+func set_option(o: Dictionary):
 	option = o
 	disabled = not option.passed
 	_update_text()
 	
 func _update_text():
-	var text = option.text
+	var text = option.line.text
 	
 	if not option.passed:
 		text = "[dim][lb]DBG[rb]%s[]" % text

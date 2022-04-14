@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://d118gcdl1wkns"]
 
-[ext_resource type="Texture2D" uid="uid://b3vywvjoc08be" path="res://icon.png" id="1_60yqm"]
 [ext_resource type="Script" path="res://addons/visual_novel/ui/saver/ui_save_slot.gd" id="1_vn5ea"]
+[ext_resource type="Texture2D" uid="uid://eidngffg4kha" path="res://addons/visual_novel/ui/saver/ui_save_slot.png" id="2_4veo0"]
 [ext_resource type="Script" path="res://addons/rich_text/RichTextLabel2.gd" id="3_aic4g"]
 
 [sub_resource type="Gradient" id="Gradient_g0bwb"]
@@ -49,12 +49,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource( "1_60yqm" )
+texture = ExtResource( "2_4veo0" )
 stretch_mode = 6
-__meta__ = {
-"_edit_layout_mode": 1,
-"_edit_use_custom_anchors": false
-}
 
 [node name="align" type="VBoxContainer" parent="Control"]
 anchor_left = 0.5

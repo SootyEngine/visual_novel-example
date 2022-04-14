@@ -10,22 +10,22 @@ var steps := []
 enum { STEP_TEXT, STEP_CHOICE, STEP_STATE }
 
 func _ready() -> void:
-	DialogueStack.on_line.connect(_on_line)
-	DialogueStack.option_selected.connect(_option_selected)
+#	Dialogue.caption.connect(_caption)
+#	Dialogue.selected.connect(_option_selected)
 	State.changed_from_to.connect(_changed_from_to)
 	
-func _on_line(line: DialogueLine):
-	_push_step({
-		type=STEP_TEXT,
-		from=line.from,
-		text=line.text
-	})
+#func _caption(from: String, text: String, kwargs := {}):
+#	_push_step({
+#		type=STEP_TEXT,
+#		from=from,
+#		text=text
+#	})
 
-func _option_selected(option: DialogueLine):
-	_push_step({
-		type=STEP_CHOICE,
-		text=option.text
-	})
+#func _option_selected(option: String):
+#	_push_step({
+#		type=STEP_CHOICE,
+#		text=option
+#	})
 
 func _changed_from_to(prop, from, to):
 	_push_step({

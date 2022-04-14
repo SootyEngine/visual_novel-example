@@ -38,7 +38,7 @@ func _text_submitted(t: String):
 		var got = StringAction.do(t)
 		add_line(LineType.RESULT, str(got))
 	else:
-		var parts := UString.split_on_spaces(t)
+		var parts = UString.split_outside(t, " ")
 		match parts[0]:
 			"list": _list(State._get_all_of_class(parts[1]))
 

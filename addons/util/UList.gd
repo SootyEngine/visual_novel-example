@@ -1,4 +1,5 @@
 @tool
+extends RefCounted
 class_name UList
 
 # works like python list[begin:end]
@@ -10,6 +11,19 @@ static func part(a: Array, begin: int = 0, end=null) -> Array:
 	
 #	if a is Array:
 	return a.slice(begin, end)
+
+static func get_unique(list: Array) -> Array:
+	var out := []
+	for item in list:
+		if not item in out:
+			out.append(item)
+	return out
+
+static func all_items_of_type(list: Array, type: int) -> bool:
+	for i in len(list):
+		if typeof(list[i]) != type:
+			return false
+	return true
 
 static func list(thing: Variant) -> Array:
 	match typeof(thing):

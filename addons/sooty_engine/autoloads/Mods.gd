@@ -6,9 +6,10 @@ const AUTO_INSTALL_USER_MODS := false
 
 signal pre_loaded()
 signal load_all(list: Array)
+signal _loaded()
 signal loaded()
 
-var mods := {}
+@export var mods := {}
 
 func _init():
 	_add_mod("res://", true)
@@ -46,7 +47,10 @@ func uninstall(dir: String):
 		mods[dir].installed = false
 		_load_mods()
 
-func _load_mods():
+func load_mods(loud := true):
+	_load_mods(loud)
+
+func _load_mods(loud := true):
 	pre_loaded.emit()
 	
 	var installed := get_installed()
@@ -56,7 +60,6 @@ func _load_mods():
 	load_all.emit(installed)
 	
 	# Display lists of what was added by the mods.
-	var loud := true
 	if loud:
 		var meta := {}
 		for k in installed[0].meta.keys():
@@ -85,7 +88,24 @@ func _load_mods():
 	# wait a little for things to initialize.
 	await get_tree().process_frame
 	# alert everyone that mods were loaded.
+	_loaded.emit()
 	loaded.emit()
+	
+	# Debug data for auto complete.
+	_save_group_data_to_file()
+
+func _save_group_data_to_file():
+	if UFile.exists("res://debug_output"):
+		var groups = UNode.get_all_groups()
+		var out := {}
+		for group in groups:
+			group = str(group)
+			if group.begins_with("@."):
+				out[group] = []
+			elif group.begins_with("@:"):
+				var node := get_tree().get_first_node_in_group(group)
+				out[group] = UObject.get_state_properties(node) + UObject.get_script_methods(node).keys()
+		UFile.save_to_resource("res://debug_output/all_groups.tres", out)
 
 func _print_file(path: String):
 	var f = UFile.get_file_name(path)

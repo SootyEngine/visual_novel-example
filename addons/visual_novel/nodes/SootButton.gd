@@ -18,14 +18,14 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 	
-	DialogueStack.started.connect(_disable)
-	DialogueStack.ended.connect(_enable)
+	Dialogue.started.connect(_disable)
+	Dialogue.ended.connect(_enable)
 	self.pressed.connect(_on_pressed)
 	
 	if len(condition_visible):
 		self.visible = true if State._eval(condition_visible) else false
 	
-	if DialogueStack.is_active():
+	if Dialogue.is_active():
 		if fadeout_on_disabled:
 			self.modulate.a = 0.0
 
@@ -36,7 +36,7 @@ func _get_property_list() -> Array:
 		props.prop_enum("goto_scene", TYPE_STRING, Scene.get_main_scene_ids())
 		
 		# scene flow ids
-		var file: String = UFile.get_file_name(owner.scene_file_path) + Soot.EXT_DIALOGUE
+		var file: String = "%s.%s" % [UFile.get_file_name(owner.scene_file_path), Soot.EXT_DIALOGUE]
 		var path := UFile.get_file_in_dir("res://dialogue", file)
 		if path:
 			var scene_flows: Array = DialogueParser.new().parse(path).flows.keys()
@@ -73,13 +73,13 @@ func _on_pressed() -> void:
 		self.release_focus()
 	
 	if action:
-		if DialogueStack.can_do(action):
-			DialogueStack.do(action)
+		if Dialogue.can_do(action):
+			Dialogue.do(action)
 		else:
 			StringAction.do(action)
 	
 	elif goto_scene_flow:
-		DialogueStack.goto(Soot.join_path([Scene.id, goto_scene_flow]))
+		Dialogue.goto(Soot.join_path([Scene.id, goto_scene_flow]))
 	
 	elif goto_scene:
 		Scene.goto(goto_scene)

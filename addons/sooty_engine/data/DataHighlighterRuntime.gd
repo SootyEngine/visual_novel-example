@@ -20,6 +20,18 @@ var _deep := 0
 func _c(i: int, clr: Color):
 	_out[i] = { color=clr }
 
+func _hl_string_w_special(from: int) -> int:
+	var start := _text.find("``", from)
+	if start != -1:
+		_c(start, C_SYMBOL)
+		_c(start+2, C_FIELD)
+		var end := _text.find("``", start+2)
+		if end != -1:
+			_c(end, C_SYMBOL)
+			return end+2
+		return start+3
+	return -1
+
 func _hl_dict(from: int) -> int:
 	var a := _text.find("{", from)
 	if a != -1:
@@ -77,7 +89,25 @@ func _get_line_syntax_highlighting(line: int) -> Dictionary:
 func _get_line_syntax_highlighting2(text: String) -> Dictionary:
 	_out = {}
 	_text = text
-	_deep = UString.count_leading_tabs(text)
+	_deep = UString.count_leading(text, "\t")
+	
+	# debug
+	for item in ["(int)", "(String)", "(Color)", "(bool)"]:
+		var ii := _text.find(item)
+		if ii != -1:
+			_c(ii, C_SYMBOL)
+			_c(ii+1, Color.LIGHT_GREEN)
+			_c(ii+len(item)-1, C_SYMBOL)
+	
+	# meta fields
+	if text.begins_with("#."):
+		_c(0, C_SYMBOL)
+		_c(2, Color.PALE_VIOLET_RED)
+		var i := text.find(":", 2)
+		if i != -1:
+			_c(i, C_SYMBOL)
+			_c(i+1, Color.PINK)
+		return _out
 	
 	# shortcuts
 	if _text.begins_with("~~"):
@@ -149,6 +179,11 @@ func _get_line_syntax_highlighting2(text: String) -> Dictionary:
 	if a != -1:
 		_c(a, C_SYMBOL)
 		i = a + 4
+	
+	# special string
+	a = _hl_string_w_special(i)
+	if a != -1:
+		i = a
 	
 	# dict
 	a = _hl_dict(i)

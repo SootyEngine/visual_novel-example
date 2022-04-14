@@ -1,6 +1,13 @@
 @tool
-extends Resource
+extends RefCounted
 class_name UDebug
+
+static func log(a=null, b=null, c=null, d=null, e=null, f=null, g=null):
+	print("    ".\
+		join([a,b,c,d,e,f,g]\
+		.filter(func(x): return x != null)\
+		.map(func(x): return "|%s|" % [x])
+	))
 
 func print_table(items: Array):
 	var col_lengths := []

@@ -24,7 +24,7 @@ var position_offset := Vector2.ZERO
 		update()
 
 func _init():
-	add_to_group("sa:camera")
+	add_to_group("@:camera")
 
 func target(id: String, snap := false):
 	__target(_get_tween(), id, snap)
@@ -55,7 +55,7 @@ func camera(action: String, args: Array = [], kwargs: Dictionary = {}):
 	if has_method("__" + action):
 		var t := get_tree().create_tween()
 		var a := [t] + args + [kwargs]
-		UObject.call_w_args(self, "__" + action, a)
+		UObject.call_w_kwargs([self, "__" + action], a)
 		
 		if kwargs.get("wait", false):
 			if flow_manager.add_pauser(self):
@@ -97,8 +97,8 @@ func _get_tween() -> Tween:
 	return _tween
 
 func wait():
-	DialogueStack.halt(self)
-	_tween.chain().tween_callback(DialogueStack.unhalt.bind(self))
+	Dialogue.wait(self)
+	_tween.chain().tween_callback(Dialogue.unwait.bind(self))
 
 func pan(x := 0.0, y := 0.0):
 	var t := _get_tween()

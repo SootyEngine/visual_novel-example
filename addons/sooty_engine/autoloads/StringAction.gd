@@ -1,101 +1,186 @@
-#@tool
+@tool
 extends Node
 
-#const OP_ASSIGN := ["=", "+=", "-=", "*=", "/="]
-const OP_ASSIGN := [" = ", " += ", " -= ", " *= ", " /= "]
-const OP_RELATION := ["==", "!=", ">", "<", ">=", "<="]
-const OP_ARITHMETIC := ["+", "-", "*", "/", "%"]
-const OP_LOGICAL := ["and", "or", "not", "&&", "||", "!"]
-const OP_ALL := OP_ASSIGN + OP_RELATION + OP_ARITHMETIC + OP_LOGICAL
-const BUILT_IN := ["true", "false", "null"]
+var _commands := {}
+var _expr := Expression.new()
+var symbol_calls := {
+	
+}
 
-func do(command: String) -> Variant:
-	# state method
-	if command.begins_with("$"):
-		var call = command.substr(1)
-		var args := UString.split_on_spaces(call)
-		var method = args.pop_front()
-		var converted_args := args.map(_str_to_var)
-		return State._call(method, converted_args)
-	
-	# node path method
-	elif command.begins_with("^"):
-		var call = command.substr(1)
-		var args := UString.split_on_spaces(call)
-		var head = args.pop_front()
-		if "." in head:
-			var p = args.pop_front().rsplit(".", true, 1)
-			var node_path = p[0].replace(",", ".")
-			var target := Global.get_tree().current_scene.get_node(node_path)
-			var method = p[1]
-			return UObject.call_w_args(target, method, args)
-		else:
-			push_error("Not implemented.")
-	
-	# group function
-	elif command.begins_with("@"):
-		var call = command.substr(1)
-		var args := UString.split_on_spaces(call)
-		var method = args.pop_front()
-		var converted_args := args.map(_str_to_var)
-		var group: String
-		
-		# sub method
-		if "." in method:
-			var p = method.split(".", true, 1)
-			group = p[0]
-			method = p[1]
-			
-			# autoload
-			if UString.is_capitalized(group):
-				var autoload := get_node("/root/%s" % group)
-				if autoload != null:
-					return UObject.call_w_args(autoload, method, converted_args)
-#
-#				# check for a static class?
-#				else:
-#					var obj = UObject.get_class_from_name(group)
-#					if obj != null:
-#						return UObject.call_w_args(obj, method, converted_args)
+func add_command(call: Variant, desc := "", id := ""):
+	var obj: Object = call.get_object() if call is Callable else call[0]
+	var method: String = call.get_method() if call is Callable else call[1]
+	id = id if id else method
+	var args = UObject.get_arg_info(obj, method)
+	var arg_names := args.map(func(x): return "%s:%s" % [x.name, UType.get_name_from_type(x.type)])
+	print("> '%s' [%s]: %s" % [id, " ".join(arg_names), desc])
+	_commands[id] = {
+		call=call,
+		desc=desc,
+		args=args
+	}
 
-				else:
-					push_error("No autoload or static class '%s'." % group)
-					return null
-		
-		# group
-		else:
-			group = "sa:" + method
-		
-		var nodes := Global.get_tree().get_nodes_in_group(group)
-		var got
-		if len(nodes):
-			for node in nodes:
-				got = UObject.call_w_args(node, method, converted_args)
-			return got
-		else:
-			push_error("No nodes in group %s for %s(%s)." % [group, method, converted_args])
-	
-	# evaluate
-	elif command.begins_with("~"):
-		return State._eval(command.substr(1))
-	
+func _eval_replace_group_call(inside: String, group: String, nested: bool) -> String:
+	if nested:
+		var p := inside.split("(", true, 1)
+		return "_G_.call_group(\"@%s\", \"%s\", [%s])" % [group, p[0], p[1]]
 	else:
-		return State._eval(command)
+		return "_G_.call_group(\"@%s\", \"%s\", [%s])" % [group, group, inside]
 
-func _test(expression: String) -> bool:
-	var got := true if State._eval(expression) else false
-#	print("_test(%s) == %s" % [expression, got])
-	return got
+# var action := '"%s %s %s %s %s" % [@test.name, @enemy.damage(score), @heal(333)]'
+# var action := '[@test.name, @enemy.damage(score), @heal(333)]'
+func preprocess_eval(eval: String):
+	var tags := []
+	var in_tag := false
+	for c in eval:
+		if c in "@$":
+			in_tag = true
+			tags.append({type=c, tag="", prop="", full=c, is_nested=false, is_func=false})
+		elif in_tag:
+			if c in UString.CHARS_ALPHA_ALL + UString.CHARS_INTS + "_":
+				tags[-1].full += c
+				if not tags[-1].is_nested:
+					tags[-1].tag += c
+				else:
+					tags[-1].prop += c
+			# is nested?
+			elif c == ".":
+				tags[-1].is_nested = true
+				tags[-1].full += c
+			# is func?
+			elif c == "(":
+				in_tag = false
+				tags[-1].is_func = true
+			elif c == " ":
+				in_tag = false
+	
+	var arg_names := ["_G_", "_S_"]
+	var arg_valus = [Global, State]
+	
+	for t in tags:
+		if t.type == "@":
+			if t.is_func:
+				if t.is_nested:
+					eval = UString.replace_between(eval, "@%s." % [t.tag], ")", _eval_replace_group_call.bind(t.tag, true))
+				else:
+					eval = UString.replace_between(eval, "@%s(" % [t.tag], ")", _eval_replace_group_call.bind(t.tag, false))
+			else:
+				eval = eval.replace(t.full, "_G_.get_group_property(\"@%s\", \"%s\")" % [t.tag, t.prop])
+#				eval = eval.replace(t.full, "_G_.call_group(\"@%s\", \"%s\")" % [t.tag, t.prop])
+		
+		elif t.type == "$":
+			if t.is_func:
+				if t.is_nested:
+					eval = eval.replace("$%s" % t.tag, "_S_.%s" % t.tag)
+				else:
+					eval = eval.replace(t.full + "(", "_S_._calls[\"%s\"].call(" % t.tag)
+			else:
+				if t.is_nested:
+					eval = eval.replace(t.full, "_S_[\"%s.%s\"]" % [t.tag, t.prop])
+				else:
+					eval = eval.replace(t.full, "_S_[\"%s\"]" % [t.tag])
+	return eval
 
-func _pipe(value: Variant, pipes: String) -> Variant:
-	for pipe in pipes.split("|"):
-		var args = UString.split_on_spaces(pipe)
-		var method = args.pop_front()
-		if State._has_method(method):
-			value = State._call(method, [value] + args.map(State._eval))
+func test(e: String, context: Object = null) -> bool:
+	return true if eval(e, context) else false
+
+func do(command: String, context: Object = null) -> Variant:
+	if not len(command):
+		return
+	
+	# MATCH case argument
+	if command == "_":
+		return "_"
+	
+	# special VAR case.
+	if command.begins_with("*"):
+		return to_var(command)
+	
+	elif command.begins_with("@"):
+		return call_group(command, context)
+	
+	elif command.begins_with("~"):
+		return eval(command.substr(1).strip_edges(), context)
+	
+	push_error("Do action '%s'." % command)
+	return null
+
+func is_action(s: String) -> bool:
+	return UString.get_leading_symbols(s) in Soot.ALL_ACTION_HEADS
+
+# vars are kept as strings, so can be auto type converted
+func to_var(s: String) -> Variant:
+	if s.begins_with("*"):
+		s = s.substr(1)
+	var out = []
+	for part in UString.split_outside(s, " "):
+		# dictionary key
+		if ":" in part:
+			if not len(out) or not out[-1] is Dictionary:
+				out.append({})
+			var kv = part.split(":", true, 1)
+			out[-1][kv[0].strip_edges()] = kv[1].strip_edges()
+		# array
+		elif "," in part:
+			out.append(Array(part.split(",")))
+		# other
 		else:
-			push_error("Can't pipe %s. No %s." % [value, method])
-	return value
+			out.append(part)
+	out = out[0] if len(out) == 1 else out
+	return out
+
+# to_var keeps everything as strings so you can auto type convert where needed
+# but if you want it to auto convert, use this
+func var_to_variant(svar: Variant) -> Variant:
+	match typeof(svar):
+		TYPE_ARRAY:
+			var out := []
+			for i in len(svar):
+				out.append(var_to_variant(svar[i]))
+			return out
+		
+		TYPE_DICTIONARY:
+			var out := {}
+			for k in svar:
+				out[k] = var_to_variant(svar[k])
+			return out
+		
+		TYPE_STRING:
+			var head := UString.get_leading_symbols(svar)
+			if head in Soot.ALL_ACTION_HEADS:
+				return do(svar)
+			else:
+				return UString.str_to_var(svar)
+		_:
+			push_error("Shouldn't happen.")
+			return svar
+
+# @action
+func call_group(action: String, context: Object) -> Variant:
+	if action.begins_with("@"):
+		action = action.substr(1).strip_edges()
+	
+	var args := UString.split_outside(action, " ")
+	var group: String = args.pop_front()
+	return call_group_w_args(group, args, true)
+
+# @action
+# while it can call many members of a group, it returns the last non null value it gets
+func call_group_w_args(group: String, args: Array, as_string_args := false) -> Variant:
+	if group.begins_with("@"):
+		group = group.substr(1).strip_edges()
+	
+	# node call
+	var method: String = group
+	if "." in group:
+		var p = group.split(".", true, 1)
+		group = "@" + p[0]
+		method = p[1]
+	# function call
+	else:
+		group = "@." + group
+	
+	return Global.call_group(group, method, args, as_string_args)
 
 func _str_to_var(s: String) -> Variant:
 	# builting
@@ -145,6 +230,77 @@ func _str_to_var(s: String) -> Variant:
 		return s.to_int()
 	# must be a string?
 	return s
+
+#func _do_func(action: String, context: Object) -> Variant:
+#	var args := UString.split_outside(action, " ")
+#	var method: String = args.pop_front()
+#	prints("FUNC", method, args)
+#	if context.has_method("_call"):
+#		return context._call(method, args, true)
+#	else:
+#		return UObject.call_w_kwargs([context, method], args, true)
+
+func _context_has(context: Object, property: String) -> bool:
+	if context.has_method("_has"):
+		return context._has(property)
+	else:
+		return property in context
+
+func eval(eval: String, context: Variant = null, default = null) -> Variant:
+	if context == null:
+		context = State
+	
+	# assignments?
+	for op in [" = ", " += ", " -= ", " *= ", " /= "]:
+		if op in eval:
+			var p := eval.split(op, true, 1)
+			var property := p[0].strip_edges()
+			var target: Object = context
+			
+			# assigning to a state variable?
+			if property.begins_with("$"):
+				property = property.substr(1)
+				target = State
+			
+			# assigning to a group object?
+			elif property.begins_with("@"):
+				property = property.substr(1)
+				target = get_tree().get_first_node_in_group(property)
+				push_error("Assigning to @nodes isn't implemented.")
+				return
+				
+			if _context_has(target, property):
+				var old_val = target[property]
+				var got_val = eval(p[1].strip_edges(), context)
+				var new_val = old_val
+				match op:
+					" = ": new_val = got_val
+					" += ": new_val += got_val
+					" -= ": new_val -= got_val
+					" *= ": new_val *= got_val
+					" /= ": new_val /= got_val
+				target[property] = new_val
+				return target[property]
+			else:
+				push_error("No property '%s' in %s." % [property, target])
+				return default
+	
+	# state_manager modified this to make it work with all it's child functions
+	if context.has_method("_preprocess_eval"):
+		eval = context._preprocess_eval(eval)
+	
+	# state shortcut
+	eval = preprocess_eval(eval)
+	
+	if _expr.parse(eval, ["_T_", "_G_", "_S_"]) != OK:
+		push_error("Failed _eval('%s'): %s." % [eval, _expr.get_error_text()])
+	else:
+		var result = _expr.execute([get_tree(), Global, State], context, false)
+		if _expr.has_execute_failed():
+			push_error("Failed _eval('%s'): %s." % [eval, _expr.get_error_text()])
+		else:
+			return result
+	return default
 
 # x = do_something(true, custom_func(0), sin(rotation))
 # BECOMES

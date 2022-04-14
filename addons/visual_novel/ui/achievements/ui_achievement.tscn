@@ -1,6 +1,5 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=3 format=3 uid="uid://chh6c0ncqs4i6"]
 
-[ext_resource type="Texture2D" uid="uid://b3vywvjoc08be" path="res://icon.png" id="1_8qw71"]
 [ext_resource type="Script" path="res://addons/visual_novel/ui/achievements/ui_achievement.gd" id="1_r8au3"]
 [ext_resource type="Script" path="res://addons/rich_text/RichTextLabel2.gd" id="3_2jdmd"]
 
@@ -20,10 +19,6 @@ offset_bottom = 80.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.5)
-__meta__ = {
-"_edit_layout_mode": 1,
-"_edit_use_custom_anchors": false
-}
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 offset_right = 592.0
@@ -43,11 +38,11 @@ size_flags_vertical = 3
 theme_override_constants/separation = 8
 
 [node name="icon" type="TextureRect" parent="MarginContainer/VBoxContainer"]
+minimum_size = Vector2(64, 64)
 offset_right = 64.0
 offset_bottom = 64.0
 size_flags_horizontal = 4
 size_flags_vertical = 3
-texture = ExtResource( "1_8qw71" )
 stretch_mode = 5
 
 [node name="CenterContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer"]

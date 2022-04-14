@@ -1,11 +1,10 @@
 extends Data
 class_name PatchableData
+func get_class() -> String:
+	return "PatchableData"
 
 const DEFAULT_FORMAT := "[b]{name}[]"
 var _extra := {}
-
-func get_class() -> String:
-	return "PatchableDataObject"
 
 func _init(d := {}):
 	UObject.set_state(self, d)
@@ -47,13 +46,15 @@ func _set(property: StringName, value) -> bool:
 		return true
 	return false
 
-func as_string() -> String:
-	if "format" in self:
-		if self.format == "":
-			if Global.config.has_section_key("default_formats", get_class()):
-				var fmt = Global.config.get_value("default_formats", get_class(), DEFAULT_FORMAT)
-				return fmt.format(UObject.get_state(self))
-		else:
-			return self.format.format(UObject.get_state(self))
-	
-	return DEFAULT_FORMAT.format(UObject.get_state(self))
+func get_string(id := "") -> String:
+	match id:
+		"speaker_name":
+			if "format" in self:
+				if self.format == "":
+					if Global.config.has_section_key("default_formats", get_class()):
+						var fmt = Global.config.get_value("default_formats", get_class(), DEFAULT_FORMAT)
+						return fmt.format(UObject.get_state(self))
+				else:
+					return self.format.format(UObject.get_state(self))
+			return DEFAULT_FORMAT.format(UObject.get_state(self))
+	return ""

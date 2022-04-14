@@ -10,8 +10,8 @@ extends Control
 @export var default_duration := 2.0
 
 func _init() -> void:
-	add_to_group("sa:blur")
-	add_to_group("sa:unblur")
+	add_to_group("@.blur")
+	add_to_group("@.unblur")
 	amount = 0.0
 	visible = false
 

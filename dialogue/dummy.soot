@@ -1,18 +1,14 @@
-=== START
-	goto next
+=== dummy
+	=== scene_started
+		A strange man enters.
+		
+		"Strange Man": Who are you?
+		
+	
+	
+	
 	
 
-=== a
-	and then b
-	=> b
-
-=== b
-	c as sub-flow
-	== c
-	and now d
-
-=== c
-	a subroutine
-
-=== d
-	all done
+	
+	=== he_haw
+		=> /started

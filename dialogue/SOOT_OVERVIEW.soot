@@ -1,9 +1,9 @@
-<-> i3j4k13n4
-	# john: Who cares what happens?
+#.IGNORE
+#.id: soot_overview
 
 # Comments start with #.
 # Flows start with ===
-=== flow_node
+=== flow_node # an array with an id
 	
 	Text without a speaker. 
 	
@@ -40,7 +40,7 @@
 	As will **whitespace**.
 	""""
 	
-	// Multiline with a speaker and condition.
+	# Multiline with a speaker and condition.
 	paul: """" {{score > 20}}
 	I don't care what [b]they[] say, it's not happening.
 	
@@ -89,20 +89,6 @@
 			john: Aw yeah, friday!
 		{{_}} It's the weekend.
 	
-	# Options.
-	Text for an options menu.
-		- Option one. ((~choice = true)) => flow
-			A line to show after option 1 is chosen.
-		- Option two. ((~score += 10;;== add_to_flow;;~score -= 20))
-		- Option three. {{score > 20}} # Only shown on condition score > 20.
-		+ add_options_from_a_flow
-		+ *_flow # Append options from all flows ending with '_flow'.
-		+ flow_* # Append options from all flows starting with 'flow_'
-	
-	# Single line options.
-	# Don't do this though, as it's hard to read.
-	Where to? ((- West => west;;- East => east {{east.unlocked}};;- North => north))
-	
 	# Extra properties.
 	This text should be offset.
 		|x:20 y:30
@@ -110,6 +96,95 @@
 	
 	# Or, on a single line.
 	This text should be offset. ((|x:20 y:30 tint:red))
+
+=== choices
+
+	# Some simple options.
+	Are you sure about that?
+		|> Yes
+		|> No
+		|> Maybe
+	
+	# Text can proceed below them.
+	police: This suspect, do you remember their hair color?
+		|> Red
+			police: Red, hmm?
+		|> Green
+			police: Green you say?
+			police: Are you lying to me?
+				|> No, honest!
+					police: I don't believe it.
+						|> You better.
+						|> All right, it was a lie.
+							police: Thought so.
+				|> Yeah, it was red.
+					police: Thought so.
+		|> Black
+			police: Hmm.
+	
+	Are you sure? || |> Yes => yes || |> No => no
+	
+	john: Are you sure? {{score > 20}}
+	
+	==||j: Wow, who knew?
+		j: I was saying this would happen.
+			&:score:3 x:20
+	
+	# It's ((rand: winter again|summer again|spring again)).
+	# It's ((once: winter again|summer again|spring again)).
+	
+	Is it time || john: okay {{score > 20}}
+	
+	(()) # shows all until last, then only shows last.
+	((once)) # shows each, then never again.
+		john: Hey.{{score > 20}}
+		john: You again. {{score > 20}}
+		john: Oh, it's you again.
+		john: You're back again!?
+	((loop)) # repeat from start
+	((ping_pong)) {{score > 20}} # go backwards then forwards
+	((rand))
+		john: Okay, and so what about it?
+		john: The muskrat came in slowly.
+		paul: Oh wow, who the hell cares?
+		==||j: Wow, who knew. # inline call. specifically for sets
+			j: Even though I told you this would happen.
+	((rand_once)) # random, but never picks same one twice in a row
+	((rand_full)) # never picks same item twice, until all have been picked
+	
+	<> checkpoint # we can come back here later
+	{{match <> checkpoint}}
+		{{0}}
+			traveler: Which direction shall we go?		#id=the_choice
+				+> traveler_nsw
+				+> traveler_w
+				+> exo_*
+		{{_}}
+			traveler: Now again, which direction shall we go?
+				-ok: false
+				|> North => north || ok || => ok || >><<
+				|> South => south
+				|> East ||-t:20 || @score.20
+				|> West
+					traveler: I don't go west.
+					<| # go back to a checkpoint
+	
+	john: It's all true.
+	
+	# Options.
+	Which animal will you set free from the zoo?
+		|> The lion
+			A line to show after option 1 is chosen.
+		|> Option two. || ~score += 10||== add_to_flow||~score -= 20
+		|> Option [b]three[]. {{score > 20}} # Only shown on condition score > 20.
+		+> add_options_from_a_flow
+		+> *_flow # Append options from all flows ending with '_flow'.
+		+> flow_* # Append options from all flows starting with 'flow_'
+	
+	# Single line options.
+	# Don't do this though, as it's hard to read.
+	
+
 
 # when loading a script, flags can be used to hide/show some lines.
 # found in Dialogues.flags = []

@@ -1,20 +1,21 @@
 # Demonstrates achievements, quests, and inventory system.
-=== START
-	~save_caption = "The Jail Cell"
-	
-	"Stranger": And who might you be?
-		- Just a random game developer.
-			"Stranger": Okay.
-			: I need a favor.
-			: You can call me [$mr_bool].
-			=> favor
+=== prison
+	=== intro
+		~save_caption = "The Jail Cell"
 		
-		- Who wants to know?
-			"Stranger": (Chuckles)
-			: I never had a government name.
-			: But you can call me [$mr_bool] for convenience.
-			mr_bool: I want to ask a favor of you.
-			=> favor
+		"Stranger": And who might you be?
+			--- Just a random game developer.
+				"Stranger": Okay.
+				: I need a favor.
+				: You can call me [$mr_bool].
+				=> .favor
+			
+			--- Who wants to know?
+				"Stranger": (Chuckles)
+				: I never had a government name.
+				: But you can call me [$mr_bool] for convenience.
+				mr_bool: I want to ask a favor of you.
+				=> .favor
 
-=== favor
-	mr_bool: I need you to get me something.
+	=== favor
+		mr_bool: I need you to get me something.

@@ -8,13 +8,13 @@ extends Node
 @onready var progress: ProgressBar = get_node(_progress)
 
 func _setup(a: Award):
-	if a.toll > 1:
+	if a.is_unlocked():
 		progress.visible = true
 		progress.value = a._progress * progress.max_value
 	else:
 		progress.visible = false
 	
-	if a._unlocked:
+	if a.is_completed():
 		icon.modulate.v = 1.0
 		var when = DateTime.create_from_total_seconds(a.date).format("{year} {month_short_capitalized} {day_of_month_ordinal} ({since})")
 		label.set_bbcode("[b;dodger_blue]%s[]\n%s\n[dim;dim;i]%s[]" % [a.name, a.desc, when])
