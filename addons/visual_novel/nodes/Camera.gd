@@ -1,7 +1,7 @@
 @tool
 extends Camera2D
 
-@onready var flow_manager: Node = get_tree().get_first_node_in_group("flow_manager")
+#@onready var flow_manager: Node = get_tree().get_first_node_in_group("flow_manager")
 
 @export var _zoom := 0.25
 @export var zoom_offset := 0.0
@@ -58,8 +58,8 @@ func camera(action: String, args: Array = [], kwargs: Dictionary = {}):
 		UObject.call_w_kwargs([self, "__" + action], a)
 		
 		if kwargs.get("wait", false):
-			if flow_manager.add_pauser(self):
-				t.tween_callback(flow_manager.remove_pauser.bind(self))
+			if VisualNovel.wait(self):
+				t.tween_callback(VisualNovel.unwait.bind(self))
 	else:
 		push_error("\tno action '%s'." % action)
 
@@ -97,8 +97,8 @@ func _get_tween() -> Tween:
 	return _tween
 
 func wait():
-	Dialogue.wait(self)
-	_tween.chain().tween_callback(Dialogue.unwait.bind(self))
+	VisualNovel.wait(self)
+	_tween.chain().tween_callback(VisualNovel.unwait.bind(self))
 
 func pan(x := 0.0, y := 0.0):
 	var t := _get_tween()

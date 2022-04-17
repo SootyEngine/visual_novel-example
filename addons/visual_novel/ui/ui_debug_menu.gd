@@ -5,7 +5,7 @@ extends CanvasLayer
 func _ready() -> void:
 	visible = false
 	debug_menu.process_mode = Node.PROCESS_MODE_DISABLED
-	Saver.loaded.connect(_hide)
+	SaveManager.loaded.connect(_hide)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_debug") and VisualNovel.debug.allow_debug_menu:

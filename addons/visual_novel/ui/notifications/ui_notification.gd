@@ -13,7 +13,7 @@ func setup(info: Dictionary):
 	label.set_bbcode("[hide].[]")
 	
 	if "play" in info:
-		SFX.play(info.play)
+		SFXManager.play(info.play)
 	
 	var time := 5.0
 	

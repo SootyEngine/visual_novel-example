@@ -1,11 +1,11 @@
-[gd_scene load_steps=24 format=3]
+[gd_scene load_steps=24 format=3 uid="uid://6nyisao525io"]
 
-[ext_resource type="PackedScene" uid="uid://dm6jk8csh0bk6" path="res://addons/visual_novel/ui/captions/ui_caption.tscn" id="1_5fvuj"]
-[ext_resource type="Script" path="res://addons/visual_novel/autoloads/VisualNovelUI.gd" id="1_jx60b"]
-[ext_resource type="Script" path="res://addons/visual_novel/ui/EdgeClampContainer.gd" id="2_mqxw1"]
+[ext_resource type="PackedScene" uid="uid://cs8w00if1th35" path="res://addons/visual_novel/ui/captions/caption_label.tscn" id="2_nmb3h"]
+[ext_resource type="Script" path="res://addons/visual_novel/ui/captions/caption_backing.gd" id="3_gnh4x"]
 [ext_resource type="Shader" path="res://addons/visual_novel/ui/ui_gradient_blur.gdshader" id="3_kr04k"]
-[ext_resource type="PackedScene" uid="uid://cc3g0jdrjk1ie" path="res://addons/visual_novel/ui/options/ui_option_menu.tscn" id="3_so0hf"]
+[ext_resource type="PackedScene" uid="uid://ctmfcupmvfhym" path="res://addons/visual_novel/ui/captions/options_menu.tscn" id="4_lxigr"]
 [ext_resource type="PackedScene" uid="uid://byq8g7ltwrr5u" path="res://addons/visual_novel/ui/notifications/ui_notifications.tscn" id="4_sf4ru"]
+[ext_resource type="PackedScene" uid="uid://dyrd2jrqd3fm1" path="res://addons/visual_novel/ui/captions/speaker_label.tscn" id="4_xx5h7"]
 [ext_resource type="PackedScene" uid="uid://bfngd7b38mvow" path="res://addons/visual_novel/ui/ui_debug.tscn" id="5_ojci6"]
 [ext_resource type="PackedScene" uid="uid://frhg24r5fgul" path="res://addons/visual_novel/ui/ui_goal_list.tscn" id="6_e6odl"]
 [ext_resource type="PackedScene" uid="uid://8oa31xfjblq8" path="res://addons/visual_novel/ui/notifications/ui_notification.tscn" id="6_ep3a5"]
@@ -30,67 +30,55 @@ shader = ExtResource( "11_wfx34" )
 shader_param/blur = null
 
 [node name="VisualNovel" type="Node"]
-script = ExtResource( "1_jx60b" )
 
 [node name="captions" type="CanvasLayer" parent="."]
 
 [node name="backing" type="ColorRect" parent="captions"]
-visible = false
 material = SubResource( "ShaderMaterial_2oed7" )
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -130.0
-script = ExtResource( "2_mqxw1" )
+script = ExtResource( "3_gnh4x" )
 
-[node name="top" parent="captions" instance=ExtResource( "1_5fvuj" )]
-visible = false
-offset_left = -494.0
-offset_top = -290.0
-offset_right = -14.0
-offset_bottom = -172.0
-mouse_filter = 2
-_option_menu = NodePath("../bottom/option_menu")
-enabled = false
-
-[node name="bottom" type="VBoxContainer" parent="captions"]
-anchor_right = 1.0
+[node name="VBoxContainer" type="VBoxContainer" parent="captions"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-offset_top = 639.0
-offset_bottom = 39.0
+offset_left = -346.0
+offset_top = -600.0
+offset_right = 346.0
 size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
+size_flags_vertical = 8
 alignment = 2
-script = ExtResource( "2_mqxw1" )
-margin = 16.0
 
-[node name="bottom" parent="captions/bottom" instance=ExtResource( "1_5fvuj" )]
-visible = false
-anchor_left = 0.0
+[node name="options" parent="captions/VBoxContainer" instance=ExtResource( "4_lxigr" )]
+offset_right = 692.0
+offset_bottom = 564.0
+alignment = 2
+
+[node name="speaker_label" parent="captions/VBoxContainer" instance=ExtResource( "4_xx5h7" )]
+anchor_right = 0.0
+offset_top = 568.0
+offset_right = 692.0
+offset_bottom = 568.0
+head = "[dima;lb;]"
+tail = "[dima;rb;]"
+
+[node name="caption_label" parent="captions/VBoxContainer" instance=ExtResource( "2_nmb3h" )]
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 0.0
-offset_top = 583.0
-offset_right = 1024.0
-offset_bottom = 643.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-_option_menu = NodePath("../option_menu")
+offset_top = 572.0
+offset_right = 692.0
+offset_bottom = 572.0
 
-[node name="option_menu" parent="captions/bottom" instance=ExtResource( "3_so0hf" )]
-visible = false
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_top = 48.0
-offset_right = 1024.0
-offset_bottom = 79.0
-size_flags_horizontal = 3
-mouse_filter = 2
-theme_override_constants/margin_right = 240
-theme_override_constants/margin_left = 240
+[node name="margin" type="Control" parent="captions/VBoxContainer"]
+minimum_size = Vector2(0, 24)
+offset_top = 576.0
+offset_right = 692.0
+offset_bottom = 600.0
 
 [node name="hud" type="CanvasLayer" parent="."]
 script = ExtResource( "7_8v3aq" )
@@ -105,6 +93,7 @@ prefab = ExtResource( "6_ep3a5" )
 
 [node name="debug" type="CanvasLayer" parent="."]
 process_mode = 3
+visible = false
 script = ExtResource( "6_rc2au" )
 
 [node name="backing" type="ColorRect" parent="debug"]
@@ -158,7 +147,7 @@ script = ExtResource( "15_tuye1" )
 [node name="RichTextLabel" type="RichTextLabel" parent="debug/debug_menu/scenes"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme_override_colors/font_outline_color = Color(0.67, 0.67, 0.67, 1)
+theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
 theme_override_constants/outline_size = 0
 theme_override_font_sizes/mono_font_size = 16
 theme_override_font_sizes/bold_italics_font_size = 16
@@ -168,7 +157,6 @@ theme_override_font_sizes/normal_font_size = 16
 meta_underlined = false
 script = ExtResource( "16_roqut" )
 alignment = 0
-outline_adjust = 0.5
 markdown_enabled = false
 
 [node name="dialogue" type="Control" parent="debug/debug_menu"]
@@ -197,7 +185,7 @@ size_flags_vertical = 3
 minimum_size = Vector2(300, 0)
 offset_right = 300.0
 size_flags_vertical = 3
-theme_override_colors/font_outline_color = Color(0.67, 0.67, 0.67, 1)
+theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
 theme_override_constants/outline_size = 0
 theme_override_font_sizes/mono_font_size = 16
 theme_override_font_sizes/bold_italics_font_size = 16
@@ -208,7 +196,6 @@ meta_underlined = false
 autowrap_mode = 0
 script = ExtResource( "16_roqut" )
 alignment = 0
-outline_adjust = 0.5
 markdown_enabled = false
 
 [node name="stack" type="RichTextLabel" parent="debug/debug_menu/dialogue/VBoxContainer/HBoxContainer"]
@@ -217,7 +204,7 @@ offset_right = 304.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 2
-theme_override_colors/font_outline_color = Color(0.67, 0.67, 0.67, 1)
+theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
 theme_override_constants/outline_size = 0
 theme_override_font_sizes/mono_font_size = 16
 theme_override_font_sizes/bold_italics_font_size = 16
@@ -230,7 +217,6 @@ meta_underlined = false
 autowrap_mode = 0
 script = ExtResource( "16_roqut" )
 alignment = 0
-outline_adjust = 0.5
 markdown_enabled = false
 
 [node name="halting_for" type="RichTextLabel" parent="debug/debug_menu/dialogue/VBoxContainer"]
@@ -240,7 +226,7 @@ offset_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 2
-theme_override_colors/font_outline_color = Color(0.67, 0.67, 0.67, 1)
+theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
 theme_override_constants/outline_size = 0
 theme_override_font_sizes/mono_font_size = 16
 theme_override_font_sizes/bold_italics_font_size = 16
@@ -253,7 +239,6 @@ meta_underlined = false
 autowrap_mode = 0
 script = ExtResource( "16_roqut" )
 alignment = 0
-outline_adjust = 0.5
 markdown_enabled = false
 
 [node name="audio" type="Control" parent="debug/debug_menu"]
@@ -265,7 +250,7 @@ script = ExtResource( "20_phiuh" )
 [node name="RichTextLabel" type="RichTextLabel" parent="debug/debug_menu/audio"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme_override_colors/font_outline_color = Color(0.67, 0.67, 0.67, 1)
+theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
 theme_override_constants/outline_size = 0
 theme_override_font_sizes/mono_font_size = 16
 theme_override_font_sizes/bold_italics_font_size = 16
@@ -275,7 +260,6 @@ theme_override_font_sizes/normal_font_size = 16
 meta_underlined = false
 script = ExtResource( "16_roqut" )
 alignment = 0
-outline_adjust = 0.5
 markdown_enabled = false
 
 [node name="history" type="Control" parent="debug/debug_menu"]
@@ -304,7 +288,7 @@ offset_right = 158.0
 offset_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_colors/font_outline_color = Color(0.67, 0.67, 0.67, 1)
+theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
 theme_override_constants/outline_size = 0
 theme_override_font_sizes/mono_font_size = 16
 theme_override_font_sizes/bold_italics_font_size = 16
@@ -313,4 +297,3 @@ theme_override_font_sizes/bold_font_size = 16
 theme_override_font_sizes/normal_font_size = 16
 meta_underlined = false
 script = ExtResource( "16_roqut" )
-outline_adjust = 0.5

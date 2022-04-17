@@ -19,5 +19,9 @@
 		--- Nothing
 			We all go through the rinng
 	
+	
+	~$paul.items.gain(1, {})
+	~$paul.items.gain("coin")
+	
 	=== westward
 		Once upon a time, there lived.

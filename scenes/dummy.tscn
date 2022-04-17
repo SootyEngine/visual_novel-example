@@ -11,22 +11,22 @@ script = ExtResource( "1_4mxnd" )
 flow = "dummy"
 
 [node name="Node2D" type="Node2D" parent="."]
-position = Vector2(545, 616)
+position = Vector2(527, 611)
 scale = Vector2(0.472602, 0.472602)
+metadata/_edit_group_ = true
 
 [node name="20181020Man" type="Sprite2D" parent="Node2D" groups=["@:Tramp"]]
-scale = Vector2(-1.16875, 1.03529)
+scale = Vector2(-1, 1)
 texture = ExtResource( "2_rt7xi" )
 offset = Vector2(0, -600)
-flip_h = true
 script = ExtResource( "3_t4th2" )
-flip_scale = Vector2(-1, 1)
-current_zoom = 1.1
-current_shake = Vector2(2.35132e-14, 0)
-current_squish = 0.0625
+_flip_scale = Vector2(-1, 1)
+seed = Vector2(0.897108, 0.361716)
 metadata/tool_button_state = {
 2361514926: false,
-2457292705: false
+2457292705: false,
+2941369620: true,
+3917832403: false
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -46,9 +46,9 @@ alignment = 1
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_top = 64.0
+offset_top = 87.0
 offset_right = 374.0
-offset_bottom = 109.0
+offset_bottom = 87.0
 size_flags_vertical = 4
 theme_override_constants/outline_size = 4
 outline_size = 4
@@ -62,9 +62,8 @@ alignment = 1
 
 [node name="speaker_label" parent="VBoxContainer2" instance=ExtResource( "5_feevm" )]
 anchor_right = 0.0
-offset_top = 23.0
+offset_top = 45.0
 offset_right = 262.0
-offset_bottom = 68.0
 theme_override_constants/outline_size = 4
 outline_size = 4
 head = "[white;dima;lb][] "

@@ -5,7 +5,7 @@ func _ready() -> void:
 	
 	var text := []
 	var meta := {}
-	var scenes = Scene.scenes.keys()
+	var scenes = SceneManager.scenes.keys()
 	scenes.sort()
 	
 	for scene in scenes:
@@ -17,4 +17,4 @@ func _ready() -> void:
 
 func _goto_scene(scene: String):
 	Dialogue.end()
-	Scene.change(scene)
+	SceneManager.change(scene)

@@ -1,11 +1,10 @@
 extends Data
 class_name Equipment
-
 func get_class() -> String:
 	return "Equipment"
 
-signal equipped(item_info: ItemInfo, slot: String)
-signal unequipped(item_info: ItemInfo, slot: String)
+signal equipped(item: Item, slot: String)
+signal unequipped(item: Item, slot: String)
 
 var _character: Character
 var _inventory: Inventory
@@ -24,8 +23,8 @@ func get_slot_info():
 	pass
 
 func wear(item_id: String, slot: String = "", gain_if_has_not := false):
-	var all_items: ItemInfos = State.item_info
-	var item_info: ItemInfo = all_items.find(item_id, "wear")
+	var all_items: ItemManager = State.get_first(ItemManager)
+	var item_info: Item = all_items.find(item_id, "wear")
 	if not item_info:
 		return
 	
@@ -40,7 +39,7 @@ func wear(item_id: String, slot: String = "", gain_if_has_not := false):
 		return
 	
 	# does slot exist?
-	var all_slots: EquipmentSlots = State.equipment_slots
+	var all_slots: EquipmentSlotManager = State.get_first(EquipmentSlotManager)
 	var slot_info: EquipmentSlot = all_slots.find(slot, "equip")
 	if not slot_info:
 		return

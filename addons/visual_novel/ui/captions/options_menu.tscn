@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctmfcupmvfhym"]
+
+[ext_resource type="Script" path="res://addons/visual_novel/ui/captions/options_menu.gd" id="1_onrsd"]
+[ext_resource type="PackedScene" uid="uid://dh5028gv6r506" path="res://addons/visual_novel/ui/captions/option_button.tscn" id="2_iifud"]
+
+[node name="parent" type="VBoxContainer"]
+offset_right = 1024.0
+offset_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( "1_onrsd" )
+_button_prefab = NodePath("option")
+
+[node name="option" parent="." instance=ExtResource( "2_iifud" )]
+offset_bottom = 35.0
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 19

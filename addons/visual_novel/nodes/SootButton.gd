@@ -33,7 +33,7 @@ func _get_property_list() -> Array:
 	var props := PropList.new().category("SootButton")
 	if owner and "scene_file_path" in owner:
 		# scene ids
-		props.prop_enum("goto_scene", TYPE_STRING, Scene.get_main_scene_ids())
+		props.prop_enum("goto_scene", TYPE_STRING, SceneManager.get_main_scene_ids())
 		
 		# scene flow ids
 		var file: String = "%s.%s" % [UFile.get_file_name(owner.scene_file_path), Soot.EXT_DIALOGUE]
@@ -79,10 +79,10 @@ func _on_pressed() -> void:
 			StringAction.do(action)
 	
 	elif goto_scene_flow:
-		Dialogue.goto(Soot.join_path([Scene.id, goto_scene_flow]))
+		Dialogue.goto(Soot.join_path([SceneManager.id, goto_scene_flow]))
 	
 	elif goto_scene:
-		Scene.goto(goto_scene)
+		SceneManager.goto(goto_scene)
 	
 	else:
 		push_warning("No action or goto_scene_flow or goto_scene in %s." % self)

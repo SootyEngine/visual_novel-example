@@ -1,5 +1,5 @@
 extends Data
-class_name Award
+class_name Award, "res://addons/visual_novel/objects/Award.gd"
 func get_class() -> String:
 	return "Award"
 

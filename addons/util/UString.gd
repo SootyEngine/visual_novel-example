@@ -7,10 +7,12 @@ const CHAR_QUOTE_CLOSED := "”"
 const CHAR_INNER_QUOTE_OPENED := "‘"
 const CHAR_INNER_QUOTE_CLOSED := "’"
 
-const CHARS_ALPHA_LOWER := "abcdefghijklmnopqrstuvwxyz"
-const CHARS_ALPHA_UPPER := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-const CHARS_ALPHA_ALL := CHARS_ALPHA_LOWER + CHARS_ALPHA_UPPER
-const CHARS_INTS := "0123456789"
+const LOWERCASE := "abcdefghijklmnopqrstuvwxyz"
+const UPPERCASE := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+const ALL_LETTERS := LOWERCASE + UPPERCASE
+const INTEGERS := "0123456789"
+const VAR_CHARS := "_" + ALL_LETTERS + INTEGERS
+const VAR_CHARS_NESTED := "." + VAR_CHARS
 
 static func express(s: String, base_instance: Object = null, default = null) -> Variant:
 	var e := Expression.new()
@@ -22,7 +24,7 @@ static func express(s: String, base_instance: Object = null, default = null) -> 
 			push_error(e.get_error_text())
 	return default
 
-static func get_string(v: Variant, id: String, default := str(v)) -> String:
+static func get_string(v: Variant, id: String = "", default := str(v)) -> String:
 	if v is Object and v.has_method("get_string"):
 		var got: String = v.get_string(id)
 		if got:
@@ -133,7 +135,7 @@ static func split_outside(s: String, split_on: String) -> Array:
 			last = i
 		else:
 			i += 1
-	if last < len(s):
+	if last <= len(s):
 		out.append(s.substr(last, i-last))
 	return out
 
@@ -227,30 +229,6 @@ static func split_on_next(s: String, items: Array) -> Array:
 	var left_over: String = "" if len(p) == 1 else p[1].strip_edges(true, false)
 	return [token, token_str, left_over]
 
-# splits a string on spaces, respecting wrapped strings.
-#static func split_on_spaces(s: String) -> Array:
-#	var out := [""]
-#	var in_quotes := false
-#	for c in s:
-#		if c == '"':
-#			if in_quotes:
-#				in_quotes = false
-#				out[-1] += '"'
-#			else:
-#				in_quotes = true
-#				if out[-1] == "":
-#					out[-1] += '"'
-#				else:
-#					out.append('"')
-#
-#		elif c == " " and not in_quotes:
-#			if out[-1] != "":
-#				out.append("")
-#
-#		else:
-#			out[-1] += c
-#	return out
-
 static func is_capitalized(s: String) -> bool:
 	return s[0] == s[0].to_upper()
 
@@ -259,6 +237,9 @@ static func is_wrapped(s: String, head: String, tail=null) -> bool:
 
 static func unwrap(s: String, head: String, tail=null) -> String:
 	return s.trim_prefix(head).trim_suffix(tail if tail else head)
+
+static func trim_amount(s: String, amount := 1) -> String:
+	return s.substr(amount, len(s)-amount*2)
 
 # 1234567 => 1,234,567
 static func commas(number: Variant) -> String:
@@ -313,9 +294,12 @@ static func get_symbol(text: String, i: int, symbols := SYMBOLS) -> String:
 	var out := ""
 	var started := false
 	while i >= 0:
+		# part of symbol head
 		if text[i] in symbols:
+			started = true
 			out = text[i] + out
-		elif text[i] in ".abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789":
+		# part of symbol name
+		elif text[i] in "._abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789":
 			out = text[i] + out
 		else:
 			break
@@ -359,104 +343,3 @@ static func get_key_var(s: String, split_on := ":") -> Array:
 	else:
 		return [s, ""]
 
-static func str_to_var(s: String) -> Variant:
-	var a := s.replace("_", "")
-	# int
-	if a.is_valid_int(): return a.to_int() 
-	# float
-	if a.is_valid_float(): return a.to_float()
-	# bool
-	if a in ["true", "false"]: return a == "true"
-	# color
-	if a.is_valid_html_color(): return Color(a)
-	# string
-	return s
-
-# converts strings in comma seperated field to a type
-static func str_to_array(s: String, type: int = -1) -> Array:
-	return Array(s.split(",")).map(func(x): return str_to_type(x.strip_edges(), type))
-
-static func str_to_color(s: String, default: Variant = Color.WHITE) -> Variant:
-	# from name?
-	var out := Color.WHITE
-	var i := out.find_named_color(s)
-	if i != -1:
-		return out.get_named_color(i)
-	# from hex?
-	if s.is_valid_html_color():
-		return Color(s)
-	# from floats?
-	if "," in s:
-		# form (0,0,0,0)
-		if is_wrapped(s, "(", ")"):
-			s = unwrap(s, "(", ")")
-		# floats?
-		return _set_type(Color.WHITE, str_to_array(s, TYPE_FLOAT))
-#	push_error("Can't convert '%s' to color." % s)
-	return default
-
-static func str_to_dict(s: String) -> Dictionary:
-	if is_wrapped(s, "{", "}"):
-		return express(s)
-	else:
-		var out := {}
-		for part in split_outside(s, " "):
-			var kv = part.split(":")
-			out[kv[0].strip_edges()] = str_to_var(kv[1].strip_edges())
-		return out
-
-static func _set_type(v: Variant, vals: Array) -> Variant:
-	for i in len(vals):
-		v[i] = vals[i]
-	return v
-
-const S2T_DONT_CONVERT := -123_456
-const S2T_BUILT_IN := -321_456
-const S2T_EXPRESSION = -654_321
-const S2T_STR_TO_VAR := -456_123
-
-static func str_to_type(s: String, type: int, default = null) -> Variant:
-	match type:
-		S2T_DONT_CONVERT: return s
-		S2T_BUILT_IN: return str2var(s)
-		S2T_EXPRESSION: return express(s)
-		S2T_STR_TO_VAR: return str_to_var(s)
-		
-		TYPE_NIL: return null
-		TYPE_BOOL: return s == "true"
-		TYPE_INT: return s.replace("_", "").to_int()
-		TYPE_FLOAT: return s.replace("_", "").to_float()
-		TYPE_STRING: return s
-		TYPE_VECTOR2: return _set_type(Vector2.ZERO, str_to_array(s, TYPE_FLOAT))
-		TYPE_VECTOR2I: return _set_type(Vector2i.ZERO, str_to_array(s, TYPE_INT))
-#		TYPE_RECT2: return "Rect2"
-#		TYPE_RECT2I: return "Rect2i"
-		TYPE_VECTOR3: return _set_type(Vector3.ZERO, str_to_array(s, TYPE_FLOAT))
-		TYPE_VECTOR3I: return _set_type(Vector3i.ZERO, str_to_array(s, TYPE_INT))
-#		TYPE_TRANSFORM2D: return "Transform2D"
-#		TYPE_PLANE: return "Plane"
-#		TYPE_QUATERNION: return "Quaternion"
-#		TYPE_AABB: return "AABB"
-#		TYPE_BASIS: return "Basis"
-#		TYPE_TRANSFORM3D: return "Transform3D"
-		TYPE_COLOR: return str_to_color(s)
-		TYPE_STRING_NAME: return StringName(s)
-		TYPE_NODE_PATH: return NodePath(s)
-#		TYPE_RID: return "RID"
-#		TYPE_OBJECT: return "Object"
-#		TYPE_CALLABLE: return "Callable"
-#		TYPE_SIGNAL: return "Signal"
-		TYPE_DICTIONARY: return str_to_dict(s)
-#		TYPE_ARRAY: return "Array"
-#		TYPE_PACKED_BYTE_ARRAY: return "PackedByteArray"
-#		TYPE_PACKED_INT32_ARRAY: return "PackedInt32Array"
-#		TYPE_PACKED_INT64_ARRAY: return "PackedInt64Array"
-#		TYPE_PACKED_FLOAT32_ARRAY: return "PackedFloat32Array"
-#		TYPE_PACKED_FLOAT64_ARRAY: return "PackedFloat64Array"
-#		TYPE_PACKED_STRING_ARRAY: return "PackedStringArray"
-#		TYPE_PACKED_VECTOR2_ARRAY: return "PackedVector2Array"
-#		TYPE_PACKED_VECTOR3_ARRAY: return "PackedVector3Array"
-#		TYPE_PACKED_COLOR_ARRAY: return "PackedColorArray"
-	
-	push_error("Non implemented '%s' String to %s." % [s, UType.get_name_from_type(type)])
-	return null

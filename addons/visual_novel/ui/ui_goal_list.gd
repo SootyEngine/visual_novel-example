@@ -8,16 +8,13 @@ extends Node
 @onready var subtask_list: RichTextLabel2 = get_node(_subtask_list)
 
 func _ready():
-	Global.message.connect(_global_message)
-	_ready_deferred.call_deferred()
+	ModManager.loaded.connect(_reloaded)
 
-func _global_message(msg: String, payload: Variant):
-	match msg:
-		Goal.MSG_STATE_CHANGED:
-			_ready_deferred()
+func _reloaded():
+	_redraw()
 
-func _ready_deferred():
-	var all := Goal.get_all().values()
+func _redraw():
+	var all := Database.get_database(Goal).get_all()
 	var s_started := all.filter(func(x): return x.main and x.is_started)
 	var s_completed := all.filter(func(x): return x.main and x.is_completed)
 	var s_unlocked := all.filter(func(x): return x.main and x.is_unlocked)

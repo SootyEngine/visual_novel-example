@@ -11,8 +11,8 @@ const C_TEXT := Color.GAINSBORO
 const C_TEXT_INSERT := Color.PALE_GREEN
 const C_TEXT_PREDICATE := Color.PALE_TURQUOISE# Color(0.5, 0.7, 1.0, 1.0)
 const C_SPEAKER := Color(1, 1, 1, 0.5)
-const C_TAG := Color(1, 1, 1, .5)
-const C_SYMBOL := Color(1, 1, 1, 0.33)
+const C_TAG := Color(1, 1, 1, .4)
+const C_SYMBOL := Color(1, 1, 1, 0.3)
 const C_SYMBOL_LIGHT := Color(1, 1, 1, 0.5)
 
 const C_FLAG := Color.SALMON
@@ -23,6 +23,7 @@ const C_COMMENT_LANG := Color(0.5, 1.0, 0.0, 0.5)
 
 const C_NODE_ACTION := Color.DEEP_SKY_BLUE
 const C_STATE_ACTION := Color.MEDIUM_PURPLE
+const C_PERSISTENT_ACTION := Color.GOLD
 const C_CONTEXT_ACTION := Color.SPRING_GREEN
 const C_VAROUT := Color.ORANGE
 
@@ -189,17 +190,16 @@ func _find_true_depth() -> int:
 func _c(i: int, clr: Color):
 	state[i] = {color=clr}
 
-func _h_var(from: int, v: String, index := 0, action_color := Color.WHITE):
+func _h_var(from: int, v: String, index: int):
 	if not len(v):
 		return
 	
 	# dict key
 	if ":" in v:
 		var p := v.split(":", true, 1)
-#		_c(from, Color(action_color, .5))
 		_c(from, C_SYMBOL)
 		_c(from+len(p[0]), C_SYMBOL)
-		_h_var(from+len(p[0])+1, p[1], 0, action_color)
+		_h_var(from+len(p[0])+1, p[1], 0)
 	
 	# array
 	elif "," in v:
@@ -207,7 +207,7 @@ func _h_var(from: int, v: String, index := 0, action_color := Color.WHITE):
 		var parts := v.split(",")
 		for i in len(parts):
 			var part := parts[i]
-			_h_var(off, part, index, action_color)
+			_h_var(off, part, index)
 			off += len(part)
 			_c(off, C_SYMBOL)
 			off += 1
@@ -218,16 +218,16 @@ func _h_var(from: int, v: String, index := 0, action_color := Color.WHITE):
 	
 	else:
 		if v[0] == "*":
-			_c(from, Color(action_color, SYMBOL_ALPHA))
+			_c(from, Color(Color.WHITE, SYMBOL_ALPHA))
 			from += 1
 		
-		_c(from, action_color)
+		_c(from, Color.DARK_GRAY if index % 2 != 0 else Color.WEB_GRAY)
 
 func _h_action_var(from: int, to: int):
 	var inner := text.substr(from, to-from)
 	var parts = UString.split_outside(inner, " ")
 	for part in parts:
-		_h_var(from, part, 0, C_VAROUT)
+		_h_var(from, part, 0)
 		from += len(part)+1
 
 func _h_case(from: int, to: int):
@@ -236,41 +236,40 @@ func _h_case(from: int, to: int):
 	var index := 0
 	for i in len(parts):
 		if parts[i]:
-			_h_var(from, parts[i], index, clr)
+			_h_var(from, parts[i], index)
 			index += 1
 		from += len(parts[i]) + 1
 	
-func _h_node_action(from: int, to: int):
+func _h_node_action(from: int, to: int, color: Color):
 	_c(from, C_SYMBOL)
-	_c(from+1, C_NODE_ACTION)
+	_c(from+1, color)
 	from += 1
 	var parts := UString.split_outside(text.substr(from, to-from), " ")
-	var clr := C_NODE_ACTION
+	var clr := color
 	var index := 0
 	for i in len(parts):
 		if parts[i]:
 			# function name
 			if index == 0:
-				clr = C_NODE_ACTION
+				clr = color
 				_c(from, clr)
 				for j in range(from, from+len(parts[i])):
 					if text[j] == ".":
-						clr = UClr.hue_shift(clr, -.1)
+						clr = UColor.hue_shift(clr, -.1)
 						clr.v += .2
 						_c(j, C_SYMBOL)
 						_c(j+1, clr)
 			
 			# arguments
 			else:
-				clr = Color.GRAY if index%2==0 else Color.WHITE
-				_h_var(from, parts[i], index, clr)
-
+				_h_var(from, parts[i], index)
+			
 			index += 1
 		
 		from += len(parts[i]) + 1
 	
 func _h_eval(from: int, to: int):
-	_c(from, C_CONTEXT_ACTION)
+	_c(from, C_SYMBOL)# C_CONTEXT_ACTION)
 	var t_color = C_CONTEXT_ACTION
 	var m_color = C_CONTEXT_ACTION
 	
@@ -287,8 +286,14 @@ func _h_eval(from: int, to: int):
 			_c(i, Color(m_color, .5))
 			_c(i+1, t_color)
 		
+		elif text[i] == "^":
+			t_color = C_PERSISTENT_ACTION
+			m_color = C_PERSISTENT_ACTION
+			_c(i, Color(m_color, .5))
+			_c(i+1, t_color)
+		
 		if text[i] == ".":
-			t_color = UClr.hue_shift(t_color, -.033)
+			t_color = UColor.hue_shift(t_color, -.033)
 			_c(i, C_SYMBOL)
 			_c(i+1, t_color)
 		
@@ -300,13 +305,13 @@ func _h_eval(from: int, to: int):
 			t_color = Color.GRAY
 			_c(i+1, t_color)
 		
-		elif text[i] in "`'\"":
+		elif text[i] in "`'\",":
 			_c(i, C_SYMBOL)
 			t_color = Color.GRAY
 			m_color = Color.GRAY
 			_c(i+1, t_color)
 		
-		elif text[i] in "!-=+<>)(),[]{}":
+		elif text[i] in "-=+*/<>)()[]{}":
 			t_color = C_CONTEXT_ACTION
 			m_color = C_CONTEXT_ACTION
 			_c(i, C_SYMBOL)
@@ -330,11 +335,10 @@ func _h_bbcode(from: int, to: int, default: Color):
 	var md_tag1 := false # *	_
 	var md_tag2 := false # **	__
 	var md_tag3 := false # ***	___
-	
+#
 	var in_predicate := false
-	var is_bold := false
-	var is_italic := false
-	var color = default
+	var clr_stack := [default]
+	
 	while i < to:
 		if text[i] == "#":
 			break
@@ -347,73 +351,137 @@ func _h_bbcode(from: int, to: int, default: Color):
 				_h_text_list(i+1, end, default)
 				_c(end, C_SYMBOL)
 				# back to normal text color
-				_c(end+1, color)
+				_c(end+1, clr_stack[-1])
 				i = end
 		
+		# predicate start
 		elif text[i] == "(":
 			in_predicate = true
-			color = C_TEXT_PREDICATE
-			if is_bold:
-				color = 4
+			clr_stack[-1].r = C_TEXT_PREDICATE.r
+			clr_stack[-1].g = C_TEXT_PREDICATE.g
+			clr_stack[-1].b = C_TEXT_PREDICATE.b
 			_c(i, C_SYMBOL)
-			_c(i+1, color)
-		
+			_c(i+1, clr_stack[-1])
+		# predicate end
 		elif text[i] == ")":
 			in_predicate = false
-			color = default
-			if is_bold:
-				color.a = 4
 			_c(i, C_SYMBOL)
-			_c(i+1, color)
+			_c(i+1, clr_stack[-1])
 		
+		# bbcode tags
 		elif text[i] == "[":
 			var end := text.find("]", i+1)
+			var added_color := false
 			if end != -1:
+				clr_stack.append(clr_stack[-1])
+				
 				var inner := text.substr(i+1, end-i-1)
 				var off = i + 1
 				var tags := inner.split(";")
 				for tag_index in len(tags):
 					var tag := tags[tag_index]
+					var tag_to := off + len(tag)
 					
+					# 
 					if tag.begins_with("!"):
 						tag = tag.substr(1)
-						_c(off, C_SYMBOL)
+						_c(off, Color.ORANGE_RED)
+						_c(off+1, clr_stack[-1])
 						off += 1
 					
-					elif tag == "":
-						is_bold = false
-						is_italic = false
-						color = default
+					# empty? pop last color tag
+					if tag == "":
+						if len(clr_stack) > 1:
+							clr_stack.pop_back()
+					
+					# colorize action tags
+					# @node action
+					elif tag.begins_with("@"):
+						_h_node_action(off, tag_to, C_NODE_ACTION)
+					# $state action
+					elif tag.begins_with("$"):
+						_h_node_action(off, tag_to, C_STATE_ACTION)
+					# ^persistent state action
+					elif tag.begins_with("^"):
+						_h_node_action(off, tag_to, C_PERSISTENT_ACTION)
+					# ~ eval
+					elif tag.begins_with("~"):
+						_h_eval(off, tag_to)
 					
 					# hacky way of getting bold
 					elif tag == "b":
-						is_bold = true
-						color.a = 4
+						added_color = true
+						clr_stack[-1].a = 4
+					
+					# dim for italic
+					elif tag == "i":
+						added_color = true
+						clr_stack[-1].r = lerp(clr_stack[-1].r, 1.0, 0.33)
+						clr_stack[-1].g = lerp(clr_stack[-1].g, 1.0, 0.33)
+						clr_stack[-1].b = lerp(clr_stack[-1].b, 1.0, 0.33)
+					
+					# hacky way of getting bold
+					elif tag == "bi":
+						added_color = true
+						# bold
+						clr_stack[-1].a = 4
+						# italics
+						clr_stack[-1].r = lerp(clr_stack[-1].r, 1.0, 0.33)
+						clr_stack[-1].g = lerp(clr_stack[-1].g, 1.0, 0.33)
+						clr_stack[-1].b = lerp(clr_stack[-1].b, 1.0, 0.33)
+					
+					# hue shift tag
+					elif tag.begins_with("hue"):
+						added_color = true
+						var amount := 0.5
+						if " " in tag:
+							var amt = tag.split(" ", true, 1)[1]
+							if amt:
+								amount = RichTextLabel2.to_number(amt)
+						var tag_clr := UColor.hue_shift(clr_stack[-1], amount)
+						clr_stack[-1].r = tag_clr.r
+						clr_stack[-1].g = tag_clr.g
+						clr_stack[-1].b = tag_clr.b
+					
+					# dim
+					elif tag.begins_with("dim") or tag.begins_with("lit"):
+						added_color = true
+						var amount := -0.33 if tag.begins_with("dim") else 0.33
+						if " " in tag:
+							var amt = tag.split(" ", true, 1)[1]
+							if amt:
+								amount = RichTextLabel2.to_number(amt)
+						var tag_clr := UColor.val_shift(clr_stack[-1], amount)
+						clr_stack[-1].r = tag_clr.r
+						clr_stack[-1].g = tag_clr.g
+						clr_stack[-1].b = tag_clr.b
 					
 					# color?
-					elif tag_index == len(tags)-1:
-						var tag_clr = UString.str_to_color(tag)
-						if tag_clr != null:
-							color = tag_clr
-							if is_bold:
-								color.a = 4
-					
-					# colorize action tags
-					if UString.begins_with_any(tag, ["~", "@", "$"]):
-						_h_eval(off, off+len(tag))
-					
 					else:
-						_c(off, C_TAG)
+						var tag_clr = UStringConvert.to_color(tag, null)
+						if tag_clr != null:
+							added_color = true
+							clr_stack[-1].r = tag_clr.r
+							clr_stack[-1].g = tag_clr.g
+							clr_stack[-1].b = tag_clr.b
+						
+						# must be a normal tag
+						else:
+							_c(off, C_TAG)
 					
 					off += len(tag)
 					_c(off, C_SYMBOL) # colorize ; seperator
 					off += 1
 				
+				if not added_color and len(clr_stack) > 1:
+					clr_stack.pop_back()
+				
 				# colorize open and close tags
 				_c(i, C_SYMBOL) 	# [ open
 				_c(end, C_SYMBOL)	# ] close
 				# back to normal text color
-				_c(end+1, color)
+				_c(end+1, clr_stack[-1])
+				
 				i = end
 		
 		elif text[i] == Soot.TEXT_INSERT:
@@ -425,7 +493,7 @@ func _h_bbcode(from: int, to: int, default: Color):
 			i += 1
 			while i < to and text[i] in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789":
 				i += 1
-			_c(i, color)
+			_c(i, clr_stack[-1])
 		
 		# markdown: * ** ***
 		elif text[i] == "*":
@@ -437,18 +505,18 @@ func _h_bbcode(from: int, to: int, default: Color):
 					i += 1
 					# bold italic
 					md_tag3 = not md_tag3
-					color.a = 4 if md_tag3 or md_tag2 else 1
-					_c(i, color if md_tag3 else default)
+					clr_stack[-1].a = 4 if md_tag3 or md_tag2 else 1
+					_c(i, clr_stack[-1])# clr_stack[-1] if md_tag3 else default)
 				else:
 					# bold
 					md_tag2 = not md_tag2
-					color.a = 4 if md_tag3 or md_tag2 else 1
-					_c(i, color if md_tag2 else default)
+					clr_stack[-1].a = 4 if md_tag3 or md_tag2 else 1
+					_c(i, clr_stack[-1] if md_tag2 else default)
 			else:
 				# italic
 				md_tag1 = not md_tag1
-				color.a = 0.8 if md_tag1 else 1
-				_c(i, color if md_tag1 else default)
+				clr_stack[-1].a = 0.8 if md_tag1 else 1
+				_c(i, clr_stack[-1] if md_tag1 else default)
 		
 		elif text[i] == "_":
 			_c(i, C_SYMBOL)
@@ -459,28 +527,27 @@ func _h_bbcode(from: int, to: int, default: Color):
 					i += 1
 					# bold italic
 					md_tag3 = not md_tag3
-					color.a = 4 if md_tag3 or md_tag2 else 1
-					_c(i, color if md_tag3 else default)
+					clr_stack[-1].a = 4 if md_tag3 or md_tag2 else 1
+					_c(i, clr_stack[-1] if md_tag3 else default)
 				else:
 					# bold
 					md_tag2 = not md_tag2
-					color.a = 4 if md_tag3 or md_tag2 else 1
-					_c(i, color if md_tag2 else default)
+					clr_stack[-1].a = 4 if md_tag3 or md_tag2 else 1
+					_c(i, clr_stack[-1] if md_tag2 else default)
 			else:
 				# italic
 				md_tag1 = not md_tag1
-				color.a = 0.8 if md_tag1 else 1
-				_c(i, color if md_tag1 else default)
+				clr_stack[-1].a = 0.8 if md_tag1 else 1
+				_c(i, clr_stack[-1] if md_tag1 else default)
 		i += 1
 
 func get_flow_color(deep: int) -> Color:
-	var color := UClr.hue_shift(C_FLOW, .3 * deep)
+	var color := UColor.hue_shift(C_FLOW, .3 * deep)
 	color.v -= .15 * deep
 	return color
 
 func _h_flow(from: int, to: int):
 	var inner := text.substr(from, to-from)
-	
 	var true_deep = _find_true_depth()+1
 	
 	_c(from, C_SYMBOL)
@@ -512,39 +579,12 @@ func _h_flow(from: int, to: int):
 		
 		if not text[i] in " \t":
 			started = true
-		
-	
-#	var head := inner.substr(0, 2)
-#	var tail := inner.substr(2)
-#	prints(head, tail)
-	# => and ==
-#	for tag in [[Soot.FLOW_GOTO, C_FLOW_GOTO], [Soot.FLOW_CALL, C_FLOW_CALL]]:
-#		var i := from
-#		while true:
-#			var j := text.find(tag[0], i)
-#			if j == -1:
-#				break
-#			var color: Color = tag[1]
-#			_c(j, C_SYMBOL)
-#			j += len(tag[0])
-#			_c(j, color)
-#			# colorize path
-#			for i in range(j, len(text)):
-#				if text[i] == ".":
-#					_c(i, C_SYMBOL)
-#					_c(i+1, color)
-#				elif text[i] == "/":
-#					_c(i, C_SYMBOL)
-#					if not i == 0:
-#						color = UClr.hue_shift(color, .2)
-#						color.v -= .1
-#					_c(i+1, color)
-#			break
 
 func _h_properties(from: int, to: int):
-	for part in text.substr(from, to-from).split(" "):
-		_h_var(from, part)
-		from += len(part) + 1
+	var parts := text.substr(from, to-from).split(" ")
+	for i in len(parts):
+		_h_var(from, parts[i], i)
+		from += len(parts[i]) + 1
 
 func _h_line(from: int, to: int):
 	var comment := text.find("# ", from)
@@ -667,12 +707,15 @@ func _h_line(from: int, to: int):
 		
 		# @node action
 		elif part.begins_with("@"):
-			_h_node_action(from, to)
-		
+			_h_node_action(from, to, C_NODE_ACTION)
+		# $state action
+		elif part.begins_with("$"):
+			_h_node_action(from, to, C_STATE_ACTION)
+		# ^persistent state action
+		elif part.begins_with("^"):
+			_h_node_action(from, to, C_PERSISTENT_ACTION)
 		# ~ eval
 		elif part.begins_with("~"):
-			_c(from, C_SYMBOL)
-			from += 1
 			_h_eval(from, to)
 		
 		# options

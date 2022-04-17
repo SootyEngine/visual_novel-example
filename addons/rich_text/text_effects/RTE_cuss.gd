@@ -4,7 +4,22 @@ extends RichTextEffect
 # v2: last letter in each word won't be symbolized.
 
 # Syntax: [cuss][]
-var bbcode = "cuss"
+const bbcode = "cuss"
+
+func _get_method_info(method: String):
+	return {
+		desc="Replace some characters with symbols",
+		kwargs={
+			chars={desc="Characters to use", default=CHARS},
+			replace={desc="Characters to replace", default=VOWELS}
+		}
+#		auto="sin:1.0 freq:1.0 speed:1.0",
+#		kwargs={
+#			sin={desc="Height of curve"},
+#			freq={desc="Width of bobbing across characters"},
+#			speed={desc="Speed of bobbinb"}
+#		}
+	}
 
 const VOWELS := "aeiouAEIOU"
 const CHARS := "&$!@*#%"

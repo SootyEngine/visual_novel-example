@@ -1,5 +1,5 @@
 @tool
-extends Waiter
+extends Node
 class_name Flow
 
 const MAX_STEPS_PER_TICK := 20 # Safety limit, in case of excessive loops.
@@ -9,10 +9,10 @@ signal started() # Dialogue starts up.
 signal ended() # Dialogue has ended.
 signal ended_w_msg(msg: String) # Dialogue has ended, and includes ending msg.
 signal passed_w_msg(msg: String) # A 'pass' was called, and included a msg.
-signal tick() # Step in a stack. May call multiple lines.
+signal step_started() # Step in a stack. May call multiple step.
 signal flow_started(id: String)
 signal flow_ended(id: String)
-signal on_step(step: Dictionary)
+signal stepped(step: Dictionary)
 signal selected(id: String) # used with select_option
 
 @export var _flows := {} # flow meta. flows themselves are in _lines.
@@ -20,6 +20,7 @@ signal selected(id: String) # used with select_option
 
 @export var last_end_message := ""
 @export var current_flow := ""
+@export var _broke := false
 @export var _started := false
 @export var _stack := [] # current stack of flows, so we can return to a position in a previous flow.
 @export var _last_tick_stack := [] # stack of the previous tick, used for saving and rollback.
@@ -62,6 +63,7 @@ func start(id: String):
 	# start dialogue
 	last_line = {}
 	goto(id)
+	step.call_deferred()
 	return true
 
 func can_do(command: String) -> bool:
@@ -103,6 +105,9 @@ func goto(id: String) -> bool:
 func _get_line(id: String) -> Dictionary:
 	return _lines[id]
 
+func goto_and_return(id: String) -> bool:
+	return _goto(id, S_CALL)
+
 func _goto(id: String, step_type: int = S_GOTO) -> bool:
 	if has_path(id):# _has_line(new_id):
 		var new_id := get_flow_path(id)
@@ -121,7 +126,6 @@ func end(msg := ""):
 		last_end_message = msg
 		_started = false
 		_stack.clear()
-		clear_waiting_list()
 		ended.emit()
 		ended_w_msg.emit(msg)
 
@@ -161,23 +165,28 @@ func execute(id: String) -> Variant:
 	if start(id):
 		var safety := 100
 		while safety > 0 and is_active():
-			_tick()
+			step()
 			safety -= 1
-	return {line=last_line, value=last_value}
+		return last_value
+	else:
+		return null
 
-func _tick():
+func break_step(msg := ""):
+	_broke = true
+
+func step():
+	_broke = false
 	if _started:
-		# has finished?
-		if not len(_stack):
-			end()
-		
 		# is start of tick?
-		if len(_stack) and not is_waiting():
+		if len(_stack):# and not _broke:
 			_last_tick_stack = _stack.duplicate(true)
-			tick.emit()
+			step_started.emit()
+		# has finished?
+		else:
+			end()
 	
 	var safety := MAX_STEPS_PER_TICK
-	while _started and len(_stack) and not is_waiting():
+	while _started and len(_stack) and not _broke:
 		safety -= 1
 		if safety <= 0:
 			push_error("Tripped safety! Increase MAX_STEPS_PER_TICK if necessary.", safety)
@@ -190,7 +199,7 @@ func _tick():
 			
 			var line := next_line
 			_on_step(line)
-			on_step.emit(line)
+			stepped.emit(line)
 			
 			match line.type:
 				"goto":
@@ -382,10 +391,10 @@ func get_list_item(id: String, type: String, list: Array) -> String:
 	
 	return ""
 
-func line_has_options(line: Dictionary) -> bool:
+static func line_has_options(line: Dictionary) -> bool:
 	return "options" in line
 
-func line_has_condition(line: Dictionary) -> bool:
+static func line_has_condition(line: Dictionary) -> bool:
 	return "cond" in line
 
 func line_passes_condition(line: Dictionary) -> bool:

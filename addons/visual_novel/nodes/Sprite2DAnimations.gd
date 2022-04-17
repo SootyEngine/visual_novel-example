@@ -1,15 +1,17 @@
 @tool
-extends Sprite2D
+extends "res://addons/visual_novel/nodes/ModulateEffects.gd"
 class_name Sprite2DAnimations
 
 @export var start_hidden := true
 
-@export var tint := Color.WHITE
 @export var unit := 64
-@export var default_scale := Vector2.ONE
-@export var flip_scale := Vector2.ONE:
+
+@export var _flip_scale := Vector2.ONE:
 	set = set_flip
 
+var _xsign: float:
+	get: return sign(_flip_scale.x)
+	
 @export var current_zoom := 1.0:
 	set = set_zoom
 
@@ -28,64 +30,49 @@ class_name Sprite2DAnimations
 @export var origin := Vector2(0.5, 1.0):
 	set = set_origin
 
+@export var seed := URand.v2()
+
 func _get_tool_buttons():
-	return [
+	return super._get_tool_buttons() + [
 		[fade_in, fade_out],
-		{text="Shake In", call=[fade_in, noise]},
 		[
 			noise,
-			{text="Y Noise", call=noise.bind(1, {xscale=0.125, yscale=2.0})},
-			{text="X Noise", call=noise.bind(1, {xscale=2.0, yscale=0.125})}
+			{text="Noise Y", call=noise.bind(1, {xscale=0.125, yscale=2.0})},
+			{text="Noise X", call=noise.bind(1, {xscale=2.0, yscale=0.125})}
 		],
-#	blink,
-#	[blink, noise],
-#	shift,
-#	[fade_in, shift.bind(-1, 0, 0.5, true)],
-#	shift_in,
-	[from_left, from_right, from_top],
+		[noise_in, noise_out, noise_yes, noise_no],
+		[shake_in, shake_out, shake_yes, shake_no],
+	blink,
+	[blink, noise],
+	[shift_left, shift_reset, shift_right],
+	[fade_in, shift.bind(-1, 0)],
+	
+	[from_left, from_right, from_bottom, from_top],
 	
 	flip,
 	
 	[zoom.bind(.9), zoom, zoom.bind(1.1)],
-	[squash.bind(-1.25), squash, squash.bind(1.25)],
-	[lean.bind(-1), lean, lean.bind(1)],
+	[stand, squash, slouch],
+	[lean_left, lean_reset, lean_right],
 	[rotate.bind(-10), rotate, rotate.bind(10)],
 	
 	[laugh, sigh, unsigh, talk, dance, suspicious],
 	[lean_back, gross],
 	
-	[shake_yes, shake_no],
+	
 	[breath, pant, stop, woozy],
+	reset
 	
 #	trans.bind(preload("res://chars/20170305_concierge-female.png")),
 #	trans.bind(preload("res://chars/20191124_man4.png")),
 	
-	[white_in, black_in, radiate]
+	
 ]
-
-var _tween: Tween
-var _tween_frame: int
 
 # will prevent dialogue stack from running until all tweens finish.
 func wait():
-	Dialogue.wait(self)
-	_tween.tween_callback(Dialogue.unwait.bind(self))
-
-func white_in(kwargs := {}):
-	var t := _create()
-	var clr = UString.str_to_color(kwargs.get("color", "white"))
-	clr.r *= 200.0
-	clr.g *= 200.0
-	clr.b *= 200.0
-	t.tween_property(self, "modulate", Color.WHITE, 0.5).from(clr)\
-		.set_trans(Tween.TRANS_EXPO)\
-		.set_ease(Tween.EASE_OUT)
-
-func black_in(kwargs := {}):
-	var t := _create()
-	t.tween_property(self, "modulate", Color.WHITE, kwargs.get("time", 1.0)).from(Color.BLACK)#\
-#		.set_trans(Tween.TRANS_EXPO)\
-#		.set_ease(Tween.EASE_OUT)
+	VisualNovel.wait(self)
+	_tween.tween_callback(VisualNovel.unwait.bind(self))
 
 func flip():
 	var t := _create()
@@ -97,37 +84,42 @@ func hide():
 func show():
 	modulate.a = 1.0
 
-func radiate():
-	var t := _create()
-	t.tween_property(self, "modulate:g", 1.0, 0.5).from(100.0)\
-		.set_trans(Tween.TRANS_EXPO)\
-		.set_ease(Tween.EASE_OUT)
+func reset():
+	squash()
+	lean()
+	zoom()
+	do_rotate()
 
-func fade_in():
+func from_left(units := 1.0):
 	var t := _create()
 	modulate = Color.TRANSPARENT
-	_add_color(t, Color.WHITE)
-
-func fade_out():
-	var t := _create()
-	_add_color(t, Color.TRANSPARENT)
-
-func from_left():
-	var t := _create().set_parallel()
-	modulate = Color.TRANSPARENT
-	current_shift = Vector2(unit * 6, 0)
+	current_shift = Vector2(unit * -units, 0)
 	_add_color(t, Color.WHITE, {ease=Tween.EASE_OUT})
 	_add_shift(t, 0, 0, {ease=Tween.EASE_OUT, trans=Tween.TRANS_QUINT})
 
-func from_right():
-	var t := _create().set_parallel()
+func from_right(units := 1.0):
+	var t := _create()
 	modulate = Color.TRANSPARENT
-	current_shift = Vector2(unit * -6, 0)
+	current_shift = Vector2(unit * units, 0)
 	_add_color(t, Color.WHITE, {ease=Tween.EASE_OUT})
 	_add_shift(t, 0, 0, {ease=Tween.EASE_OUT, trans=Tween.TRANS_QUINT})
 
-func from_top():
-	var t := _create().set_parallel()
+func from_top(units := 1.0):
+	var t := _create()
+	modulate = Color.TRANSPARENT
+	current_shift = Vector2(0, -unit * units)
+	_add_color(t, Color.WHITE, {ease=Tween.EASE_OUT})
+	_add_shift(t, 0, 0, {ease=Tween.EASE_OUT, trans=Tween.TRANS_QUINT})
+
+func from_bottom(units := 1.0):
+	var t := _create()
+	modulate = Color.TRANSPARENT
+	current_shift = Vector2(0, unit * units)
+	_add_color(t, Color.WHITE, {ease=Tween.EASE_OUT})
+	_add_shift(t, 0, 0, {ease=Tween.EASE_OUT, trans=Tween.TRANS_QUINT})
+
+func dropped():
+	var t := _create()
 	modulate = Color.TRANSPARENT
 	current_shift = Vector2(0, unit * -6)
 	_add_color(t, Color.WHITE, {ease=Tween.EASE_OUT})
@@ -135,7 +127,6 @@ func from_top():
 
 func laugh():
 	var t := _create()
-	t.set_parallel()
 	_add_shake(t, 0.5, {ytimes=4.0, yscale=0.5})
 	_add_rotate(t, -4.0)
 	_add_squash(t, -1)
@@ -144,24 +135,28 @@ func laugh():
 
 func suspicious():
 	var t := _create()
-	t.set_parallel()
 	_add_flip(t, -1)
 	t.chain()
-	_add_squash(t, 2.0)
-	_add_lean(t, -1)
-	t.chain()
-	_add_squash(t, 0.0)
-	_add_lean(t, 0.0)
+#	_add_squash(t, 2.0)
+	_add_lean(t, -0.5)
+#	t.chain()
+##	_add_squash(t, 0.0)
+#	_add_lean(t, 0.0)
+	
 	t.chain()
 	_add_flip(t, 1)
 	t.chain()
-	_add_squash(t, 2.0)
-	_add_lean(t, 1.0)
+#	_add_squash(t, 2.0)
+	_add_lean(t, 0.5)
 	t.chain()
-	_add_squash(t, 0.0)
+#	_add_squash(t, 0.0)
 	_add_lean(t, 0.0)
 	t.chain()
 	_add_flip(t, -1)
+
+func lean_left(): lean(-1)
+func lean_right(): lean(1)
+func lean_reset(): lean()
 
 func lean_back():
 	var t := _create()
@@ -173,7 +168,7 @@ func lean_back():
 func gross():
 	var t := _create()
 	_add_shift(t, -4.0, 0.0, {time=0.5})
-	_add_lean(t, 2.0 * -sign(flip_scale.x), {time=0.5})
+	_add_lean(t, 2.0 * _xsign, {time=0.5})
 	_add_blink(t, Color.TOMATO)
 	t.chain()
 	_add_shift(t, 0.0, 0.0, {time=0.5})
@@ -198,17 +193,17 @@ func woozy(kwargs := {}):
 	t.chain()
 	t.tween_callback(set_material.bind(null))
 
-func trans(next: Texture):
-	var mat = load("res://addons/visual_novel/nodes/sprite_2d_animations/trans.tres")
-	mat.set_shader_param("blend", 0.0)
-	mat.set_shader_param("next", next)
-	var t := _create()
-	t.tween_callback(set_material.bind(mat))
-	t.tween_method(func(x):
-		mat.set_shader_param("blend", x),
-		0.0, 1.0, 0.5)
-	t.tween_callback(set_texture.bind(next))
-	t.tween_callback(set_material.bind(null))
+#func trans(next: Texture):
+#	var mat = load("res://addons/visual_novel/nodes/sprite_2d_animations/trans.tres")
+#	mat.set_shader_param("blend", 0.0)
+#	mat.set_shader_param("next", next)
+#	var t := _create()
+#	t.tween_callback(set_material.bind(mat))
+#	t.tween_method(func(x):
+#		mat.set_shader_param("blend", x),
+#		0.0, 1.0, 0.5)
+#	t.tween_callback(set_texture.bind(next))
+#	t.tween_callback(set_material.bind(null))
 
 func dance(amount := 0.5, kwargs := {}):
 	var t := _create()
@@ -224,23 +219,6 @@ func talk(dir := 1.1):
 	_add_squash(t, dir)
 	_add_squash(t.chain(), 0.0)
 
-func _create(kwargs := {}) -> Tween:
-	var t_frame := get_tree().get_frame()
-	if t_frame == _tween_frame:
-		return _tween
-	
-	if _tween and _tween_frame:
-		_tween.kill()
-	_tween = get_tree().create_tween()
-	_tween.bind_node(self)
-	_tween.set_parallel(true)
-	_tween_frame = t_frame
-	
-	if "loop" in kwargs:
-		_tween.set_loops(kwargs.loop)
-	
-	return _tween
-
 func sigh():
 	var t := _create()
 	_add_squash(t, -.2, {time=0.25, trans="linear", ease="out"})
@@ -250,6 +228,34 @@ func unsigh():
 	var t := _create()
 	_add_squash(t, 0.0, {trans="linear", ease="out"})
 	_add_squash(t.chain(), 1.25, {time=2.0})
+
+func noise_in():
+	fade_in()
+	noise_from()
+
+func noise_out():
+	fade_out()
+	noise_to()
+
+func noise_yes():
+	var t := _create()
+	_add_shake(t.chain(), 0.5, {yscale=1.0, ytimes=3, xscale=0.0})
+	_add_noise(t, 0.5, 0.0, 1.0, {turb=2})
+	_add_blink(t, Color.AQUAMARINE)
+
+func noise_no():
+	var t := _create()
+	_add_shake(t.chain(), 0.5, {yscale=0.0, xtimes=3, xscale=1.0})
+	_add_noise(t, 0.5, 0.0, 1.0, {turb=2})
+	_add_blink(t, Color.TOMATO)
+
+func shake_in():
+	fade_in()
+	_add_shake(_create(), 0.5, {xscale=1.0, off=false, xtimes=4, yscale=0.0})
+
+func shake_out():
+	fade_out()
+	_add_shake(_create(), 0.5, {xscale=1.0, off=true, xtimes=4, yscale=0.0})
 
 func shake_yes():
 	var t := _create()
@@ -277,23 +283,24 @@ func stop():
 	if _tween:
 		_tween.kill()
 
-func _add_color(t: Tween, c := Color.WHITE, kwargs := {}):
-	t.tween_property(self, "modulate", c, kwargs.get("time", 1.0))\
-		.set_trans(UTween.find_trans(kwargs.get("trans", Tween.TRANS_LINEAR)))\
-		.set_ease(UTween.find_ease(kwargs.get("ease", Tween.EASE_IN_OUT)))
-
 func noise(power := 1.0, kwargs := {}):
-	_add_noise(_create(), power, kwargs)
+	_add_noise(_create(), power, 0.0, 1.0, kwargs)
 
-func _add_noise(t: Tween, power := 1.0, kwargs := {}):
-	return t.tween_method(_noise.bind(power, kwargs), 0.0, 1.0, kwargs.get("time", 1.0))\
+func noise_from(power := 1.0, kwargs := {}):
+	_add_noise(_create(), power, 0.5, 1.0, kwargs)
+
+func noise_to(power := 1.0, kwargs := {}):
+	_add_noise(_create(), power, 0.0, 0.5, kwargs)
+
+func _add_noise(t: Tween, power := 1.0, from := 0.0, to := 1.0, kwargs := {}):
+	return t.tween_method(_noise.bind(power, kwargs), from, to, kwargs.get("time", 1.0))\
 		.set_trans(UTween.find_trans(kwargs.get("trans", Tween.TRANS_LINEAR)))\
 		.set_ease(UTween.find_ease(kwargs.get("ease", Tween.EASE_IN_OUT)))
 
 func _noise(t: float, power: float, kwargs: Dictionary):
 	t = 1.0 - absf(t - 0.5) * 2.0
 	t *= t # smoothing.
-	var n := URand.noise_animated_v2(position, kwargs.get("turb", 1.0))
+	var n := URand.noise_animated_v2(seed, kwargs.get("turb", 1.0))
 	n.x *= kwargs.get("xscale", 1.0) as float
 	n.y *= kwargs.get("yscale", 1.0) as float
 	n *= kwargs.get("unit", unit) as float
@@ -304,25 +311,31 @@ func shake(power := 1.0, kwargs := {}):
 	_add_shake(_create(), power, kwargs)
 
 func _add_shake(t: Tween, power := 1.0, kwargs := {}):
-	return t.tween_method(_shake.bind(power, kwargs), 0.0, 1.0, kwargs.get("time", 1.0)).set_trans(Tween.TRANS_SINE)
+	return t.tween_method(_shake.bind(power, kwargs), 0.0, 1.0, kwargs.get("time", 1.0))\
+		.set_trans(Tween.TRANS_SINE)
 
 func _shake(t: float, power: float, kwargs: Dictionary):
-	var sh := Vector2(
-		sin(t * kwargs.get("xtimes", 2.0) * -TAU),
-		sin(t * kwargs.get("ytimes", 2.0) * -TAU))
+	var sh := Vector2.ZERO
+	if "off" in kwargs:
+		var s := (t if kwargs.off else (1.0-t))
+		sh.x = sin(t * kwargs.get("xtimes", 2.0) * -TAU) * s
+		sh.y = sin(t * kwargs.get("ytimes", 2.0) * -TAU) * s
+	else:
+		sh.x = sin(t * kwargs.get("xtimes", 2.0) * -TAU)
+		sh.y = sin(t * kwargs.get("ytimes", 2.0) * -TAU)
 	sh *= power * unit
 	sh.x *= kwargs.get("xscale", 1.0) as float
 	sh.y *= kwargs.get("yscale", 0.0) as float
 	current_shake = sh
 
-func blink(color: Variant = Color.TOMATO, kwargs := {}):
-	_add_blink(_create(), color, kwargs)
+func shift_left(units := 1, kwargs := {}):
+	shift(-units, 0, kwargs)
 
-func _add_blink(t: Tween, color: Variant = Color.TOMATO, kwargs := {}):
-	t.tween_method(_blink.bind(color, kwargs), 0.0, 1.0, kwargs.get("time", 1.0))
+func shift_right(units := 1, kwargs := {}):
+	shift(units, 0, kwargs)
 
-func _blink(t: float, color: Color, kwargs: Dictionary):
-	modulate = tint.lerp(color, pingpong(t * kwargs.get("count", 1.0) * 2.0, 1.0))
+func shift_reset(kwargs := {}):
+	shift(0, 0, kwargs)
 
 func shift(x := 0.0, y := 0.0, kwargs := {}):
 	_add_shift(_create(), x, y, kwargs)
@@ -333,21 +346,19 @@ func _add_shift(t: Tween, x := 0.0, y := 0.0, kwargs := {}):
 		.set_trans(UTween.find_trans(kwargs.get("trans", Tween.TRANS_BACK)))\
 		.set_ease(UTween.find_ease(kwargs.get("ease", Tween.EASE_IN_OUT)))
 
-func shift_in(x := 0.0, y := 0.0, dur := 0.5, from_start := true, kwargs := {}):
-	var t := _create()
-	var v := Vector2(x, y) * (kwargs.get("unit", unit) as float)
-	t.tween_property(self, "current_shift", Vector2.ZERO, dur)\
-		.from(v if from_start else current_shift)\
-		.set_trans(UTween.find_trans(kwargs.get("trans", Tween.TRANS_BACK)))\
-		.set_ease(UTween.find_ease(kwargs.get("ease", Tween.EASE_IN_OUT)))
-
 func zoom(to := 1.0, kwargs := {}):
 	var t := _create()
 	t.tween_method(set_zoom, current_zoom, to, kwargs.get("time", 1.0))\
 		.set_trans(UTween.find_trans(kwargs.get("trans", Tween.TRANS_BACK)))\
 		.set_ease(UTween.find_ease(kwargs.get("ease", Tween.EASE_IN_OUT)))
 	return t
-	
+
+func stand():
+	squash(-1.25)
+
+func slouch():
+	squash(1.25)
+
 func squash(x := 0.0, kwargs := {}):
 	_add_squash(_create(), x, kwargs)
 
@@ -356,8 +367,8 @@ func _add_squash(t: Tween, x := 0.0, kwargs := {}):
 		.set_trans(UTween.find_trans(kwargs.get("trans", Tween.TRANS_BACK)))\
 		.set_ease(UTween.find_ease(kwargs.get("ease", Tween.EASE_IN_OUT)))
 
-func _add_flip(t: Tween, f: float = -sign(flip_scale.x)):
-	return t.tween_property(self, "flip_scale:x", f, 0.125)\
+func _add_flip(t: Tween, f: float = _xsign):
+	return t.tween_property(self, "_flip_scale:x", f, 0.125)\
 		.set_trans(Tween.TRANS_BACK)\
 		.set_ease(Tween.EASE_OUT)
 
@@ -368,11 +379,11 @@ func _add_lean(t: Tween, l := 0.0, kwargs := {}):
 	t.tween_property(self, "skew", l * .1, kwargs.get("time", 1.0))\
 		.set_trans(Tween.TRANS_BACK)
 
-func rotate(x := 0.0, time := 0.5):
-	_add_rotate(_create(), x, time)
+func do_rotate(amount := 0.0, kwargs := {}):
+	_add_rotate(_create(), amount, kwargs)
 
-func _add_rotate(t: Tween, x := 0.0, time := 0.5):
-	t.tween_property(self, "rotation", deg2rad(x), time).set_trans(Tween.TRANS_BACK)
+func _add_rotate(t: Tween, amount := 0.0, kwargs := {}):
+	t.tween_property(self, "rotation", deg2rad(amount), kwargs.get("time", 1.0)).set_trans(Tween.TRANS_BACK)
 
 func set_shake(n: Vector2):
 	current_shake = n
@@ -391,7 +402,7 @@ func set_zoom(z: float):
 	_update_scale()
 
 func set_flip(f: Vector2):
-	flip_scale = f
+	_flip_scale = f
 	_update_scale()
 
 func set_origin(o: Vector2):
@@ -405,13 +416,13 @@ func set_squish(x: float):
 
 func _update_scale():
 	var s := current_squish + 1.0
-	scale = default_scale * flip_scale * Vector2(s, 1.0 / s) * current_zoom
+	scale = _flip_scale * Vector2(s, 1.0 / s) * current_zoom
 
 func _update_offset():
-	var s := texture.get_size()
-	offset = -origin * s
-	offset += current_noise
-	offset += current_shake
-	offset += current_shift
-	if centered:
-		offset += s * .5
+	var s = self.texture.get_size()
+	position = -origin * s
+	position += current_noise
+	position += current_shake
+	position += current_shift
+	if self.centered:
+		position += s * .5

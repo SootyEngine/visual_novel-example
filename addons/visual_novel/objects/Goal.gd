@@ -1,6 +1,5 @@
 extends Data
-class_name Goal
-
+class_name Goal, "res://addons/visual_novel/icons/goal.png"
 func get_class() -> String:
 	return "Goal"
 
@@ -58,15 +57,8 @@ func _sub_state_changed(sub: Goal):
 		if get_total_complete_required() >= get_total_required():
 			complete()
 
-func get_required() -> Array[Goal]:
-	var all := State._get_all_of_type(Goal)
-	var out := []
-	for k in requires:
-		if k in all:
-			out.append(all[k])
-		else:
-			push_error("No quest %s. %s" % [k, all])
-	return out
+func get_required() -> Array:
+	return get_database().get_many(requires)
 
 var is_completed: bool:
 	get: return state == GOAL_COMPLETED
@@ -109,9 +101,3 @@ func start(force := false):
 func complete():
 	if state != GOAL_COMPLETED:
 		state = GOAL_COMPLETED
-
-static func exists(id: String) -> bool:
-	return State._has_of_type(id, Goal)
-
-static func get_all() -> Dictionary:
-	return State._get_all_of_type(Goal)

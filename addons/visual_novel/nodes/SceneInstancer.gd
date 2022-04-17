@@ -5,11 +5,11 @@ extends Node
 @export var scene_id := ""
 
 func _ready() -> void:
-	Mods.loaded.connect(_recreate)
+	ModManager.loaded.connect(_recreate)
 
 func _recreate():
 	UNode.remove_children(self)
-	if Scene.has(scene_id):
-		Scene.create(scene_id, self)
+	if SceneManager.has(scene_id):
+		SceneManager.create(scene_id, self)
 	else:
 		push_error("No scene '%s'." % scene_id)

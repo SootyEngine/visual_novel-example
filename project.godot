@@ -15,9 +15,9 @@ _global_script_classes=[{
 "path": "res://addons/visual_novel/objects/Award.gd"
 }, {
 "base": "DataManager",
-"class": &"Awards",
+"class": &"AwardManager",
 "language": &"GDScript",
-"path": "res://addons/visual_novel/objects/Awards.gd"
+"path": "res://addons/visual_novel/objects/AwardManager.gd"
 }, {
 "base": "Node",
 "class": &"BaseState",
@@ -35,9 +35,9 @@ _global_script_classes=[{
 "path": "res://addons/visual_novel/objects/Character.gd"
 }, {
 "base": "DataManager",
-"class": &"Characters",
+"class": &"CharacterManager",
 "language": &"GDScript",
-"path": "res://addons/visual_novel/objects/Characters.gd"
+"path": "res://addons/visual_novel/objects/CharacterManager.gd"
 }, {
 "base": "ConfigFile",
 "class": &"Config",
@@ -49,7 +49,7 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://addons/sooty_engine/common/Data.gd"
 }, {
-"base": "Resource",
+"base": "RefCounted",
 "class": &"DataManager",
 "language": &"GDScript",
 "path": "res://addons/sooty_engine/common/DataManager.gd"
@@ -84,15 +84,15 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://addons/visual_novel/objects/Equipment.gd"
 }, {
-"base": "DataManager",
+"base": "Data",
 "class": &"EquipmentSlot",
 "language": &"GDScript",
 "path": "res://addons/visual_novel/objects/EquipmentSlot.gd"
 }, {
 "base": "DataManager",
-"class": &"EquipmentSlots",
+"class": &"EquipmentSlotManager",
 "language": &"GDScript",
-"path": "res://addons/visual_novel/objects/EquipmentSlots.gd"
+"path": "res://addons/visual_novel/objects/EquipmentSlotManager.gd"
 }, {
 "base": "Node",
 "class": &"Fader",
@@ -104,7 +104,7 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://addons/sooty_engine/common/FileModifiedScanner.gd"
 }, {
-"base": "Waiter",
+"base": "Node",
 "class": &"Flow",
 "language": &"GDScript",
 "path": "res://addons/sooty_engine/common/Flow.gd"
@@ -120,34 +120,44 @@ _global_script_classes=[{
 "path": "res://addons/visual_novel/objects/Goal.gd"
 }, {
 "base": "DataManager",
-"class": &"Goals",
+"class": &"GoalManager",
 "language": &"GDScript",
-"path": "res://addons/visual_novel/objects/Goals.gd"
+"path": "res://addons/visual_novel/objects/GoalManager.gd"
+}, {
+"base": "RefCounted",
+"class": &"Grammar",
+"language": &"GDScript",
+"path": "res://addons/visual_novel/objects/Grammar.gd"
 }, {
 "base": "Data",
 "class": &"Inventory",
 "language": &"GDScript",
 "path": "res://addons/visual_novel/objects/Inventory.gd"
 }, {
-"base": "RefCounted",
+"base": "PatchableData",
 "class": &"InventoryItem",
 "language": &"GDScript",
 "path": "res://addons/visual_novel/objects/InventoryItem.gd"
 }, {
 "base": "PatchableData",
-"class": &"ItemInfo",
+"class": &"Item",
 "language": &"GDScript",
-"path": "res://addons/visual_novel/objects/ItemInfo.gd"
+"path": "res://addons/visual_novel/objects/Item.gd"
 }, {
 "base": "DataManager",
-"class": &"ItemInfos",
+"class": &"ItemManager",
 "language": &"GDScript",
-"path": "res://addons/visual_novel/objects/ItemInfos.gd"
+"path": "res://addons/visual_novel/objects/ItemManager.gd"
 }, {
 "base": "PatchableData",
 "class": &"Location",
 "language": &"GDScript",
 "path": "res://addons/visual_novel/objects/Location.gd"
+}, {
+"base": "DataManager",
+"class": &"LocationManager",
+"language": &"GDScript",
+"path": "res://addons/visual_novel/objects/LocationManager.gd"
 }, {
 "base": "Resource",
 "class": &"Markdown",
@@ -204,7 +214,7 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://addons/visual_novel/nodes/SootScene.gd"
 }, {
-"base": "Sprite2D",
+"base": "Node2D",
 "class": &"Sprite2DAnimations",
 "language": &"GDScript",
 "path": "res://addons/visual_novel/nodes/Sprite2DAnimations.gd"
@@ -213,6 +223,11 @@ _global_script_classes=[{
 "class": &"SpriteTransitions",
 "language": &"GDScript",
 "path": "res://addons/visual_novel/shaders/SpriteTransition.gd"
+}, {
+"base": "RefCounted",
+"class": &"UClass",
+"language": &"GDScript",
+"path": "res://addons/util/UClass.gd"
 }, {
 "base": "RefCounted",
 "class": &"UClr",
@@ -280,6 +295,11 @@ _global_script_classes=[{
 "path": "res://addons/util/UString.gd"
 }, {
 "base": "RefCounted",
+"class": &"UStringConvert",
+"language": &"GDScript",
+"path": "res://addons/util/UStringConvert.gd"
+}, {
+"base": "RefCounted",
 "class": &"UTime",
 "language": &"GDScript",
 "path": "res://addons/util/UTime.gd"
@@ -305,34 +325,36 @@ _global_script_classes=[{
 "path": "res://addons/sooty_engine/common/Waiter.gd"
 }]
 _global_script_class_icons={
-"Award": "",
-"Awards": "",
+"Award": "res://addons/visual_novel/objects/Award.gd",
+"AwardManager": "",
 "BaseState": "",
 "Bool": "",
-"Character": "",
-"Characters": "",
+"Character": "res://addons/visual_novel/icons/person.png",
+"CharacterManager": "res://addons/visual_novel/icons/people.png",
 "Config": "",
 "Data": "",
-"DataManager": "",
+"DataManager": "res://addons/visual_novel/icons/database.png",
 "DataParser": "",
-"DateTime": "",
+"DateTime": "res://addons/sooty_engine/icons/datetime.png",
 "DialogueParser": "",
 "DialogueTools": "",
 "Emoji": "",
 "Equipment": "",
 "EquipmentSlot": "",
-"EquipmentSlots": "",
+"EquipmentSlotManager": "",
 "Fader": "",
 "FileModifiedScanner": "",
 "Flow": "",
 "FontHelper": "",
-"Goal": "",
-"Goals": "",
-"Inventory": "",
-"InventoryItem": "",
-"ItemInfo": "",
-"ItemInfos": "",
-"Location": "",
+"Goal": "res://addons/visual_novel/icons/goal.png",
+"GoalManager": "",
+"Grammar": "",
+"Inventory": "res://addons/visual_novel/icons/inventory.png",
+"InventoryItem": "res://addons/visual_novel/icons/item.png",
+"Item": "res://addons/visual_novel/icons/item.png",
+"ItemManager": "",
+"Location": "res://addons/visual_novel/icons/location.png",
+"LocationManager": "res://addons/visual_novel/icons/locations.png",
 "Markdown": "",
 "ModInfo": "",
 "Note": "",
@@ -346,6 +368,7 @@ _global_script_class_icons={
 "SootScene": "",
 "Sprite2DAnimations": "",
 "SpriteTransitions": "",
+"UClass": "",
 "UClr": "",
 "UDebug": "",
 "UDict": "",
@@ -359,6 +382,7 @@ _global_script_class_icons={
 "URand": "",
 "UScript": "",
 "UString": "",
+"UStringConvert": "",
 "UTime": "",
 "UTween": "",
 "UTween2D": "",
@@ -372,26 +396,6 @@ config/name="sooty_example"
 run/main_scene="res://scenes/dummy.tscn"
 config/icon="res://chars/godette/face_confused.webp"
 config/features=PackedStringArray("4.0", "Vulkan Clustered")
-
-[autoload]
-
-VisualNovel="*res://addons/visual_novel/autoloads/VisualNovel.gd"
-VisualNovelUI="*res://addons/visual_novel/autoloads/VisualNovelUI.tscn"
-Global="*res://addons/sooty_engine/autoloads/Global.gd"
-Mods="*res://addons/sooty_engine/autoloads/Mods.gd"
-Settings="*res://addons/sooty_engine/autoloads/Settings.gd"
-Scene="*res://addons/sooty_engine/autoloads/Scene.gd"
-Saver="*res://addons/sooty_engine/autoloads/Saver.gd"
-Persistent="*res://addons/sooty_engine/autoloads/Persistent.gd"
-State="*res://addons/sooty_engine/autoloads/State.gd"
-StringAction="*res://addons/sooty_engine/autoloads/StringAction.gd"
-Music="*res://addons/sooty_engine/autoloads/Music.gd"
-SFX="*res://addons/sooty_engine/autoloads/SFX.gd"
-Dialogue="*res://addons/sooty_engine/autoloads/Dialogue.gd"
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/rich_text/plugin.cfg", "res://addons/sooty_engine/plugin.cfg", "res://addons/tool_button/plugin.cfg", "res://addons/visual_novel/plugin.cfg")
 
 [input]
 

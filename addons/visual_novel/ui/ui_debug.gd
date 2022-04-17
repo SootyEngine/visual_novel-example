@@ -19,10 +19,10 @@ func _ready() -> void:
 	$VBoxContainer/HBoxContainer/filter.text_changed.connect(_filter_changed)
 	State.changed.connect(_changed)
 	Persistent.changed.connect(_changed)
-	Mods.loaded.connect(_changed)
+	ModManager.loaded.connect(_changed)
 
 func _force_reload():
-	Mods._load_mods()
+	ModManager._load_mods()
 
 func _toggle_persistent(t):
 	persistent = t

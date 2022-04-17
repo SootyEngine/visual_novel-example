@@ -32,7 +32,7 @@ func captioner(id: String):
 
 func show_caption(from: String, text: String, kwargs := {}):
 	if enabled:
-		Dialogue.wait(self)
+		VisualNovel.wait(self)
 		_delay_action()
 		
 		if not visible:
@@ -46,7 +46,7 @@ func show_caption(from: String, text: String, kwargs := {}):
 
 func hide_caption():
 	if enabled:
-		Dialogue.unwait(self)
+		VisualNovel.unwait(self)
 
 func _delay_action():
 	_can_skip = false

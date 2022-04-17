@@ -218,7 +218,7 @@ static func _is_list_item(s: String) -> bool:
 	return s.begins_with("- ") or s == "-"
 
 # attempt to display data as a .soda file
-static func dict_to_str(dict: Dictionary, with_type := false, strip := false, allow_flat := false) -> String:
+static func dict_to_str(dict: Dictionary, with_type := false, strip := false, allow_flat := true) -> String:
 	var out := []
 	dict = dict.duplicate(true)
 	if strip:
@@ -307,9 +307,9 @@ static func patch_to_var(patch: Variant, sources: Array, explicit_type := -1) ->
 			var line: String = info[1]
 			var data: String = info[2]
 			if explicit_type != -1:
-				return UString.str_to_type(data, explicit_type)
+				return UStringConvert.to_type(data, explicit_type)
 			else:
-				return UString.str_to_var(data)
+				return UStringConvert.to_var(data)
 		TYPE_DICTIONARY:
 			var out := {}
 			for k in patch:
@@ -360,7 +360,7 @@ static func patch(target: Object, patch: Dictionary, sources: Array):
 							push_error("No _patch_list_object() in %s. Ignoring %s." % [target, patch_to_var(list_item_patch, sources)])
 					
 					elif list_item_patch is Array:
-						push_error("Not implemented.")
+						push_error("Array patching not implemented yet.")
 					
 					else:
 						if target.has_method("_patch_list_property"):

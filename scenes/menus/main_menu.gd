@@ -11,14 +11,14 @@ func _ready() -> void:
 
 func _is_visible(id: String) -> bool:
 	match id:
-		"continue": return Saver.has_last_save()
+		"continue": return SaveManager.has_last_save()
 		_: return true
 
 func _pressed(id: String):
 	match id:
-		"continue": Saver.load_last_save()
+		"continue": SaveManager.load_last_save()
 		"start": Global.start()
-		"load": Scene.goto("load_game_menu")
+		"load": SceneManager.goto("load_game_menu")
 		"quit": Global.quit()
 	
 	grab_focus()

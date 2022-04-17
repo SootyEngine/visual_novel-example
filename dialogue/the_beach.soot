@@ -46,6 +46,8 @@
 				godette (talk): I should go home.
 				@godette.fade_out
 			
+				@Music.play 
+			
 			--- Go to daytime. {{$beach_is_night}}
 				~$beach_is_night = false
 				Here comes the sun!

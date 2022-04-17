@@ -14,6 +14,7 @@ func _init() -> void:
 	add_to_group("@.reset_list")
 	selected.connect(_choose)
 
+
 # check if a choise was made
 func chose(id: String) -> bool:
 	return states.get(id, 0) > 0
@@ -30,21 +31,18 @@ func _ready() -> void:
 	reloaded.connect(_reloaded)
 	
 	await get_tree().process_frame
-	Mods.load_all.connect(_load_mods)
+	ModManager.load_all.connect(_load_mods)
 
 func _files_modified(file_scanner: FileModifiedScanner):
 	file_scanner.update_times()
-	Mods._load_mods()
-
-func _process(_delta: float) -> void:
-	_tick()
+	ModManager._load_mods()
 
 func _on_step(step: Dictionary):
 	match step.type:
 		"text": caption.emit(step.text, step)
 
 func _reloaded():
-	clear_waiting_list()
+#	clear_waiting_list()
 	_stack = _last_tick_stack.duplicate(true)
 
 func _load_mods(mods: Array):
@@ -91,9 +89,3 @@ func _load_mods(mods: Array):
 	var memory_used = OS.get_static_memory_usage() - memory_before
 	prints("Dialogues:", String.humanize_size(memory_used))
 
-#func find(id: String) -> Dialogue:
-#	if id in cache:
-#		return cache[id]
-#	else:
-#		UString.push_error_similar("No dialogue %s." % id, id, cache.keys())
-#		return null

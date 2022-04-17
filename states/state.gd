@@ -1,27 +1,35 @@
+@tool
 extends Node
 
-var item_info := ItemInfos.new()
-var equipment_slots := EquipmentSlots.new()
-var characters := Characters.new()
+#var awards := AwardManager.new()
+var items: ItemManager = ItemManager.new()
+var equipment_slots := EquipmentSlotManager.new()
+var characters := CharacterManager.new({
+	godot = Character.new({name="Godot", color=Color.DEEP_SKY_BLUE}),
+	godette = {name="Godette", color=Color.SKY_BLUE},
+	godot_game_engine = Character.new({name="Godot Game Engine", color=Color.DEEP_SKY_BLUE}),
+	sooty = Character.new({name="Sooty", color=Color.DARK_GRAY}),
+	mr_bool = Character.new({name="Mr. Bool", color=Color.BURLYWOOD}),
+	chris = Character.new({name="Chris", color=Color.DEEP_SKY_BLUE}),
+	paul = {
+		name="Paul",
+		color=Color.GREEN_YELLOW,
+		items=Inventory.new()
+	},
+	john = Character.new({name="John", color=Color.TOMATO})
+})
+
+var areas := LocationManager.new({
+	zone = Location.new({name="The Zone", color=Color.TEAL})
+})
 
 var beach_is_night := false
 var save_caption := "The Quest"
 
 var score := 0
 
-var godot := Character.new({name="Godot", color=Color.DEEP_SKY_BLUE})
-var godette := Character.new({name="Godette", color=Color.SKY_BLUE})
-var godot_game_engine := Character.new({name="Godot Game Engine", color=Color.DEEP_SKY_BLUE})
 
-var sooty := Character.new({name="Sooty", color=Color.DARK_GRAY})
 
-var mr_bool := Character.new({name="Mr. Bool", color=Color.BURLYWOOD})
-
-var chris := Character.new({name="Chris", color=Color.DEEP_SKY_BLUE})
-var paul := Character.new({name="Paul", color=Color.GREEN_YELLOW})
-var john := Character.new({name="John", color=Color.TOMATO})
-
-var zone := Location.new({name="The Zone", color=Color.TEAL})
 
 #func _init() -> void:
 #	Saver._get_state_info.connect(_get_state_info)

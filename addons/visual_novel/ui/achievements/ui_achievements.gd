@@ -9,10 +9,10 @@ func _ready() -> void:
 	parent.remove_child(prefab)
 	
 	await get_tree().process_frame
-	Mods.loaded.connect(_connect)
+	ModManager.loaded.connect(_connect)
 
 func _connect():
-	var awards: Awards = Persistent.awards
+	var awards: AwardDatabase = Database.get_database(Award)
 	awards.unlocked.connect(_update)
 	awards.progress.connect(_update)
 	_update()
@@ -22,8 +22,9 @@ func _update(_x=null):
 		parent.remove_child(child)
 		child.queue_free()
 	
-	for id in Persistent.awards:
-		var a: Award = Persistent.awards[id]
+	var awards: AwardDatabase = Database.get_database(Award)
+	for id in awards:
+		var a: Award = awards[id]
 		var btn = prefab.duplicate()
 		parent.add_child(btn)
 		btn.get_child(0)._setup(a)

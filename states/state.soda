@@ -1,0 +1,52 @@
+# shortcuts
+~~p: characters.james
+~~inv: characters.james.items
+
+items:
+	coin:
+		name: Coint
+		desc: A shiny purple coint
+
+# multiline strings.
+desc:
+	""""
+	A game where you can do different things.
+	Like beating up monsters, and what not.
+		Multiline strings allow tabs.
+		
+			And new lines.
+	""""
+
+# you can define data on the same line { }, and tabbed below.
+dict: { same_line_property: my_dict, prop2: 3 }
+	new_line_property: [a, b, c, d]
+	array:
+		- { name: My Item, cost: 1_000 }
+		- { cost: 123 }
+	name: Reggie
+	age: 90123
+	coins: 3241
+
+#characters:
+#	james:
+#		name: James
+#		# name?fr: French James
+#		# name?dbg?cheat: Chinese James
+#		# create an Inventory object named 'items'
+#		items=Inventory:
+#			coin: 20
+#			helmet: 2
+#		# create an Equipment object named 'equip'
+#		equip=Equipment:
+#			head: helmet
+
+equipment_slots:
+	head:
+		name: Head
+
+item_info:
+	coin: { name: Coin, slot_max: 1_000_000 }
+	
+	helmet:
+		name: Helmet
+		worn_to: [head]

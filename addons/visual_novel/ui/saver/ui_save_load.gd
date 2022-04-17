@@ -43,7 +43,7 @@ func _select_slot(index: int):
 	# save?
 	if save_mode:
 		# if slot exists, warn about overriding.
-		if Saver.has_slot(slot):
+		if SaveManager.has_slot(slot):
 			confirmation.title = "Warning!"
 			confirmation.dialog_text = "Data exists at %s. Override it?" % slot
 			confirmation.confirmed.connect(_save.bind(slot, index), Node.CONNECT_ONESHOT)
@@ -52,20 +52,20 @@ func _select_slot(index: int):
 			_save(slot, index)
 	# load?
 	else:
-		if Saver.has_slot(slot):
+		if SaveManager.has_slot(slot):
 			# if game is running, ask if sure about losing progress.
 			if Global.active_game:
 				confirmation.title = "Warning!"
 				confirmation.dialog_text = "You will lose current games progress. Load anyway?"
-				confirmation.confirmed.connect(Saver.load_slot.bind(slot), Node.CONNECT_ONESHOT)
+				confirmation.confirmed.connect(SaveManager.load_slot.bind(slot), Node.CONNECT_ONESHOT)
 				confirmation.popup_centered()
 			else:
-				Saver.load_slot(slot)
+				SaveManager.load_slot(slot)
 		else:
 			push_warning("Empty slot: %s." % slot)
 
 func _save(slot: String, index: int):
-	await Saver.save_slot(slot)
+	await SaveManager.save_slot(slot)
 	_update_slot(index)
 
 func _update_page():
@@ -73,5 +73,5 @@ func _update_page():
 		_update_slot(i)
 
 func _update_slot(index: int):
-	var info := Saver.get_slot_info("%s_%s" % [page, index])
+	var info := SaveManager.get_slot_info("%s_%s" % [page, index])
 	buttons.get_child(index).set_info(info)

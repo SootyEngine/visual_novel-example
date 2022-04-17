@@ -1,0 +1,19 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://dphf3soqek48b"]
+
+[ext_resource type="Shader" path="res://addons/visual_novel/nodes/sprite_2d_animations/woozy.gdshader" id="1_kmqmx"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_c44pn"]
+seed = 4124
+
+[sub_resource type="NoiseTexture" id="NoiseTexture_yg07p"]
+width = 32
+height = 32
+seamless = true
+seamless_blend_skirt = 0.8
+as_normal_map = true
+noise = SubResource( "FastNoiseLite_c44pn" )
+
+[resource]
+shader = ExtResource( "1_kmqmx" )
+shader_param/noise_scale = 0.0
+shader_param/noise_texture = SubResource( "NoiseTexture_yg07p" )

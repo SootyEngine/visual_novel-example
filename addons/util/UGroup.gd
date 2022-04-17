@@ -2,11 +2,19 @@
 extends RefCounted
 class_name UGroup
 
-static func get_dict(group: String) -> Dictionary:
-	var out := {}
-	for node in Global.get_tree().get_nodes_in_group(group):
-		out[node.name] = node
+# find all groups
+# go down the tree, starting from given node, and collect all distinct groups
+static func get_all(from: Node = Global.get_tree().root) -> Array:
+	var out := []
+	UNode.dig(from, func(x: Node):
+		for group in x.get_groups():
+			if not group in out:
+				out.append(group))
 	return out
+
+# dict where keys are the names of nodes in the group
+static func get_dict(group: String) -> Dictionary:
+	return UDict.map_on_property(Global.get_tree().get_nodes_in_group(group), "name")
 
 static func get_first_where(group: String, filter: Dictionary) -> Node:
 	for node in Global.get_tree().get_nodes_in_group(group):
@@ -22,3 +30,4 @@ static func _filter(node: Node, filter: Dictionary) -> bool:
 		if not k in node or node[k] != filter[k]:
 			return false
 	return true
+

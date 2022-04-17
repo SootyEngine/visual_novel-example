@@ -16,7 +16,7 @@ func _init() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _ready():
-	Saver.loaded.connect(_hide)
+	SaveManager.loaded.connect(_hide)
 	
 	_hide()
 	save_load_screen.visible = false
@@ -35,7 +35,7 @@ func _goto_main_menu():
 	# TODO: Are you sure?
 	_hide()
 	Global.end()
-	Scene.goto("main_menu")
+	SceneManager.goto("main_menu")
 
 func _hide_screens():
 	for child in screen_parent.get_children():
@@ -59,7 +59,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		if visible:
 			_hide()
-		elif get_tree().current_scene is SootScene:
+		elif VisualNovel.is_scene():
 			_show()
 			
 		get_viewport().set_input_as_handled()
