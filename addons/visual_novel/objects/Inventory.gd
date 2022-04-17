@@ -5,12 +5,7 @@ class_name Inventory, "res://addons/visual_novel/icons/inventory.png"
 signal gained(item: Item, quantity: int)
 signal lost(item: Item, quantity: int)
 
-var _character: Character
 var slots := []
-
-# called by UObject
-func _added(parent: Object):
-	_character = parent
 
 #func _patch(key: String, type: String, patch: Variant, sources: Array):
 ##	match key:

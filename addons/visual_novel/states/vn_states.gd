@@ -2,6 +2,8 @@
 extends Node
 
 # databases
+var data := Database.new() # unorganized data
+var inventories := InventoryDatabase.new()
 var items := ItemDatabase.new()
 var characters := CharacterDatabase.new()
 var goals := GoalDatabase.new()
@@ -19,11 +21,11 @@ var caption_auto_clear := true
 
 # common
 var time := DateTime.new({weekday="sat"})
-var score := 123
+var score := 0
 
-var _FLOW_flow_ended = "/flow_started"
-var _FLOW_started = "/started"
-var _FLOW_dialogue_ended = "/dialogue_ended"
+const F_GAME_STARTED := "_main/game_started"
+const F_DIALOGUE_ENDED := "_main/dialogue_ended"
+const F_FLOW_ENDED := "_main/flow_ended"
 
 func _ready() -> void:
 	Global.started.connect(_game_started)
@@ -34,10 +36,10 @@ func _ready() -> void:
 	Dialogue.selected.connect(_selected)
 
 func _game_started():
-	if Dialogue.has_path(_FLOW_started):
-		Dialogue.goto(_FLOW_started)
+	if Dialogue.has_path(F_GAME_STARTED):
+		Dialogue.goto(F_GAME_STARTED)
 	else:
-		push_error("There is no '%s' flow." % _FLOW_started)
+		push_error("There is no '%s' flow." % F_GAME_STARTED)
 
 func _selected(id: String):
 	UDict.tick(choice_history, id)
@@ -46,9 +48,8 @@ func _dialogue_started():
 	flow_history.clear()
 
 func _dialogue_ended():
-	var dialogue_ended := _FLOW_dialogue_ended
-	if len(flow_history) and flow_history[-1] != _FLOW_dialogue_ended and Dialogue.has_path(_FLOW_dialogue_ended):
-		Dialogue.stack(_FLOW_dialogue_ended)
+	if len(flow_history) and flow_history[-1] != F_DIALOGUE_ENDED and Dialogue.has_path(F_DIALOGUE_ENDED):
+		Dialogue.stack(F_DIALOGUE_ENDED)
 
 func _flow_started(flow: String):
 	flow_history.append(flow)
@@ -57,14 +58,18 @@ func _flow_ended(flow: String):
 	# tick number of times visited
 	UDict.tick(flow_visited, flow)
 	# goto the ending node
-	if len(flow_history) and not flow_history[-1] in [_FLOW_dialogue_ended, _FLOW_flow_ended] and Dialogue.has_path(_FLOW_flow_ended):
-		Dialogue.stack(_FLOW_flow_ended)
+	if len(flow_history) and not flow_history[-1] in [F_DIALOGUE_ENDED, F_FLOW_ENDED] and Dialogue.has_path(F_FLOW_ENDED):
+		Dialogue.stack(F_FLOW_ENDED)
 
 # output a property in a formatted way
 func show(property: String) -> String:
 	# TODO: format
 	return "[b]%s[]" % State._get(property)
 
+# the current location
+func location() -> String:
+	return VisualNovel.scene.scene_id if VisualNovel.scene else ""
+	
 #func caption(kwargs: Dictionary):
 #	if "at" in kwargs:
 #		State._set("caption_at", kwargs.at)

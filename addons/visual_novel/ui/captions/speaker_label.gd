@@ -2,7 +2,6 @@
 extends RichTextLabel2
 
 @export var disabled := false
-@export var active := false
 
 @export var head := "[dima;lb;]":
 	set(x):
@@ -18,6 +17,7 @@ func _init():
 	add_to_group("@.speaker_label")
 	
 func _ready() -> void:
+	visible = false
 	if not Engine.is_editor_hint():
 		VisualNovel.caption_started.connect(_caption_started)
 		VisualNovel.caption_ended.connect(_caption_ended)
@@ -32,12 +32,12 @@ func _caption_started():
 		return
 	
 	if VisualNovel.speaker:
-		active = true
+		visible = true
 		set_bbcode(VisualNovel.speaker)
 
 func _caption_ended():
+	visible = false
 	clear()
-	active = false
 
 func _option_selected():
 	pass

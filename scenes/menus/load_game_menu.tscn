@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://addons/visual_novel/nodes/SootButton.gd" id="1_gept4"]
+[ext_resource type="Script" path="res://addons/visual_novel/nodes/SceneButton.gd" id="1_gept4"]
 [ext_resource type="PackedScene" uid="uid://3kiavxcgtsmg" path="res://addons/visual_novel/ui/saver/ui_save_load.tscn" id="1_w6ffs"]
 
 [node name="load_game_menu" type="Control"]

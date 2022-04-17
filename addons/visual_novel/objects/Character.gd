@@ -8,6 +8,7 @@ var format := ""
 var gender := ""
 var at := ""
 var color := Color.WHITE
+var inventory := ""
 
 func _get(property: StringName):
 	var k := str(property)

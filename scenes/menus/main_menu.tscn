@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://b12bxccc4memc"]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scenes/menus/main_menu.gd" id="1_me6hl"]
-[ext_resource type="Texture2D" uid="uid://b3vywvjoc08be" path="res://icon.png" id="1_vth3o"]
+[ext_resource type="Texture2D" uid="uid://05k5g35bx38x" path="res://icon.png" id="1_vth3o"]
 [ext_resource type="Script" path="res://addons/rich_text/RichTextLabel2.gd" id="2_jklle"]
 
 [node name="main_menu" type="Control"]

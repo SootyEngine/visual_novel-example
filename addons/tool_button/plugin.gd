@@ -19,7 +19,6 @@ func _selection_changed():
 	var scene := get_editor_interface().get_edited_scene_root()
 	if edited_scene != scene:
 		edited_scene = scene
-		print("Changed scene.")
 		_refresh_buttons.call_deferred()
 
 func _input(event: InputEvent) -> void:

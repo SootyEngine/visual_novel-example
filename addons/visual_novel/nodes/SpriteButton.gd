@@ -1,5 +1,5 @@
 @tool
-extends SootButton
+extends Sprite2D
 
 signal mouse_entered
 signal mouse_exited
@@ -52,9 +52,8 @@ func _input(event: InputEvent) -> void:
 				get_viewport().set_input_as_handled()
 
 func _is_pixel_opaque() -> bool:
-	if get_class() == "Sprite2D":
-		if self.is_pixel_opaque(self.get_local_mouse_position()):
-			return true
+	if is_pixel_opaque(get_local_mouse_position()):
+		return true
 	
 	for child in get_children():
 		if child is Sprite2D:

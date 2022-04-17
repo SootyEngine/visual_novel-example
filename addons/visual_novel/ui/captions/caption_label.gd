@@ -2,13 +2,13 @@
 extends RichTextAnimation
 
 @export var disabled := false
-@export var active := false
 
 func _init() -> void:
 	add_to_group("@.caption_label")
 	add_to_group("@.advance_caption")
 
 func _ready() -> void:
+	visible = false
 	if not Engine.is_editor_hint():
 		VisualNovel.caption_started.connect(_caption_started)
 		VisualNovel.caption_ended.connect(_caption_ended)
@@ -19,7 +19,7 @@ func _caption_started():
 	if disabled:
 		return
 	
-	active = true
+	visible = true
 	VisualNovel.wait(self)
 	set_bbcode(VisualNovel.caption)
 	
@@ -29,7 +29,7 @@ func _caption_started():
 
 func _caption_ended():
 	#TODO: check if same as current, then we don't need to go away
-	active = false
+	visible = false
 	clear()
 
 func advance_caption():
@@ -37,7 +37,7 @@ func advance_caption():
 		advance()
 	else:
 		VisualNovel.unwait(self)
-		active = false
+		visible = false
 
 func _option_selected():
 	VisualNovel.unwait(self)

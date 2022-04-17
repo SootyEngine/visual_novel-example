@@ -2,7 +2,9 @@ extends Node
 
 func _ready() -> void:
 	await get_tree().process_frame
-	
+	ModManager.loaded.connect(_redraw)
+
+func _redraw():
 	var text := []
 	var meta := {}
 	var scenes = SceneManager.scenes.keys()

@@ -84,10 +84,7 @@ func _scene_changed():
 	
 	var fs := _get_scene_flow_path("_started")
 	# if dialogue is already running, add this to the end of the current flow
-	if Dialogue.is_active():
-		Dialogue.ended.connect(Dialogue.start.bind(fs), CONNECT_ONESHOT)
-	# otherwise, start a dialogue
-	else:
+	if not Dialogue.is_active():
 		Dialogue.start(fs)
 
 # an option was selected
@@ -104,17 +101,21 @@ func _input(event: InputEvent) -> void:
 		set_process_input(false)
 		return
 	
-	if event.is_action_pressed("advance"):
-		if is_waiting():
-			StringAction.do("@advance_caption")
-		else:
-			StringAction.do("@hide_caption")
-			unwait(self)
-	
-	# run input for captions
-	for node in waiting_for:
-		if node.has_method("_vn_input"):
-			node._vn_input(event)
+	if is_showing_caption():
+		if event.is_action_pressed("advance"):
+			if is_waiting():
+				StringAction.do("@advance_caption")
+			else:
+				StringAction.do("@hide_caption")
+				unwait(self)
+		
+		# run input for captions
+		for node in waiting_for:
+			if node.has_method("_vn_input"):
+				node._vn_input(event)
+
+func is_showing_caption() -> bool:
+	return true if current_line else false
 
 func _caption(text: String, line := {}):
 	# replace list patterns
@@ -138,7 +139,7 @@ func _caption(text: String, line := {}):
 	caption_started.emit()
 
 func _goto_scene(id: String, kwargs := {}):
-	if Scene.find(id):
+	if SceneManager.find(id):
 		wait(self)
 		Fader.create(
 			SceneManager.change.bind(SceneManager.scenes[id]),

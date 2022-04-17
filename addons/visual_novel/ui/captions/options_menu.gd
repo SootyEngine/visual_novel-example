@@ -13,15 +13,13 @@ var hovered := 0:
 	set = set_hovered
 
 func _ready() -> void:
+	visible = false
 	button_parent.remove_child(button_prefab)
-	
 	Dialogue.reloaded.connect(_hide)
 	Dialogue.ended.connect(_hide)
 	VisualNovel.caption_started.connect(_caption_started)
 	VisualNovel.caption_ended.connect(_caption_ended)
 	VisualNovel.option_selected.connect(_caption_ended)
-	set_enabled(false)
-	visible = false
 
 func _caption_started():
 	var line: Dictionary = VisualNovel.current_line
@@ -31,7 +29,7 @@ func _caption_started():
 		if not VisualNovel.debug.show_hidden_options:
 			_options = _options.filter(func(x): return x.passed)
 		
-		set_enabled(true)
+		visible = true
 		_can_select = false
 		_create_buttons()
 		
@@ -41,9 +39,9 @@ func _caption_started():
 
 func _caption_ended():
 	if _options:
+		visible = false
 		_options = []
 		VisualNovel.unwait(self)
-		set_enabled(false)
 
 func _vn_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -76,9 +74,6 @@ func set_hovered(h: int):
 			var n: Control = button_parent.get_child(i)
 			n.hovered = i == h
 
-func set_enabled(e):
-	visible = e
-
 func _create_buttons():
 	size.y = 0.0
 	
@@ -106,7 +101,7 @@ func _select(option: String):
 	Dialogue.select_option(option)
 
 func _hide():
-	set_enabled(false)
+	visible = false
 	
 	for button in button_parent.get_children():
 		button_parent.remove_child(button)
